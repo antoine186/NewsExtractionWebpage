@@ -6,26 +6,17 @@ function Link(props) {
 }
 
 function App() {
-  const [value, onChangeText] = React.useState('Useless Multiline Placeholder');
+  const [value, onChangeText] = React.useState('Search');
 
   return (
     <View style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.title}>Emotional Machines</Text>
       </View>
-      <Text style={styles.text}>
-        Search
-      </Text>
-      <Text style={styles.text}>
-        Built with <Link href="https://github.com/facebook/create-react-app">Create React App</Link> and{' '}
-        <Link href="https://github.com/necolas/react-native-web">React Native for Web</Link>
-      </Text>
-      <Button onPress={() => {}} title="Example button" />
-
       <View class="form-group form-row">
             <View class="col-10">
               <Text style={styles.text}>
-                Search
+                Find Emotions
               </Text>
               <TextInput
                 editable
@@ -34,16 +25,17 @@ function App() {
                 maxLength={40}
                 onChangeText={text => onChangeText(text)}
                 value={value}
-                style={{padding: 10}}
+                style={{padding: 10, borderWidth: 2, borderColor: "#BC2BEA"}}
               />
               <label for="from_date" class="col-form-label">
                   From:
               </label>
-              <TextInput type="date" id="date" min="2006-01-01"/>
+              <br></br>
+              <input type="date" id="date" min="2006-01-01"/>
               <label for="to_date" class="col-form-label">
                   To:
               </label>
-              <TextInput type="date" id="maxdatepicker" max="{{date.today()}}"/>
+              <input type="date" id="maxdatepicker" max="{{date.today()}}"/>
             </View>
       </View>
     </View>
