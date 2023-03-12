@@ -1,6 +1,7 @@
 {
   "expo": {
     "name": "NewsExtractionWebpage",
+    "entryPoint": "./src/containers/App.js",
     "slug": "NewsExtractionWebpage",
     "version": "1.0.0",
     "orientation": "portrait",

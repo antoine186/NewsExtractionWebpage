@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button, StyleSheet, Text, View, Dimensions, TextInput } from 'react-native';
+import { registerRootComponent } from 'expo';
 
 function Link(props) {
   return <Text {...props} accessibilityRole="link" style={StyleSheet.compose(styles.link, props.style)} />;
@@ -73,4 +74,5 @@ const styles = StyleSheet.create({
     fontFamily: 'monospace, monospace'
   }
 });
-export default App;
+
+export default registerRootComponent(App);
