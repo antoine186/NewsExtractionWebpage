@@ -1,13 +1,14 @@
-import React from 'react';
-import { Button, StyleSheet, Text, View, Dimensions, TextInput } from 'react-native';
-import { registerRootComponent } from 'expo';
+import React from 'react'
+import { Button, StyleSheet, Text, View, Dimensions, TextInput } from 'react-native'
+import { registerRootComponent } from 'expo'
+import CappedDatePicker from '../components/atoms/CappedDatePicker'
 
-function Link(props) {
-  return <Text {...props} accessibilityRole="link" style={StyleSheet.compose(styles.link, props.style)} />;
+function Link (props) {
+  return <Text {...props} accessibilityRole="link" style={StyleSheet.compose(styles.link, props.style)} />
 }
 
-function App() {
-  const [value, onChangeText] = React.useState('Search');
+function EmotionalSearchPage () {
+  const [value, onChangeText] = React.useState('Search')
 
   return (
     <View style={styles.container}>
@@ -26,24 +27,24 @@ function App() {
                 maxLength={40}
                 onChangeText={text => onChangeText(text)}
                 value={value}
-                style={{padding: 10, borderWidth: 2, borderColor: "#BC2BEA"}}
+                style={{ padding: 10, borderWidth: 2, borderColor: '#BC2BEA' }}
               />
-              <label for="from_date" class="col-form-label">
+              <label htmlFor="from_date" className="col-form-label">
                   From:
               </label>
               <br></br>
-              <input type="date" id="date" min="2006-01-01"/>
-              <label for="to_date" class="col-form-label">
+              <CappedDatePicker minDate="2006-01-01" />
+              <label htmlFor="to_date" className="col-form-label">
                   To:
               </label>
-              <input type="date" id="maxdatepicker" max="{{date.today()}}"/>
+              <CappedDatePicker minDate="2006-01-01" />
             </View>
       </View>
     </View>
-  );
+  )
 }
 
-let ScreenHeight = Dimensions.get('window').height;
+const ScreenHeight = Dimensions.get('window').height
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -73,6 +74,6 @@ const styles = StyleSheet.create({
   code: {
     fontFamily: 'monospace, monospace'
   }
-});
+})
 
-export default registerRootComponent(App);
+export default registerRootComponent(EmotionalSearchPage)

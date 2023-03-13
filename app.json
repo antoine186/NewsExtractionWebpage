@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "NewsExtractionWebpage",
-    "entryPoint": "./src/containers/App.js",
+    "entryPoint": "./src/containers/EmotionalSearchPage.jsx",
     "slug": "NewsExtractionWebpage",
     "version": "1.0.0",
     "orientation": "portrait",
