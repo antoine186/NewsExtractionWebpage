@@ -19,8 +19,8 @@ class CappedDatePicker extends React.Component {
 }
 
 CappedDatePicker.propTypes = {
-  minDate: PropTypes.string,
-  maxDate: PropTypes.string
+  minDate: PropTypes.string.isRequired,
+  maxDate: PropTypes.string.isRequired
 }
 
 let today = new Date()

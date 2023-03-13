@@ -2,6 +2,7 @@ import React from 'react'
 import { Button, StyleSheet, Text, View, Dimensions, TextInput } from 'react-native'
 import { registerRootComponent } from 'expo'
 import CappedDatePicker from '../components/atoms/CappedDatePicker'
+import PairedDatePickers from '../components/molecules/PairedDatePickers'
 
 function Link (props) {
   return <Text {...props} accessibilityRole="link" style={StyleSheet.compose(styles.link, props.style)} />
@@ -29,15 +30,8 @@ function EmotionalSearchPage () {
                 value={value}
                 style={{ padding: 10, borderWidth: 2, borderColor: '#BC2BEA' }}
               />
-              <label htmlFor="from_date" className="col-form-label">
-                  From:
-              </label>
               <br></br>
-              <CappedDatePicker minDate="2006-01-01" />
-              <label htmlFor="to_date" className="col-form-label">
-                  To:
-              </label>
-              <CappedDatePicker minDate="2006-01-01" />
+              <PairedDatePickers />
             </View>
       </View>
     </View>
