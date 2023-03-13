@@ -2,6 +2,7 @@ import React from 'react'
 import { View, Text } from 'react-native'
 import PropTypes from 'prop-types'
 import CappedDatePicker from '../atoms/CappedDatePicker'
+import DateFormatter from '../../utils/DateFormatter'
 
 class PairedDatePickers extends React.Component {
   constructor (props) {
@@ -13,8 +14,8 @@ class PairedDatePickers extends React.Component {
     }
   }
 
-  onChange (value) {
-    this.setState({ [this.state.posteriorMinDate]: value })
+  onChange (event) {
+    this.setState({ [this.state.posteriorMinDate]: event.target.value })
   }
 
   render () {

@@ -1,7 +1,6 @@
 import React from 'react'
 import { Button, StyleSheet, Text, View, Dimensions, TextInput } from 'react-native'
 import { registerRootComponent } from 'expo'
-import CappedDatePicker from '../components/atoms/CappedDatePicker'
 import PairedDatePickers from '../components/molecules/PairedDatePickers'
 
 function Link (props) {

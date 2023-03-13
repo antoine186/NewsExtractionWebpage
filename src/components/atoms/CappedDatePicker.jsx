@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import DateFormatter from '../../utils/DateFormatter'
 
 class CappedDatePicker extends React.Component {
   constructor (props) {
@@ -13,22 +14,18 @@ class CappedDatePicker extends React.Component {
 
   render () {
     return (
-        <input type="date" id="date" min={this.state.minDate} max={this.state.maxDate} />
+        <input type="date" id="date" min={this.state.minDate} max={this.state.maxDate} onChange={this.props.onChange} />
     )
   }
 }
 
 CappedDatePicker.propTypes = {
   minDate: PropTypes.string.isRequired,
-  maxDate: PropTypes.string.isRequired
+  maxDate: PropTypes.string.isRequired,
+  onChange: PropTypes.func
 }
 
-let today = new Date()
-const dd = String(today.getDate()).padStart(2, '0')
-const mm = String(today.getMonth() + 1).padStart(2, '0')
-const yyyy = today.getFullYear()
-
-today = yyyy + '-' + mm + '-' + dd
+const today = DateFormatter(new Date())
 
 CappedDatePicker.defaultProps = {
   maxDate: today
