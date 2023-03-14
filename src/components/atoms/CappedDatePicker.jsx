@@ -12,6 +12,12 @@ class CappedDatePicker extends React.Component {
     }
   }
 
+  componentDidUpdate (prevProps, prevState) {
+    if (prevProps.minDate !== this.props.minDate) {
+      this.setState({ minDate: this.props.minDate })
+    }
+  }
+
   render () {
     return (
         <input type="date" id="date" min={this.state.minDate} max={this.state.maxDate} onChange={this.props.onChange} />

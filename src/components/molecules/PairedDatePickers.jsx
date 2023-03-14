@@ -15,7 +15,8 @@ class PairedDatePickers extends React.Component {
   }
 
   onChange (event) {
-    this.setState({ [this.state.posteriorMinDate]: event.target.value })
+    const selectedDate = new Date(event.target.value)
+    this.setState({ posteriorMinDate: DateFormatter(selectedDate) })
   }
 
   render () {
