@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
-// import Dashboard from './Dashboard'
-// import EmotionalSearchPage from './EmotionalSearchPage'
-import { Button, StyleSheet, Text, View, Dimensions, TextInput } from 'react-native'
+import { StatusBar } from 'expo-status-bar'
+import { TouchableOpacity, Text, View, Image, TextInput } from 'react-native'
+import styles from '../utils/style_guide/LoginPageStyle'
 
 function Login () {
   // const [username, setUsername] = useState('')
@@ -18,9 +18,33 @@ function Login () {
   }
 
   return (
-        <View>
-            <Text>Login</Text>
+      <View style={styles.container}>
+        <Image style={styles.image} source={require('../assets/images/EMOfficialLogo.png')} />
+        <StatusBar style="auto" />
+        <View style={styles.inputView}>
+          <TextInput
+            style={styles.TextInput}
+            placeholder="Email."
+            placeholderTextColor="#003f5c"
+            onChangeText={(email) => setEmail(email)}
+          />
         </View>
+        <View style={styles.inputView}>
+          <TextInput
+            style={styles.TextInput}
+            placeholder="Password."
+            placeholderTextColor="#003f5c"
+            secureTextEntry={true}
+            onChangeText={(password) => setPassword(password)}
+          />
+        </View>
+        <TouchableOpacity>
+          <Text style={styles.forgot_button}>Forgot Password?</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.loginBtn}>
+          <Text style={styles.loginText}>LOGIN</Text>
+        </TouchableOpacity>
+      </View>
   )
 }
 
@@ -38,7 +62,7 @@ function Login () {
                     onChange={(e) => setPassword(e.target.value)}
                 />
                 <input type="submit" value="Submit" />
-            </form> 
+            </form>
 */
 
 export default Login
