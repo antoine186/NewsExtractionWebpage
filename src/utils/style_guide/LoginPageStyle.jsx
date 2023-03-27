@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
   image: {
-    marginBottom: 40,
+    marginBottom: 10,
     height: '13%',
     width: '7%'
   },
@@ -31,6 +31,10 @@ const styles = StyleSheet.create({
   forgot_button: {
     height: 30,
     marginBottom: 30
+  },
+  company_name: {
+    height: 10,
+    marginBottom: 50
   },
   loginBtn: {
     width: '8%',

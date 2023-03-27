@@ -20,6 +20,7 @@ function Login () {
   return (
       <View style={styles.container}>
         <Image style={styles.image} source={require('../assets/images/EMOfficialLogo.png')} />
+        <Text style={styles.company_name}>Emotional Machines</Text>
         <StatusBar style="auto" />
         <View style={styles.inputView}>
           <TextInput
