@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { StatusBar } from 'expo-status-bar'
 import { TouchableOpacity, Text, View, Image, TextInput } from 'react-native'
 import styles from '../utils/style_guide/LoginPageStyle'
-// import api, { loginAuthUrl } from '../utils/backend_configuration/BackendConfig'
+import { api, loginAuthUrl } from '../utils/backend_configuration/BackendConfig'
 
 function Login () {
   const [username, setUsername] = useState('')
@@ -12,7 +12,7 @@ function Login () {
   const handleSubmit = (e) => {
     e.preventDefault()
 
-    api.post('/auth-login', {
+    api.post(loginAuthUrl, {
       username: username,
       password: password
     }
