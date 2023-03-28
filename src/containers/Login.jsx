@@ -3,6 +3,8 @@ import { StatusBar } from 'expo-status-bar'
 import { TouchableOpacity, Text, View, Image, TextInput } from 'react-native'
 import styles from '../utils/style_guide/LoginPageStyle'
 import { api, loginAuthUrl } from '../utils/backend_configuration/BackendConfig'
+import Store from '../store/Store'
+import { Provider } from 'react-redux'
 
 function Login () {
   const [username, setUsername] = useState('')
@@ -17,7 +19,6 @@ function Login () {
       password: password
     }
     ).then(response =>
-      // this.setState({ articleId: response.data.id })
       console.log('POST returned something')
     )
 
@@ -29,34 +30,36 @@ function Login () {
   }
 
   return (
-    <View style={styles.container}>
-      <Image style={styles.image} source={require('../assets/images/EMOfficialLogo.png')} />
-      <Text style={styles.company_name}>Emotional Machines</Text>
-      <StatusBar style="auto" />
-      <View style={styles.inputView}>
-        <TextInput
-          style={styles.TextInput}
-          placeholder="Email"
-          placeholderTextColor="#003f5c"
-          onChangeText={(email) => setUsername(email)}
-        />
+    <Provider store={Store}>
+      <View style={styles.container}>
+        <Image style={styles.image} source={require('../assets/images/EMOfficialLogo.png')} />
+        <Text style={styles.company_name}>Emotional Machines</Text>
+        <StatusBar style="auto" />
+        <View style={styles.inputView}>
+          <TextInput
+            style={styles.TextInput}
+            placeholder="Email"
+            placeholderTextColor="#003f5c"
+            onChangeText={(email) => setUsername(email)}
+          />
+        </View>
+        <View style={styles.inputView}>
+          <TextInput
+            style={styles.TextInput}
+            placeholder="Password"
+            placeholderTextColor="#003f5c"
+            secureTextEntry={true}
+            onChangeText={(password) => setPassword(password)}
+          />
+        </View>
+        <TouchableOpacity>
+          <Text style={styles.forgot_button}>Forgot Password?</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.loginBtn} onPress={handleSubmit}>
+          <Text style={styles.loginText}>LOGIN</Text>
+        </TouchableOpacity>
       </View>
-      <View style={styles.inputView}>
-        <TextInput
-          style={styles.TextInput}
-          placeholder="Password"
-          placeholderTextColor="#003f5c"
-          secureTextEntry={true}
-          onChangeText={(password) => setPassword(password)}
-        />
-      </View>
-      <TouchableOpacity>
-        <Text style={styles.forgot_button}>Forgot Password?</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.loginBtn} onPress={handleSubmit}>
-        <Text style={styles.loginText}>LOGIN</Text>
-      </TouchableOpacity>
-    </View>
+    </Provider>
   )
 }
 
