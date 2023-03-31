@@ -7,10 +7,10 @@ const initialState = {
 const userSessionReducer = (state = initialState, action) => {
   switch (action.type) {
     case ADD_USER_SESSION: {
-      const { task } = action.payload
+      const { session } = action.payload
       return {
         ...state,
-        userSession: [...state.userSession, { task }]
+        userSession: [...state.userSession, { session }]
       }
     }
     default:

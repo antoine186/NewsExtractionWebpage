@@ -1,10 +1,8 @@
 export const ADD_USER_SESSION = 'ADD_USER_SESSION'
 
-// let userSession = {}
-
-export const addAuthenticatedUserSession = task => ({
+export const addAuthenticatedUserSession = session => ({
   type: ADD_USER_SESSION,
   payload: {
-    task
+    session
   }
 })

@@ -3,63 +3,64 @@ import { StatusBar } from 'expo-status-bar'
 import { TouchableOpacity, Text, View, Image, TextInput } from 'react-native'
 import styles from '../utils/style_guide/LoginPageStyle'
 import { api, loginAuthUrl } from '../utils/backend_configuration/BackendConfig'
-import Store from '../store/Store'
-import { Provider } from 'react-redux'
+import { useDispatch } from 'react-redux'
+import { addAuthenticatedUserSession } from '../store/actions/UserSessionActions'
 
 function Login () {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
-  // const [authenticated, setAuthenticated] = useState(localStorage.getItem(localStorage.getItem('authenticated') || false))
+  const dispatch = useDispatch()
 
   const handleSubmit = (e) => {
     e.preventDefault()
 
+    console.log(api.defaults.baseURL)
+    // axios.defaults.baseURL
+
     api.post(loginAuthUrl, {
       username: username,
       password: password
+    }, {
+      withCredentials: true
     }
-    ).then(response =>
-      console.log('POST returned something')
+    ).then(response => {
+      // console.log('POST returned something')
+      const xyz = response.headers.get('set-cookie')
+      // console.log(response)
+      // dispatch(addAuthenticatedUserSession(response.data))
+    }
     )
-
-    /*
-    if (account && account.password === password) {
-      setauthenticated(true)
-      localStorage.setItem('authenticated', true)
-    } */
   }
 
   return (
-    <Provider store={Store}>
-      <View style={styles.container}>
-        <Image style={styles.image} source={require('../assets/images/EMOfficialLogo.png')} />
-        <Text style={styles.company_name}>Emotional Machines</Text>
-        <StatusBar style="auto" />
-        <View style={styles.inputView}>
-          <TextInput
-            style={styles.TextInput}
-            placeholder="Email"
-            placeholderTextColor="#003f5c"
-            onChangeText={(email) => setUsername(email)}
-          />
-        </View>
-        <View style={styles.inputView}>
-          <TextInput
-            style={styles.TextInput}
-            placeholder="Password"
-            placeholderTextColor="#003f5c"
-            secureTextEntry={true}
-            onChangeText={(password) => setPassword(password)}
-          />
-        </View>
-        <TouchableOpacity>
-          <Text style={styles.forgot_button}>Forgot Password?</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.loginBtn} onPress={handleSubmit}>
-          <Text style={styles.loginText}>LOGIN</Text>
-        </TouchableOpacity>
+    <View style={styles.container}>
+      <Image style={styles.image} source={require('../assets/images/EMOfficialLogo.png')} />
+      <Text style={styles.company_name}>Emotional Machines</Text>
+      <StatusBar style="auto" />
+      <View style={styles.inputView}>
+        <TextInput
+          style={styles.TextInput}
+          placeholder="Email"
+          placeholderTextColor="#003f5c"
+          onChangeText={(email) => setUsername(email)}
+        />
       </View>
-    </Provider>
+      <View style={styles.inputView}>
+        <TextInput
+          style={styles.TextInput}
+          placeholder="Password"
+          placeholderTextColor="#003f5c"
+          secureTextEntry={true}
+          onChangeText={(password) => setPassword(password)}
+        />
+      </View>
+      <TouchableOpacity>
+        <Text style={styles.forgot_button}>Forgot Password?</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.loginBtn} onPress={handleSubmit}>
+        <Text style={styles.loginText}>LOGIN</Text>
+      </TouchableOpacity>
+    </View>
   )
 }
 
