@@ -1,21 +1,27 @@
-import React, { useState } from 'react'
+import React, { useState, useLayoutEffect } from 'react'
 import { StatusBar } from 'expo-status-bar'
 import { TouchableOpacity, Text, View, Image, TextInput } from 'react-native'
 import styles from '../utils/style_guide/LoginPageStyle'
 import { api, loginAuthUrl } from '../utils/backend_configuration/BackendConfig'
 import { useDispatch } from 'react-redux'
 import { addAuthenticatedUserSession } from '../store/actions/UserSessionActions'
+import CookieSessionChecker from '../utils/CookiesSessions/CookieSessionChecker'
 
 function Login () {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const dispatch = useDispatch()
 
+  useLayoutEffect(() => {
+    if (CookieSessionChecker()) {
+      console.log('Session confirmed')
+    } else {
+      console.log('Session absent')
+    }
+  }, [])
+
   const handleSubmit = (e) => {
     e.preventDefault()
-
-    console.log(api.defaults.baseURL)
-    // axios.defaults.baseURL
 
     api.post(loginAuthUrl, {
       username: username,
@@ -24,9 +30,7 @@ function Login () {
       withCredentials: true
     }
     ).then(response => {
-      // console.log('POST returned something')
-      const xyz = response.headers.get('set-cookie')
-      // console.log(response)
+
       // dispatch(addAuthenticatedUserSession(response.data))
     }
     )
