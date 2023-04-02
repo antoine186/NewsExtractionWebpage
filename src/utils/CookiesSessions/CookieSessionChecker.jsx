@@ -2,15 +2,15 @@ import Cookies from 'js-cookie'
 import { api, sessionAuthUrl } from '../backend_configuration/BackendConfig'
 import CookieString2DictConverter from './CookieString2DictConverter'
 
-function CookieSessionChecker () {
+function CookieSessionChecker() {
   let userSessionCookie = Cookies.get('user_session_cookie')
 
-  userSessionCookie = CookieString2DictConverter(userSessionCookie)
-  const userId = userSessionCookie.user_id
-  const secretToken1 = userSessionCookie.secret_token_1
-  const secretToken2 = userSessionCookie.secret_token_2
-
   if (userSessionCookie != null) {
+    userSessionCookie = CookieString2DictConverter(userSessionCookie)
+    const userId = userSessionCookie.user_id
+    const secretToken1 = userSessionCookie.secret_token_1
+    const secretToken2 = userSessionCookie.secret_token_2
+
     api.post(sessionAuthUrl, {
       userId,
       secretToken1,
