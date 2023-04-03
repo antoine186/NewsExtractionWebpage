@@ -1,15 +1,45 @@
-import React from 'react'
+import React, { useLayoutEffect, Component, useEffect } from 'react'
 import { Button, StyleSheet, Text, View, Dimensions, TextInput } from 'react-native'
+import { Navigate } from 'react-router-dom'
 import PairedDatePickers from '../components/molecules/PairedDatePickers'
 import styles from '../utils/style_guide/MainWebpageStyle'
+import CookieSessionChecker from '../utils/CookiesSessions/CookieSessionChecker'
+import { useSelector, connect } from 'react-redux'
 
 function Link (props) {
   return <Text {...props} accessibilityRole="link" style={StyleSheet.compose(styles.link, props.style)} />
 }
 
-function EmotionalSearchPage () {
-  const [value, onChangeText] = React.useState('Search')
+class EmotionalSearchPage extends Component {
+  constructor (props) {
+    super(props)
+    this.state = {
+      searchInput: ''
+    }
 
+    const someData = this.props.xyz
+    console.log(someData)
+
+    /*
+    trySelector () {
+      const userSession = useSelector(state => state.userSession)
+    }
+
+    trySelector() */
+    // console.log(userSession)
+
+    if (CookieSessionChecker()) {
+      console.log('Session confirmed')
+    } else {
+      console.log('Session absent')
+    }
+  }
+
+  render () {
+    return <Navigate to='/login' />
+  }
+
+  /*
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -34,7 +64,15 @@ function EmotionalSearchPage () {
             </View>
       </View>
     </View>
-  )
+  ) */
 }
 
-export default EmotionalSearchPage
+const mapStateToProps = state => {
+  return {
+    xyz: state
+  }
+}
+
+export default connect(mapStateToProps)(EmotionalSearchPage)
+
+// export default EmotionalSearchPage

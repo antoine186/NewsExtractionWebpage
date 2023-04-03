@@ -1,24 +1,16 @@
-import React, { useState, useLayoutEffect } from 'react'
+import React, { useState } from 'react'
 import { StatusBar } from 'expo-status-bar'
 import { TouchableOpacity, Text, View, Image, TextInput } from 'react-native'
 import styles from '../utils/style_guide/LoginPageStyle'
 import { api, loginAuthUrl } from '../utils/backend_configuration/BackendConfig'
 import { useDispatch } from 'react-redux'
-import { addAuthenticatedUserSession } from '../store/actions/UserSessionActions'
-import CookieSessionChecker from '../utils/CookiesSessions/CookieSessionChecker'
+// import { addAuthenticatedUserSession } from '../store/actions/UserSessionActions'
+import { validateUserSession, invalidateUserSession } from '../store/Slices/UserSessionSlice'
 
 function Login () {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const dispatch = useDispatch()
-
-  useLayoutEffect(() => {
-    if (CookieSessionChecker()) {
-      console.log('Session confirmed')
-    } else {
-      console.log('Session absent')
-    }
-  }, [])
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -30,8 +22,9 @@ function Login () {
       withCredentials: true
     }
     ).then(response => {
-
-      // dispatch(addAuthenticatedUserSession(response.data))
+      if (response.data) {
+        dispatch(validateUserSession())
+      }
     }
     )
   }

@@ -2,7 +2,7 @@ import Cookies from 'js-cookie'
 import { api, sessionAuthUrl } from '../backend_configuration/BackendConfig'
 import CookieString2DictConverter from './CookieString2DictConverter'
 
-function CookieSessionChecker() {
+function CookieSessionChecker () {
   let userSessionCookie = Cookies.get('user_session_cookie')
 
   if (userSessionCookie != null) {
@@ -27,8 +27,6 @@ function CookieSessionChecker() {
       }
     }
     )
-  } else {
-    return false
   }
 }
 
