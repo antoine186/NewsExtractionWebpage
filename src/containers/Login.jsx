@@ -4,8 +4,8 @@ import { TouchableOpacity, Text, View, Image, TextInput } from 'react-native'
 import styles from '../utils/style_guide/LoginPageStyle'
 import { api, loginAuthUrl } from '../utils/backend_configuration/BackendConfig'
 import { useDispatch } from 'react-redux'
-// import { addAuthenticatedUserSession } from '../store/actions/UserSessionActions'
-import { validateUserSession, invalidateUserSession } from '../store/Slices/UserSessionSlice'
+import { validateUserSession } from '../store/Slices/UserSessionSlice'
+import { Navigate } from 'react-router-dom'
 
 function Login () {
   const [username, setUsername] = useState('')
@@ -24,6 +24,7 @@ function Login () {
     ).then(response => {
       if (response.data) {
         dispatch(validateUserSession())
+        return <Navigate to='/login' />
       }
     }
     )
