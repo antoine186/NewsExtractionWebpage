@@ -5,12 +5,13 @@ import styles from '../utils/style_guide/LoginPageStyle'
 import { api, loginAuthUrl } from '../utils/backend_configuration/BackendConfig'
 import { useDispatch } from 'react-redux'
 import { validateUserSession } from '../store/Slices/UserSessionSlice'
-import { Navigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 function Login () {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const dispatch = useDispatch()
+  const navigate = useNavigate()
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -24,7 +25,7 @@ function Login () {
     ).then(response => {
       if (response.data) {
         dispatch(validateUserSession())
-        return <Navigate to='/login' />
+        navigate('/')
       }
     }
     )
