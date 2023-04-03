@@ -15,6 +15,8 @@ export const userSessionSlice = createSlice({
   reducers: {
     validateUserSession: (state) => {
       state.validated = true
+      // console.log('Reducer triggered')
+      // return { ...state, validated: true }
     },
     invalidateUserSession: (state) => {
       state.validated = false
