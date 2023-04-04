@@ -29,6 +29,15 @@ const styles = StyleSheet.create({
   },
   code: {
     fontFamily: 'monospace, monospace'
+  },
+  searchBtn: {
+    width: '100%',
+    borderRadius: 25,
+    height: 50,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 40,
+    backgroundColor: '#FF1493'
   }
 })
 

@@ -13,7 +13,6 @@ function Login () {
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
-  // const [userSessionValidated, setUserSessionValidation] = useState(this.props.userSession.validated)
   const userSessionValidated = useSelector(state => state.userSession.validated)
 
   const handleSubmit = (e) => {
