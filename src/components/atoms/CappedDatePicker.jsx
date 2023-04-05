@@ -21,7 +21,7 @@ class CappedDatePicker extends React.Component {
 
   render () {
     return (
-        <input type="date" id="date" min={this.state.minDate} max={this.state.maxDate} onChange={this.props.onChange} value={this.props.defaultDate}/>
+        <input type="date" id="date" min={this.state.minDate} max={this.state.maxDate} onChange={this.props.onChange} defaultValue={this.props.defaultDate}/>
     )
   }
 }
@@ -33,11 +33,15 @@ CappedDatePicker.propTypes = {
   defaultDate: PropTypes.Date
 }
 
-const today = DateFormatter(new Date())
+const relevantDate = new Date()
+const today = DateFormatter(relevantDate)
+
+relevantDate.setDate(relevantDate.getDate() - 1)
+const yesterday = DateFormatter(relevantDate)
 
 CappedDatePicker.defaultProps = {
-  maxDate: today,
-  defaultDate: today
+  maxDate: yesterday,
+  defaultDate: yesterday
 }
 
 export default CappedDatePicker
