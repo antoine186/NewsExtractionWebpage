@@ -30,7 +30,7 @@ CappedDatePicker.propTypes = {
   minDate: PropTypes.string.isRequired,
   maxDate: PropTypes.string.isRequired,
   onChange: PropTypes.func,
-  defaultDate: PropTypes.Date
+  defaultDate: PropTypes.string
 }
 
 const relevantDate = new Date()

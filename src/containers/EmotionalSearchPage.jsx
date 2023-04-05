@@ -10,24 +10,28 @@ import DateFormatter from '../utils/DateFormatter'
 import SearchArticlesResultTable from '../components/molecules/SearchArticlesResultTable'
 import ArticlesResultTableDataWrangler from './search_helper_functions/ArticlesResultTableDataWrangler'
 
-function Link (props) {
+function Link(props) {
   return <Text {...props} accessibilityRole="link" style={StyleSheet.compose(styles.link, props.style)} />
 }
 
 class EmotionalSearchPage extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.state = {
       searchInput: '',
       dateInput: this.props.minDate,
       userSessionValidated: this.props.userSession.validated,
       minDate: this.props.minDate,
-      searchArticlesResultTableData: []
+      searchArticlesResultTableData: [],
+      noResultsToReturn: false,
+      searchingInitiated: false
     }
   }
 
   handleSubmit = (e) => {
     e.preventDefault()
+
+    this.setState({ searchingInitiated: true })
 
     api.post(searchUrl, {
       searchInput: this.state.searchInput,
@@ -36,20 +40,22 @@ class EmotionalSearchPage extends Component {
       withCredentials: true
     }
     ).then(response => {
-      if (response.data) {
+      if (response.data !== 'Error') {
         console.log('Search returned something!')
         this.populateArticlesResultTable(response.data)
+      } else {
+        this.setState({ noResultsToReturn: true })
       }
     }
     )
   }
 
-  onChange (event) {
+  onChange(event) {
     const selectedDate = new Date(event.target.value)
     this.setState({ dateInput: DateFormatter(selectedDate) })
   }
 
-  populateArticlesResultTable (data) {
+  populateArticlesResultTable(data) {
     const searchArticlesResultTableData = []
 
     const articlesResultsDict = ArticlesResultTableDataWrangler(data)
@@ -67,7 +73,7 @@ class EmotionalSearchPage extends Component {
     this.setState({ searchArticlesResultTableData })
   }
 
-  render () {
+  render() {
     if (!this.state.userSessionValidated) {
       return <Navigate to='/login' />
     } else {
@@ -92,16 +98,25 @@ class EmotionalSearchPage extends Component {
               />
               <br></br>
               <CappedDatePicker minDate={this.state.minDate} onChange={this.onChange.bind(this)} />
-              <TouchableOpacity style={styles.searchBtn} onPress={this.handleSubmit}>
-                <Text style={styles.text}>SEARCH</Text>
-              </TouchableOpacity>
+              {!this.state.searchingInitiated &&
+                <TouchableOpacity style={styles.searchBtn} onPress={this.handleSubmit}>
+                  <Text style={styles.text}>SEARCH</Text>
+                </TouchableOpacity>
+              }
             </View>
           </View>
           <br></br>
-          <Text style={styles.text}>
-            Results One Week Prior and Up to Selected Date
-          </Text>
+          {this.state.searchingInitiated && !this.state.noResultsToReturn &&
+            <Text style={styles.text}>
+              Results One Week Prior and Up to Selected Date
+            </Text>
+          }
           <br></br>
+          {this.state.noResultsToReturn &&
+            <Text style={styles.text}>
+              No results found! Please refresh page to initiate another search.
+            </Text>
+          }
           <SearchArticlesResultTable tableData={this.state.searchArticlesResultTableData} />
         </View>
       )

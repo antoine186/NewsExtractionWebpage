@@ -10,13 +10,13 @@ export const columns = [
     title: 'Title',
     dataIndex: 'title',
     key: 'title',
-    width: 200
+    width: 300
   },
   {
     title: 'Description',
     dataIndex: 'description',
     key: 'description',
-    width: 200
+    width: 300
   },
   {
     title: 'Publisher',
