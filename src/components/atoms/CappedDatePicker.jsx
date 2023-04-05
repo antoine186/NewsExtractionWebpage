@@ -8,7 +8,8 @@ class CappedDatePicker extends React.Component {
 
     this.state = {
       minDate: this.props.minDate,
-      maxDate: this.props.maxDate
+      maxDate: this.props.maxDate,
+      defaultDate: this.props.defaultDate
     }
   }
 
@@ -20,7 +21,7 @@ class CappedDatePicker extends React.Component {
 
   render () {
     return (
-        <input type="date" id="date" min={this.state.minDate} max={this.state.maxDate} onChange={this.props.onChange} />
+        <input type="date" id="date" min={this.state.minDate} max={this.state.maxDate} onChange={this.props.onChange} value={this.props.defaultDate}/>
     )
   }
 }
@@ -28,13 +29,15 @@ class CappedDatePicker extends React.Component {
 CappedDatePicker.propTypes = {
   minDate: PropTypes.string.isRequired,
   maxDate: PropTypes.string.isRequired,
-  onChange: PropTypes.func
+  onChange: PropTypes.func,
+  defaultDate: PropTypes.Date
 }
 
 const today = DateFormatter(new Date())
 
 CappedDatePicker.defaultProps = {
-  maxDate: today
+  maxDate: today,
+  defaultDate: today
 }
 
 export default CappedDatePicker

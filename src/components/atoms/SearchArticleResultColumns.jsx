@@ -10,13 +10,13 @@ export const columns = [
     title: 'Title',
     dataIndex: 'title',
     key: 'title',
-    width: 100
+    width: 200
   },
   {
     title: 'Description',
     dataIndex: 'description',
     key: 'description',
-    width: 100
+    width: 200
   },
   {
     title: 'Publisher',
@@ -28,12 +28,18 @@ export const columns = [
     title: 'Published Date',
     dataIndex: 'published_date',
     key: 'published_date',
-    width: 100
+    width: 200
   },
   {
-    title: 'Emotional Engagement',
+    title: 'Emotional Engagement (%)',
     dataIndex: 'emotional_engagement',
     key: 'emotional_engagement',
-    width: 100
-  }
+    width: 300
+  },
+  {
+    title: 'URL',
+    dataIndex: 'url',
+    key: 'url',
+    width: 300
+  },
 ]

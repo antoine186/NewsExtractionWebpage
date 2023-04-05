@@ -8,6 +8,7 @@ import PropTypes from 'prop-types'
 import { api, searchUrl } from '../utils/backend_configuration/BackendConfig'
 import DateFormatter from '../utils/DateFormatter'
 import SearchArticlesResultTable from '../components/molecules/SearchArticlesResultTable'
+import ArticlesResultTableDataWrangler from './search_helper_functions/ArticlesResultTableDataWrangler'
 
 function Link (props) {
   return <Text {...props} accessibilityRole="link" style={StyleSheet.compose(styles.link, props.style)} />
@@ -49,31 +50,21 @@ class EmotionalSearchPage extends Component {
   }
 
   populateArticlesResultTable (data) {
-    console.log(data)
-    const averageEmoBreakdown = data.average_emo_breakdown
-    const emoBreakdownResults = data.emo_breakdown_results
-    const happiestArticle = data.happiest_article
-    const mostAngryArticle = data.most_angry_article
-    const mostDisgustedArticle = data.most_disgusted_article
-    const mostFearfulArticle = data.most_fearful_article
-    const mostNeutralArticle = data.most_neutral_article
-    const mostSurprisedArticle = data.most_surprised_article
-    const sadestArticle = data.sadest_article
-
     const searchArticlesResultTableData = []
 
-    const happiestArticleData = {
-      article_category: 'Happiest Article',
-      title: happiestArticle.title,
-      description: happiestArticle.description,
-      publisher: happiestArticle.publisher,
-      published_date: happiestArticle.published_date,
-      emotional_engagement: happiestArticle.emo_breakdown
-    }
+    const articlesResultsDict = ArticlesResultTableDataWrangler(data)
 
-    searchArticlesResultTableData.push(happiestArticleData)
+    searchArticlesResultTableData.push(
+      articlesResultsDict.Happiest,
+      articlesResultsDict.Angriest,
+      articlesResultsDict.Disgusted,
+      articlesResultsDict.Fearful,
+      articlesResultsDict.Neutral,
+      articlesResultsDict.Sadest,
+      articlesResultsDict.Surprised
+    )
 
-    this.setState({ searchArticlesResultTableData: searchArticlesResultTableData })
+    this.setState({ searchArticlesResultTableData })
   }
 
   render () {
@@ -83,7 +74,7 @@ class EmotionalSearchPage extends Component {
       return (
         <View style={styles.container}>
           <View style={styles.header}>
-            <Text style={styles.title}>Emotional Machines</Text>
+            <Text style={styles.title}>Emotional Machines (Beta - Please Use on Desktop Browser)</Text>
           </View>
           <View class="form-group form-row">
             <View class="col-10">
@@ -104,9 +95,14 @@ class EmotionalSearchPage extends Component {
               <TouchableOpacity style={styles.searchBtn} onPress={this.handleSubmit}>
                 <Text style={styles.text}>SEARCH</Text>
               </TouchableOpacity>
-              <SearchArticlesResultTable tableData={this.state.searchArticlesResultTableData} />
             </View>
           </View>
+          <br></br>
+          <Text style={styles.text}>
+            Results One Week Prior and Up to Selected Date
+          </Text>
+          <br></br>
+          <SearchArticlesResultTable tableData={this.state.searchArticlesResultTableData} />
         </View>
       )
     }
