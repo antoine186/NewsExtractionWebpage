@@ -16,6 +16,8 @@
     "expo": "^48.0.6",
     "expo-status-bar": "~1.4.4",
     "js-cookie": "^3.0.1",
+    "jsonpickle": "^1.1.2",
+    "node-pickle": "^0.0.2",
     "react": "18.2.0",
     "react-dom": "^18.2.0",
     "react-native": "0.71.3",
@@ -23,7 +25,8 @@
     "react-redux": "^8.0.5",
     "react-router-dom": "^6.9.0",
     "redux": "^4.2.1",
-    "redux-persist": "^6.0.0"
+    "redux-persist": "^6.0.0",
+    "unpickle": "^0.2.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
