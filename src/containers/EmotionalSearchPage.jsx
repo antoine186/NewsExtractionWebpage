@@ -7,19 +7,21 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { api, searchUrl } from '../utils/backend_configuration/BackendConfig'
 import DateFormatter from '../utils/DateFormatter'
+import SearchArticlesResultTable from '../components/molecules/SearchArticlesResultTable'
 
-function Link(props) {
+function Link (props) {
   return <Text {...props} accessibilityRole="link" style={StyleSheet.compose(styles.link, props.style)} />
 }
 
 class EmotionalSearchPage extends Component {
-  constructor(props) {
+  constructor (props) {
     super(props)
     this.state = {
       searchInput: '',
       dateInput: this.props.minDate,
       userSessionValidated: this.props.userSession.validated,
-      minDate: this.props.minDate
+      minDate: this.props.minDate,
+      searchArticlesResultTableData: []
     }
   }
 
@@ -35,6 +37,7 @@ class EmotionalSearchPage extends Component {
     ).then(response => {
       if (response.data) {
         console.log('Search returned something!')
+        this.populateArticlesResultTable(response.data)
       }
     }
     )
@@ -43,6 +46,34 @@ class EmotionalSearchPage extends Component {
   onChange (event) {
     const selectedDate = new Date(event.target.value)
     this.setState({ dateInput: DateFormatter(selectedDate) })
+  }
+
+  populateArticlesResultTable (data) {
+    console.log(data)
+    const averageEmoBreakdown = data.average_emo_breakdown
+    const emoBreakdownResults = data.emo_breakdown_results
+    const happiestArticle = data.happiest_article
+    const mostAngryArticle = data.most_angry_article
+    const mostDisgustedArticle = data.most_disgusted_article
+    const mostFearfulArticle = data.most_fearful_article
+    const mostNeutralArticle = data.most_neutral_article
+    const mostSurprisedArticle = data.most_surprised_article
+    const sadestArticle = data.sadest_article
+
+    const searchArticlesResultTableData = []
+
+    const happiestArticleData = {
+      article_category: 'Happiest Article',
+      title: happiestArticle.title,
+      description: happiestArticle.description,
+      publisher: happiestArticle.publisher,
+      published_date: happiestArticle.published_date,
+      emotional_engagement: happiestArticle.emo_breakdown
+    }
+
+    searchArticlesResultTableData.push(happiestArticleData)
+
+    this.setState({ searchArticlesResultTableData: searchArticlesResultTableData })
   }
 
   render () {
@@ -65,7 +96,7 @@ class EmotionalSearchPage extends Component {
                 numberOfLines={4}
                 maxLength={40}
                 onChangeText={text => this.setState({ searchInput: text })}
-                placeholder={'Search... (result might take a few seconds)'}
+                placeholder={'Try searching \'ChatGPT\'... (result might take a few minutes)'}
                 style={{ padding: 10, borderWidth: 2, borderColor: '#BC2BEA' }}
               />
               <br></br>
@@ -73,6 +104,7 @@ class EmotionalSearchPage extends Component {
               <TouchableOpacity style={styles.searchBtn} onPress={this.handleSubmit}>
                 <Text style={styles.text}>SEARCH</Text>
               </TouchableOpacity>
+              <SearchArticlesResultTable tableData={this.state.searchArticlesResultTableData} />
             </View>
           </View>
         </View>
