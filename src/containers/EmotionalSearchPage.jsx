@@ -63,7 +63,7 @@ class EmotionalSearchPage extends Component {
     this.setState({ dateInput: DateFormatter(selectedDate) })
   }
 
-  populateOverallEmoResultTable (data) {
+  populateOverallEmoResultTable(data) {
     const searchOverallEmoResultTableData = []
 
     const overallEmoResultDict = {
@@ -76,7 +76,7 @@ class EmotionalSearchPage extends Component {
     this.setState({ searchOverallEmoResultTableData })
   }
 
-  populateArticlesResultTable (data) {
+  populateArticlesResultTable(data) {
     const searchArticlesResultTableData = []
 
     const articlesResultsDict = ArticlesResultTableDataWrangler(data)
@@ -126,6 +126,20 @@ class EmotionalSearchPage extends Component {
               }
             </View>
           </View>
+          {!this.state.searchingInitiated &&
+            <View>
+              <br></br>
+              <br></br>
+              <Text style={styles.text}>
+                <strong>Upcoming Features! Stay Posted:</strong>
+                <ul>
+                  <li>Tags: Each customer can tag up to 5 topics. Emotional engagement will be reported back to them daily</li>
+                  <li>Increased metadata regarding the most emotionally engaged articles such as how long, what kinds of keywords used and etc...</li>
+                  <li>Emotional concepts driving the emotional engagement. For instance, what kind of subtopics is consistently brought up in angry articles?</li>
+                </ul>
+              </Text>
+            </View>
+          }
           <br></br>
           {this.state.searchingInitiated && !this.state.anyResponseFromServer &&
             <View>
