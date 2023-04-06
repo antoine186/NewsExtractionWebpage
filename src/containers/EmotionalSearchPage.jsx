@@ -10,6 +10,8 @@ import DateFormatter from '../utils/DateFormatter'
 import SearchArticlesResultTable from '../components/molecules/SearchArticlesResultTable'
 import ArticlesResultTableDataWrangler from './search_helper_functions/ArticlesResultTableDataWrangler'
 import ClipLoader from 'react-spinners/ClipLoader'
+import SearchOverallEmoResultTable from '../components/molecules/SearchOverallEmoResultTable'
+import EmoEngagementStringFormatter from './search_helper_functions/EmoEngagementStringFormatter'
 
 function Link(props) {
   return <Text {...props} accessibilityRole="link" style={StyleSheet.compose(styles.link, props.style)} />
@@ -23,6 +25,7 @@ class EmotionalSearchPage extends Component {
       dateInput: this.props.defaultDate,
       userSessionValidated: this.props.userSession.validated,
       minDate: this.props.minDate,
+      searchOverallEmoResultTableData: [],
       searchArticlesResultTableData: [],
       noResultsToReturn: false,
       searchingInitiated: false,
@@ -46,6 +49,7 @@ class EmotionalSearchPage extends Component {
 
       if (response.data !== 'Error') {
         console.log('Search returned something!')
+        this.populateOverallEmoResultTable(response.data)
         this.populateArticlesResultTable(response.data)
       } else {
         this.setState({ noResultsToReturn: true })
@@ -59,7 +63,20 @@ class EmotionalSearchPage extends Component {
     this.setState({ dateInput: DateFormatter(selectedDate) })
   }
 
-  populateArticlesResultTable(data) {
+  populateOverallEmoResultTable (data) {
+    const searchOverallEmoResultTableData = []
+
+    const overallEmoResultDict = {
+      overall_emo: 'Overall Emotional Engagement with Search Topic Over All Articles Found!',
+      emotional_engagement: EmoEngagementStringFormatter(data.average_emo_breakdown)
+    }
+
+    searchOverallEmoResultTableData.push(overallEmoResultDict)
+
+    this.setState({ searchOverallEmoResultTableData })
+  }
+
+  populateArticlesResultTable (data) {
     const searchArticlesResultTableData = []
 
     const articlesResultsDict = ArticlesResultTableDataWrangler(data)
@@ -111,11 +128,21 @@ class EmotionalSearchPage extends Component {
           </View>
           <br></br>
           {this.state.searchingInitiated && !this.state.anyResponseFromServer &&
-            <ClipLoader
-              size={150}
-              aria-label="Loading Spinner"
-              data-testid="loader"
-            />
+            <View>
+              <br></br>
+              <br></br>
+              <Text style={styles.text}>
+                Give Me a Minute or Two...
+              </Text>
+              <br></br>
+              <br></br>
+              <ClipLoader
+                color={'#e75fa6'}
+                size={200}
+                aria-label="Loading Spinner"
+                data-testid="loader"
+              />
+            </View>
           }
 
           {this.state.searchingInitiated && !this.state.noResultsToReturn && this.state.anyResponseFromServer &&
@@ -129,6 +156,7 @@ class EmotionalSearchPage extends Component {
               No results found! Maybe the date is too recent... Please refresh page to initiate another search.
             </Text>
           }
+          <SearchOverallEmoResultTable tableData={this.state.searchOverallEmoResultTableData} />
           <SearchArticlesResultTable tableData={this.state.searchArticlesResultTableData} />
         </View>
       )
