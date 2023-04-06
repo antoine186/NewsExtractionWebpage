@@ -9,6 +9,7 @@ import { api, searchUrl } from '../utils/backend_configuration/BackendConfig'
 import DateFormatter from '../utils/DateFormatter'
 import SearchArticlesResultTable from '../components/molecules/SearchArticlesResultTable'
 import ArticlesResultTableDataWrangler from './search_helper_functions/ArticlesResultTableDataWrangler'
+import ClipLoader from 'react-spinners/ClipLoader'
 
 function Link(props) {
   return <Text {...props} accessibilityRole="link" style={StyleSheet.compose(styles.link, props.style)} />
@@ -19,12 +20,13 @@ class EmotionalSearchPage extends Component {
     super(props)
     this.state = {
       searchInput: '',
-      dateInput: this.props.minDate,
+      dateInput: this.props.defaultDate,
       userSessionValidated: this.props.userSession.validated,
       minDate: this.props.minDate,
       searchArticlesResultTableData: [],
       noResultsToReturn: false,
-      searchingInitiated: false
+      searchingInitiated: false,
+      anyResponseFromServer: false
     }
   }
 
@@ -40,6 +42,8 @@ class EmotionalSearchPage extends Component {
       withCredentials: true
     }
     ).then(response => {
+      this.setState({ anyResponseFromServer: true })
+
       if (response.data !== 'Error') {
         console.log('Search returned something!')
         this.populateArticlesResultTable(response.data)
@@ -106,7 +110,15 @@ class EmotionalSearchPage extends Component {
             </View>
           </View>
           <br></br>
-          {this.state.searchingInitiated && !this.state.noResultsToReturn &&
+          {this.state.searchingInitiated && !this.state.anyResponseFromServer &&
+            <ClipLoader
+              size={150}
+              aria-label="Loading Spinner"
+              data-testid="loader"
+            />
+          }
+
+          {this.state.searchingInitiated && !this.state.noResultsToReturn && this.state.anyResponseFromServer &&
             <Text style={styles.text}>
               Results One Week Prior and Up to Selected Date
             </Text>
@@ -114,7 +126,7 @@ class EmotionalSearchPage extends Component {
           <br></br>
           {this.state.noResultsToReturn &&
             <Text style={styles.text}>
-              No results found! Please refresh page to initiate another search.
+              No results found! Maybe the date is too recent... Please refresh page to initiate another search.
             </Text>
           }
           <SearchArticlesResultTable tableData={this.state.searchArticlesResultTableData} />
@@ -124,12 +136,18 @@ class EmotionalSearchPage extends Component {
   }
 }
 
+const relevantDate = new Date()
+relevantDate.setDate(relevantDate.getDate() - 1)
+const yesterday = DateFormatter(relevantDate)
+
 EmotionalSearchPage.propTypes = {
-  minDate: PropTypes.string
+  minDate: PropTypes.string,
+  defaultDate: PropTypes.string
 }
 
 EmotionalSearchPage.defaultProps = {
-  minDate: '2006-01-01'
+  minDate: '2006-01-01',
+  defaultDate: yesterday
 }
 
 const mapStateToProps = state => {
