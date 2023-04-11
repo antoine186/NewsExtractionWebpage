@@ -1,5 +1,5 @@
 import React from 'react'
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { HashRouter, Route, Routes } from 'react-router-dom'
 import EmotionalSearchPage from '../containers/EmotionalSearchPage'
 import Login from '../containers/Login'
 import { registerRootComponent } from 'expo'
@@ -12,13 +12,13 @@ function App () {
         <Provider store={store}>
             <PersistGate loading={null} persistor={persistor}>
                 <React.StrictMode>
-                    <BrowserRouter>
+                    <HashRouter>
                         <Routes>
                             <Route path="/" element={<EmotionalSearchPage />} />
                             <Route index element={<EmotionalSearchPage />} />
                             <Route path="login" element={<Login />} />
                         </Routes>
-                    </BrowserRouter>
+                    </HashRouter>
                 </React.StrictMode>
             </PersistGate>
         </Provider>
