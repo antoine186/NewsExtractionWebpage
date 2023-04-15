@@ -8390,6 +8390,11 @@ react-native-gradle-plugin@^0.71.15:
   resolved "https://registry.npmjs.org/react-native-gradle-plugin/-/react-native-gradle-plugin-0.71.16.tgz"
   integrity sha512-H2BjG2zk7B7Wii9sXvd9qhCVRQYDAHSWdMw9tscmZBqSP62DkIWEQSk4/B2GhQ4aK9ydVXgtqR6tBeg3yy8TSA==
 
+react-native-viewport-units@^0.0.5:
+  version "0.0.5"
+  resolved "https://registry.npmjs.org/react-native-viewport-units/-/react-native-viewport-units-0.0.5.tgz"
+  integrity sha512-0Z4vvZsGciXusmyMQImfm1fK6je49lwfGIze5UoG/TRWGXXCEwRAZAXvDecHTFKfhzF9YXfalawNsLfN3FsgYg==
+
 react-native-web@^0.18.12:
   version "0.18.12"
   resolved "https://registry.npmjs.org/react-native-web/-/react-native-web-0.18.12.tgz"
@@ -8403,7 +8408,7 @@ react-native-web@^0.18.12:
     postcss-value-parser "^4.2.0"
     styleq "^0.1.2"
 
-"react-native@^0.0.0-0 || 0.60 - 0.72 || 1000.0.0", react-native@>=0.59, react-native@0.71.3:
+"react-native@^0.0.0-0 || 0.60 - 0.72 || 1000.0.0", "react-native@>= 0.4.4 < 1.0", react-native@>=0.59, react-native@0.71.3:
   version "0.71.3"
   resolved "https://registry.npmjs.org/react-native/-/react-native-0.71.3.tgz"
   integrity sha512-RYJXCcQGa4NTfKiPgl92eRDUuQ6JGDnHqFEzRwJSqEx9lWvlvRRIebstJfurzPDKLQWQrvITR7aI7e09E25mLw==

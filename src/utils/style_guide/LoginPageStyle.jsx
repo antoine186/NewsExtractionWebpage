@@ -1,4 +1,5 @@
 import { StyleSheet, Dimensions } from 'react-native'
+let {vw, vh, vmin, vmax} = require('react-native-viewport-units')
 
 const ScreenHeight = Dimensions.get('window').height
 const styles = StyleSheet.create({
@@ -11,13 +12,13 @@ const styles = StyleSheet.create({
   },
   image: {
     marginBottom: 10,
-    height: '13%',
-    width: '7%'
+    height: 8.5 * vw,
+    width: 9 * vw
   },
   inputView: {
     backgroundColor: '#FFC0CB',
     borderRadius: 30,
-    width: '8%',
+    width: 9 * vw,
     height: 45,
     marginBottom: 20,
     alignItems: 'center'
@@ -37,9 +38,9 @@ const styles = StyleSheet.create({
     marginBottom: 50
   },
   loginBtn: {
-    width: '8%',
+    width: 9 * vw,
     borderRadius: 25,
-    height: 50,
+    height: 3 * vw,
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: 40,

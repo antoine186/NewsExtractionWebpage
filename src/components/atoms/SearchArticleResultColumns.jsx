@@ -1,3 +1,5 @@
+import React from "react"
+import { Link } from 'react-router'
 
 export const columns = [
   {
@@ -40,6 +42,8 @@ export const columns = [
     title: 'URL',
     dataIndex: 'url',
     key: 'url',
-    width: 300
-  },
+    width: 300,
+    // Cell: ({ row }) => (<Link to={{ pathname: `/foo/${row.id}` }}>{row.name}</Link>)
+    Cell: ({ row }) => (<a href="#">Delete</a>)
+  }
 ]

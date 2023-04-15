@@ -18,7 +18,7 @@ function Link(props) {
 }
 
 class EmotionalSearchPage extends Component {
-  constructor(props) {
+  constructor (props) {
     super(props)
     this.state = {
       searchInput: '',
@@ -58,12 +58,12 @@ class EmotionalSearchPage extends Component {
     )
   }
 
-  onChange(event) {
+  onChange (event) {
     const selectedDate = new Date(event.target.value)
     this.setState({ dateInput: DateFormatter(selectedDate) })
   }
 
-  populateOverallEmoResultTable(data) {
+  populateOverallEmoResultTable (data) {
     const searchOverallEmoResultTableData = []
 
     const overallEmoResultDict = {
@@ -76,7 +76,7 @@ class EmotionalSearchPage extends Component {
     this.setState({ searchOverallEmoResultTableData })
   }
 
-  populateArticlesResultTable(data) {
+  populateArticlesResultTable (data) {
     const searchArticlesResultTableData = []
 
     const articlesResultsDict = ArticlesResultTableDataWrangler(data)
@@ -94,84 +94,90 @@ class EmotionalSearchPage extends Component {
     this.setState({ searchArticlesResultTableData })
   }
 
-  render() {
+  render () {
     if (!this.state.userSessionValidated) {
-      return <Navigate to='/login' />
+      return (
+        <View>
+          <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0" />
+          <Navigate to='/login' />
+        </View>
+      )
     } else {
       return (
         <View style={styles.container}>
-          <View style={styles.header}>
-            <Text style={styles.title}>Emotional Machines (Beta - Please Use on Desktop Browser)</Text>
-          </View>
-          <View class="form-group form-row">
-            <View class="col-10">
-              <Text style={styles.text}>
-                Search Topic Emotions
-              </Text>
-              <TextInput
-                editable
-                multiline
-                numberOfLines={4}
-                maxLength={40}
-                onChangeText={text => this.setState({ searchInput: text })}
-                placeholder={'Try searching \'ChatGPT\'... (result might take a few minutes)'}
-                style={{ padding: 10, borderWidth: 2, borderColor: '#BC2BEA' }}
-              />
-              <br></br>
-              <CappedDatePicker minDate={this.state.minDate} onChange={this.onChange.bind(this)} />
-              {!this.state.searchingInitiated &&
-                <TouchableOpacity style={styles.searchBtn} onPress={this.handleSubmit}>
-                  <Text style={styles.text}>SEARCH</Text>
-                </TouchableOpacity>
-              }
+          <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0" />
+            <View style={styles.header}>
+              <Text style={styles.title}>Emotional Machines (Beta - Please Use on Desktop Browser)</Text>
             </View>
-          </View>
-          {!this.state.searchingInitiated &&
-            <View>
-              <br></br>
-              <br></br>
-              <Text style={styles.text}>
-                <strong>Upcoming Features! Stay Posted:</strong>
-                <ul>
-                  <li>Tags: Each customer can tag up to 5 topics. Emotional engagement will be reported back to them daily</li>
-                  <li>Increased metadata regarding the most emotionally engaged articles such as how long, what kinds of keywords used and etc...</li>
-                  <li>Emotional concepts driving the emotional engagement. For instance, what kind of subtopics is consistently brought up in angry articles?</li>
-                </ul>
-              </Text>
+            <View class="form-group form-row">
+              <View class="col-10">
+                <Text style={styles.text}>
+                  Search Topic Emotions
+                </Text>
+                <TextInput
+                  editable
+                  multiline
+                  numberOfLines={4}
+                  maxLength={40}
+                  onChangeText={text => this.setState({ searchInput: text })}
+                  placeholder={'Try searching \'ChatGPT\'... (result might take a few minutes)'}
+                  style={{ padding: 10, borderWidth: 2, borderColor: '#BC2BEA' }}
+                />
+                <br></br>
+                <CappedDatePicker minDate={this.state.minDate} onChange={this.onChange.bind(this)} />
+                {!this.state.searchingInitiated &&
+                  <TouchableOpacity style={styles.searchBtn} onPress={this.handleSubmit}>
+                    <Text style={styles.text}>SEARCH</Text>
+                  </TouchableOpacity>
+                }
+              </View>
             </View>
-          }
-          <br></br>
-          {this.state.searchingInitiated && !this.state.anyResponseFromServer &&
-            <View>
-              <br></br>
-              <br></br>
-              <Text style={styles.text}>
-                Give Me a Minute or Two...
-              </Text>
-              <br></br>
-              <br></br>
-              <ClipLoader
-                color={'#e75fa6'}
-                size={200}
-                aria-label="Loading Spinner"
-                data-testid="loader"
-              />
-            </View>
-          }
+            {!this.state.searchingInitiated &&
+              <View>
+                <br></br>
+                <br></br>
+                <Text style={styles.text}>
+                  <strong>Upcoming Features! Stay Posted:</strong>
+                  <ul>
+                    <li>Tags: Each customer can tag up to 5 topics. Emotional engagement will be reported back to them daily</li>
+                    <li>Increased metadata regarding the most emotionally engaged articles such as how long, what kinds of keywords used and etc...</li>
+                    <li>Emotional concepts driving the emotional engagement. For instance, what kind of subtopics is consistently brought up in angry articles?</li>
+                  </ul>
+                </Text>
+              </View>
+            }
+            <br></br>
+            {this.state.searchingInitiated && !this.state.anyResponseFromServer &&
+              <View>
+                <br></br>
+                <br></br>
+                <Text style={styles.text}>
+                  Give Me a Minute or Two...
+                </Text>
+                <br></br>
+                <br></br>
+                <ClipLoader
+                  color={'#e75fa6'}
+                  size={200}
+                  aria-label="Loading Spinner"
+                  data-testid="loader"
+                />
+              </View>
+            }
 
-          {this.state.searchingInitiated && !this.state.noResultsToReturn && this.state.anyResponseFromServer &&
-            <Text style={styles.text}>
-              Results One Week Prior and Up to Selected Date
-            </Text>
-          }
-          <br></br>
-          {this.state.noResultsToReturn &&
-            <Text style={styles.text}>
-              No results found! Maybe the date is too recent... Please refresh page to initiate another search.
-            </Text>
-          }
-          <SearchOverallEmoResultTable tableData={this.state.searchOverallEmoResultTableData} />
-          <SearchArticlesResultTable tableData={this.state.searchArticlesResultTableData} />
+            {this.state.searchingInitiated && !this.state.noResultsToReturn && this.state.anyResponseFromServer &&
+              <Text style={styles.text}>
+                Results One Week Prior and Up to Selected Date
+              </Text>
+            }
+            <br></br>
+            {this.state.noResultsToReturn &&
+              <Text style={styles.text}>
+                No results found! Maybe the date is too recent... Please refresh page to initiate another search.
+              </Text>
+            }
+            <SearchOverallEmoResultTable tableData={this.state.searchOverallEmoResultTableData} />
+            <SearchArticlesResultTable tableData={this.state.searchArticlesResultTableData} />
         </View>
       )
     }

@@ -1,4 +1,5 @@
 import { StyleSheet, Dimensions } from 'react-native'
+// let {vw, vh, vmin, vmax} = require('react-native-viewport-units')
 
 const ScreenHeight = Dimensions.get('window').height
 const styles = StyleSheet.create({
@@ -7,7 +8,8 @@ const styles = StyleSheet.create({
     height: ScreenHeight,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#F5FCFF'
+    backgroundColor: '#F5FCFF',
+    width: Dimensions.get('window').width
   },
   header: {
     padding: 20
