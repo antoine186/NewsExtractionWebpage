@@ -1,5 +1,5 @@
 import { StyleSheet, Dimensions } from 'react-native'
-// let {vw, vh, vmin, vmax} = require('react-native-viewport-units')
+let {vw, vh, vmin, vmax} = require('react-native-viewport-units')
 
 const ScreenHeight = Dimensions.get('window').height
 const styles = StyleSheet.create({
@@ -16,14 +16,14 @@ const styles = StyleSheet.create({
   },
   title: {
     fontWeight: 'bold',
-    fontSize: '1.5rem',
-    marginVertical: '1em',
+    fontSize: 1.2 * vw,
+    marginVertical: 1.2 * vw,
     textAlign: 'center'
   },
   text: {
-    lineHeight: '1.5em',
-    fontSize: '1.125rem',
-    marginVertical: '1em',
+    lineHeight: 1 * vw,
+    fontSize: 0.8 * vw,
+    marginVertical: 1 * vw,
     textAlign: 'center'
   },
   link: {
@@ -33,9 +33,9 @@ const styles = StyleSheet.create({
     fontFamily: 'monospace, monospace'
   },
   searchBtn: {
-    width: '100%',
+    width: 8 * vw,
     borderRadius: 25,
-    height: 50,
+    height: 2 * vw,
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: 40,
