@@ -10,10 +10,23 @@ import { useNavigate, Navigate } from 'react-router-dom'
 function Login () {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
+  const [passIncorrect, setPassIncorrect] = useState(false)
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
   const userSessionValidated = useSelector(state => state.userSession.validated)
+
+  const loginButtonRef = React.useRef()
+
+  window.addEventListener('keypress', function (event) {
+    if (event.key === 'Enter') {
+      event.preventDefault()
+
+      if (loginButtonRef.current !== undefined) {
+        loginButtonRef.current.click()
+      }
+    }
+  })
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -28,6 +41,8 @@ function Login () {
       if (response.data) {
         dispatch(validateUserSession())
         navigate('/')
+      } else {
+        setPassIncorrect(true)
       }
     }
     )
@@ -58,10 +73,18 @@ function Login () {
             onChangeText={(password) => setPassword(password)}
           />
         </View>
+        {passIncorrect &&
+          <View>
+            <Text style={styles.text}>
+              Incorrect credentials
+            </Text>
+            <br></br>
+          </View>
+        }
         <TouchableOpacity>
           <Text style={styles.forgot_button}>Forgot Password?</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.loginBtn} onPress={handleSubmit}>
+        <TouchableOpacity style={styles.loginBtn} onPress={handleSubmit} ref={loginButtonRef}>
           <Text style={styles.loginText}>LOGIN</Text>
         </TouchableOpacity>
       </View>

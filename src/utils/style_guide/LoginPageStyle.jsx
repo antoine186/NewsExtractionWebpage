@@ -45,6 +45,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginTop: 40,
     backgroundColor: '#FF1493'
+  },
+  text: {
+    color: '#DC143C'
   }
 })
 
