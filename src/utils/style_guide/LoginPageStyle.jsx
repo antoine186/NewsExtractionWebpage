@@ -12,13 +12,13 @@ const styles = StyleSheet.create({
   },
   image: {
     marginBottom: 10,
-    height: 8.5 * vw,
-    width: 9 * vw
+    height: 6.5 * vw,
+    width: 7 * vw
   },
   inputView: {
     backgroundColor: '#FFC0CB',
     borderRadius: 30,
-    width: 9 * vw,
+    width: 8 * vw,
     height: 45,
     marginBottom: 20,
     alignItems: 'center'
@@ -38,9 +38,9 @@ const styles = StyleSheet.create({
     marginBottom: 50
   },
   loginBtn: {
-    width: 9 * vw,
+    width: 8 * vw,
     borderRadius: 25,
-    height: 3 * vw,
+    height: 2 * vw,
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: 40,
