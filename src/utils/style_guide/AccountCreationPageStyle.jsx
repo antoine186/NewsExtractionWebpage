@@ -1,5 +1,14 @@
 import { StyleSheet, Dimensions } from 'react-native'
-let {vw, vh, vmin, vmax} = require('react-native-viewport-units')
+const { vw, vh, vmin, vmax } = require('react-native-viewport-units')
+
+const inputViewBaseStyle = {
+  backgroundColor: '#FFC0CB',
+  borderRadius: 30,
+  width: 8 * vw,
+  height: 1.8 * vw,
+  marginBottom: 0.7 * vw,
+  alignItems: 'center'
+}
 
 const ScreenHeight = Dimensions.get('window').height
 const styles = StyleSheet.create({
@@ -16,12 +25,7 @@ const styles = StyleSheet.create({
     width: 7 * vw
   },
   inputView: {
-    backgroundColor: '#FFC0CB',
-    borderRadius: 30,
-    width: 8 * vw,
-    height: 1.8 * vw,
-    marginBottom: 0.7 * vw,
-    alignItems: 'center'
+    ...inputViewBaseStyle
   },
   textInput: {
     height: 10 * vw,
@@ -49,6 +53,17 @@ const styles = StyleSheet.create({
   text: {
     color: '#AD3978',
     fontSize: 0.7 * vw
+  },
+  titleText: {
+    color: '#AD3978',
+    fontSize: 1.2 * vw
+  },
+  rowContainer: {
+    flexDirection: 'row'
+  },
+  dualRowInputViewLeft: {
+    ...inputViewBaseStyle,
+    marginRight: 1.5 * vw
   }
 })
 
