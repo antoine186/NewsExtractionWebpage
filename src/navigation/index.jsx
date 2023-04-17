@@ -6,6 +6,7 @@ import { registerRootComponent } from 'expo'
 import { store, persistor } from '../store/Store'
 import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react'
+import AccountCreationPage from '../containers/AccountCreationPage'
 
 function App () {
   return (
@@ -17,6 +18,7 @@ function App () {
                             <Route path="/" element={<EmotionalSearchPage />} />
                             <Route index element={<EmotionalSearchPage />} />
                             <Route path="login" element={<Login />} />
+                            <Route path="account-create" element={<AccountCreationPage />}/>
                         </Routes>
                     </HashRouter>
                 </React.StrictMode>

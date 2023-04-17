@@ -47,7 +47,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#FF1493'
   },
   text: {
-    color: '#DC143C'
+    color: '#AD3978',
+    fontSize: 0.7 * vw
   }
 })
 

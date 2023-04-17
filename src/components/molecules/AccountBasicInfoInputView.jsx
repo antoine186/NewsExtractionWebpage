@@ -1,40 +1,104 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { TouchableOpacity, Text, View, Image, TextInput } from 'react-native'
+import styles from '../../utils/style_guide/AccountCreationPageStyle'
+import PhoneInput from 'react-phone-number-input'
+import 'react-phone-number-input/style.css'
+import CappedDatePicker from '../atoms/CappedDatePicker'
 
 class AccountBasicInfoInputView extends React.Component {
   constructor (props) {
     super(props)
 
     this.state = {
-      minDate: this.props.minDate,
-      maxDate: this.props.maxDate,
-      defaultDate: this.props.defaultDate
+      firstName: this.props.firstName,
+      lastName: this.props.lastName,
+      emailAddress: this.props.emailAddress,
+      password: this.props.password,
+      dateBirth: this.props.dateBirth,
+      telephoneNumber: this.props.telephoneNumber
     }
   }
 
-  componentDidUpdate (prevProps, prevState) {
-    if (prevProps.minDate !== this.props.minDate) {
-      this.setState({ minDate: this.props.minDate })
-    }
+  xyz () {
+
   }
 
   render () {
     return (
-        <input type="date" id="date" min={this.state.minDate} max={this.state.maxDate} onChange={this.props.onChange} defaultValue={this.props.defaultDate}/>
+        <View style={styles.container}>
+            <View style={styles.inputView}>
+                <TextInput
+                    style={styles.textInput}
+                    placeholder="First Name"
+                    placeholderTextColor="#003f5c"
+                    onChangeText={(password) => xyz(password)}
+                />
+            </View>
+            <View style={styles.inputView}>
+                <TextInput
+                    style={styles.textInput}
+                    placeholder="Last Name"
+                    placeholderTextColor="#003f5c"
+                    onChangeText={(password) => xyz(password)}
+                />
+            </View>
+            <Text style={styles.text}>
+                Date of birth
+            </Text>
+            <br></br>
+            <CappedDatePicker minDate={'1900-01-01'}/>
+            <br></br>
+            <View style={styles.inputView}>
+                <TextInput
+                    style={styles.textInput}
+                    placeholder="Email Address"
+                    placeholderTextColor="#003f5c"
+                    onChangeText={(password) => xyz(password)}
+                />
+            </View>
+            <PhoneInput
+               placeholder="Telephone number"
+               defaultCountry="US"
+               value={this.state.telephoneNumber}
+               onChange={telephoneNumber => this.setState({ telephoneNumber })}
+               inputComponent={TextInput}
+               />
+            <br></br>
+            <View style={styles.inputView}>
+                <TextInput
+                    style={styles.textInput}
+                    placeholder="Password"
+                    placeholderTextColor="#003f5c"
+                    secureTextEntry={true}
+                    onChangeText={(password) => xyz(password)}
+                />
+            </View>
+            <View style={styles.inputView}>
+                <TextInput
+                    style={styles.textInput}
+                    placeholder="Confirm Password"
+                    placeholderTextColor="#003f5c"
+                    secureTextEntry={true}
+                    onChangeText={(password) => xyz(password)}
+                />
+            </View>
+        </View>
     )
   }
 }
 
 AccountBasicInfoInputView.propTypes = {
-  minDate: PropTypes.string.isRequired,
-  maxDate: PropTypes.string.isRequired,
-  onChange: PropTypes.func,
-  defaultDate: PropTypes.string
+  firstName: PropTypes.string,
+  lastName: PropTypes.string,
+  emailAddress: PropTypes.string,
+  password: PropTypes.string,
+  dateBirth: PropTypes.string,
+  telephoneNumber: PropTypes.string
 }
 
 AccountBasicInfoInputView.defaultProps = {
-  maxDate: yesterday,
-  defaultDate: yesterday
+  telephoneNumber: ''
 }
 
 export default AccountBasicInfoInputView

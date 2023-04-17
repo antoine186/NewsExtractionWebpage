@@ -48,6 +48,10 @@ function Login () {
     )
   }
 
+  function accountCreate () {
+    navigate('/account-create')
+  }
+
   if (userSessionValidated) {
     return <Navigate to='/' />
   } else {
@@ -85,7 +89,9 @@ function Login () {
           <Text style={styles.textButton}>Forgot Password?</Text>
         </TouchableOpacity>
         <TouchableOpacity>
-          <Text style={styles.textButton}>{"Don't have an account? Create new account here"}</Text>
+          <Text style={styles.textButton} onPress={accountCreate}>
+            {"Don't have an account? Create an account here"}
+          </Text>
         </TouchableOpacity>
         <br></br>
         <TouchableOpacity style={styles.loginBtn} onPress={handleSubmit} ref={loginButtonRef}>
