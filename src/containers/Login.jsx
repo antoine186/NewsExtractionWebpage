@@ -54,11 +54,11 @@ function Login () {
     return (
       <View style={styles.container}>
         <Image style={styles.image} source={require('../assets/images/EMOfficialLogo.png')} />
-        <Text style={styles.company_name}>Emotional Machines</Text>
+        <Text style={styles.companyName}>Emotional Machines</Text>
         <StatusBar style="auto" />
         <View style={styles.inputView}>
           <TextInput
-            style={styles.TextInput}
+            style={styles.textInput}
             placeholder="Email"
             placeholderTextColor="#003f5c"
             onChangeText={(email) => setUsername(email)}
@@ -66,7 +66,7 @@ function Login () {
         </View>
         <View style={styles.inputView}>
           <TextInput
-            style={styles.TextInput}
+            style={styles.textInput}
             placeholder="Password"
             placeholderTextColor="#003f5c"
             secureTextEntry={true}
@@ -82,8 +82,12 @@ function Login () {
           </View>
         }
         <TouchableOpacity>
-          <Text style={styles.forgot_button}>Forgot Password?</Text>
+          <Text style={styles.textButton}>Forgot Password?</Text>
         </TouchableOpacity>
+        <TouchableOpacity>
+          <Text style={styles.textButton}>{"Don't have an account? Create new account here"}</Text>
+        </TouchableOpacity>
+        <br></br>
         <TouchableOpacity style={styles.loginBtn} onPress={handleSubmit} ref={loginButtonRef}>
           <Text style={styles.loginText}>LOGIN</Text>
         </TouchableOpacity>
