@@ -11,7 +11,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
   image: {
-    marginBottom: 10,
+    marginBottom: 0.5 * vw,
     height: 6.5 * vw,
     width: 7 * vw
   },
@@ -19,31 +19,31 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFC0CB',
     borderRadius: 30,
     width: 8 * vw,
-    height: 45,
-    marginBottom: 20,
+    height: 1.8 * vw,
+    marginBottom: 0.7 * vw,
     alignItems: 'center'
   },
-  TextInput: {
-    height: 50,
+  textInput: {
+    height: 10 * vw,
     flex: 1,
-    padding: 10,
-    marginLeft: 20
+    padding: 0.5 * vw,
+    marginLeft: 1 * vw
   },
   textButton: {
-    height: 30,
+    height: 1.5 * vw,
     marginBottom: 0
   },
   companyName: {
-    height: 10,
+    height: 0.5 * vw,
     marginBottom: 50
   },
-  accountCreateBtn: {
+  loginBtn: {
     width: 8 * vw,
     borderRadius: 25,
     height: 2 * vw,
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: 40,
+    marginTop: 2 * vw,
     backgroundColor: '#FF1493'
   },
   text: {

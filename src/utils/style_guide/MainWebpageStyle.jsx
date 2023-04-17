@@ -12,7 +12,7 @@ const styles = StyleSheet.create({
     width: Dimensions.get('window').width
   },
   header: {
-    padding: 20
+    padding: 1 * vw
   },
   title: {
     fontWeight: 'bold',
@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
     height: 2 * vw,
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: 40,
+    marginTop: 2 * vw,
     backgroundColor: '#FF1493'
   }
 })
