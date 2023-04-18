@@ -11,7 +11,7 @@ const inputViewBaseStyle = {
 }
 
 const selectViewBaseStyle = {
-  width: 5 * vw
+  width: 8 * vw
 }
 
 const ScreenHeight = Dimensions.get('window').height
