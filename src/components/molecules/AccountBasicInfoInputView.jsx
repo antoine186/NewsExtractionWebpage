@@ -153,6 +153,7 @@ class AccountBasicInfoInputView extends React.Component {
                             onChange={(value) => {
                               this.countrySelected(value)
                             }}
+                            styles={styles.selectViewHighlight}
                             menuPortalTarget={document.querySelector('body')}
                         />
                     </View>
@@ -165,6 +166,7 @@ class AccountBasicInfoInputView extends React.Component {
                             onChange={(value) => {
                               this.stateSelected(value)
                             }}
+                            styles={styles.selectViewHighlight}
                             menuPortalTarget={document.querySelector('body')}
                         />
                     </View>
@@ -175,8 +177,9 @@ class AccountBasicInfoInputView extends React.Component {
                             label="Cities"
                             options={this.state.cities}
                             onChange={(value) => {
-                            // setValues({ country: value, state: null, city: null }, false)
+                              // setValues({ country: value, state: null, city: null }, false)
                             }}
+                            styles={styles.selectViewHighlight}
                             menuPortalTarget={document.querySelector('body')}
                         />
                     </View>

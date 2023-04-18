@@ -72,6 +72,23 @@ const styles = StyleSheet.create({
   rowSelectViewLeft: {
     ...selectViewBaseStyle,
     marginRight: 1.5 * vw
+  },
+  selectViewHighlight: {
+    control: (provided, state) => ({
+      ...provided,
+      boxShadow: 'none',
+      border: state.isFocused && 'none'
+    }),
+    menu: (provided, state) => ({
+      ...provided,
+      border: 'none',
+      boxShadow: 'none'
+    }),
+    option: (provided, state) => ({
+      ...provided,
+      backgroundColor: state.isFocused && 'lightgray',
+      color: state.isFocused && 'black'
+    })
   }
 })
 
