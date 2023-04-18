@@ -2,13 +2,23 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { TouchableOpacity, Text, View, Image, TextInput } from 'react-native'
 import styles from '../../utils/style_guide/AccountCreationPageStyle'
-import PhoneInput from 'react-phone-number-input'
+import PhoneInput, { isValidPhoneNumber } from 'react-phone-number-input'
 import 'react-phone-number-input/style.css'
 import CappedDatePicker from '../atoms/CappedDatePicker'
+import { Country, State, City } from 'country-state-city'
+import Select from 'react-select'
 
 class AccountBasicInfoInputView extends React.Component {
   constructor (props) {
     super(props)
+
+    const countries = Country.getAllCountries()
+
+    const updatedCountries = countries.map((country) => ({
+      label: country.name,
+      value: country.id,
+      ...country
+    }))
 
     this.state = {
       firstName: this.props.firstName,
@@ -18,8 +28,31 @@ class AccountBasicInfoInputView extends React.Component {
       confirmedPassword: this.props.confirmedPassword,
       dateBirth: this.props.dateBirth,
       minDateOfBirth: '1900-01-01',
-      telephoneNumber: this.props.telephoneNumber
+      telephoneNumber: this.props.telephoneNumber,
+      countries: updatedCountries,
+      selectedCountryCode: '',
+      states: '',
+      cities: ''
     }
+  }
+
+  countrySelected (selectedCountry) {
+    const countryCode = selectedCountry.isoCode
+
+    const updatedStates = State
+      .getStatesOfCountry(countryCode)
+      .map((state) => ({ label: state.name, value: state.id, ...state }))
+
+    this.setState({ states: updatedStates })
+    this.setState({ selectedCountryCode: countryCode })
+  }
+
+  stateSelected (selectedState) {
+    const updatedCities = City
+      .getCitiesOfState(this.state.selectedCountryCode, selectedState.isoCode)
+      .map((city) => ({ label: city.name, value: city.id, ...city }))
+
+    this.setState({ cities: updatedCities })
   }
 
   render () {
@@ -109,6 +142,53 @@ class AccountBasicInfoInputView extends React.Component {
                             onChangeText={confirmedPassword => this.setState({ confirmedPassword })}
                         />
                     </View>
+                </View>
+                <View style={styles.rowContainer}>
+                    <View style={styles.rowSelectViewLeft}>
+                        <Select
+                            id="country"
+                            name="country"
+                            label="Country"
+                            options={this.state.countries}
+                            onChange={(value) => {
+                              this.countrySelected(value)
+                            }}
+                            menuPortalTarget={document.querySelector('body')}
+                        />
+                    </View>
+                    <View style={styles.rowSelectViewLeft}>
+                        <Select
+                            id="state"
+                            name="state"
+                            label="State"
+                            options={this.state.states}
+                            onChange={(value) => {
+                              this.stateSelected(value)
+                            }}
+                            menuPortalTarget={document.querySelector('body')}
+                        />
+                    </View>
+                    <View style={styles.selectView}>
+                        <Select
+                            id="city"
+                            name="city"
+                            label="Cities"
+                            options={this.state.cities}
+                            onChange={(value) => {
+                            // setValues({ country: value, state: null, city: null }, false)
+                            }}
+                            menuPortalTarget={document.querySelector('body')}
+                        />
+                    </View>
+                </View>
+                <br></br>
+                <View style={styles.inputView}>
+                    <TextInput
+                        style={styles.textInput}
+                        placeholder="Zip code"
+                        placeholderTextColor="#003f5c"
+                        onChangeText={confirmedPassword => this.setState({ confirmedPassword })}
+                    />
                 </View>
             </View>
     )

@@ -10,6 +10,10 @@ const inputViewBaseStyle = {
   alignItems: 'center'
 }
 
+const selectViewBaseStyle = {
+  width: 5 * vw
+}
+
 const ScreenHeight = Dimensions.get('window').height
 const styles = StyleSheet.create({
   container: {
@@ -28,10 +32,7 @@ const styles = StyleSheet.create({
     ...inputViewBaseStyle
   },
   textInput: {
-    height: 10 * vw,
-    flex: 1,
-    padding: 0.5 * vw,
-    marginLeft: 1 * vw
+    height: 10 * vw
   },
   textButton: {
     height: 1.5 * vw,
@@ -63,6 +64,13 @@ const styles = StyleSheet.create({
   },
   dualRowInputViewLeft: {
     ...inputViewBaseStyle,
+    marginRight: 1.5 * vw
+  },
+  selectView: {
+    ...selectViewBaseStyle
+  },
+  rowSelectViewLeft: {
+    ...selectViewBaseStyle,
     marginRight: 1.5 * vw
   }
 })
