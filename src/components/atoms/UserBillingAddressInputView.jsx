@@ -20,7 +20,12 @@ class UserBillingAddressInputView extends React.Component {
 
     this.state = {
       countries: updatedCountries,
+      selectedCountryName: '',
       selectedCountryCode: '',
+      selectedStateCode: '',
+      selectedStateName: '',
+      selectedCityCode: '',
+      selectedCityName: '',
       states: '',
       cities: '',
       addressLine1: this.props.addressLine1,
@@ -38,6 +43,7 @@ class UserBillingAddressInputView extends React.Component {
 
     this.setState({ states: updatedStates })
     this.setState({ selectedCountryCode: countryCode })
+    this.setState({ selectedCountryName: selectedCountry.name })
   }
 
   stateSelected (selectedState) {
@@ -46,6 +52,13 @@ class UserBillingAddressInputView extends React.Component {
       .map((city) => ({ label: city.name, value: city.id, ...city }))
 
     this.setState({ cities: updatedCities })
+    this.setState({ selectedStateCode: selectedState.isoCode })
+    this.setState({ selectedStateName: selectedState.name })
+  }
+
+  citySelected (selectedCity) {
+    this.setState({ selectedCityCode: selectedCity.isoCode })
+    this.setState({ selectedCityName: selectedCity.name })
   }
 
   render () {
@@ -113,7 +126,7 @@ class UserBillingAddressInputView extends React.Component {
                         placeholder="City"
                         options={this.state.cities}
                         onChange={(value) => {
-                          // setValues({ country: value, state: null, city: null }, false)
+                          this.citySelected(value)
                         }}
                         styles={styles.selectViewHighlight}
                         menuPortalTarget={document.querySelector('body')}

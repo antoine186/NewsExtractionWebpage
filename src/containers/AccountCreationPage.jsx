@@ -65,8 +65,15 @@ class AccountCreationPage extends React.Component {
     if (!PasswordValidate(this.state.password, this.state.confirmedPassword)) {
       handleSubmitProceed = false
     }
-
-    console.log(handleSubmitProceed)
+    if (!validator.isStrongPassword(this.state.password, {
+      minLength: 8,
+      minLowercase: 1,
+      minUppercase: 1,
+      minNumbers: 1,
+      minSymbols: 1
+    })) {
+      handleSubmitProceed = false
+    }
   }
 
   render () {
