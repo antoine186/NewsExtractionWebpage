@@ -49,13 +49,11 @@ class AccountBasicInfoInputView extends React.Component {
   }
 
   setUserEmail (email) {
-    // Validate email here
     this.setState({ email })
     this.state.userEmailGrabber(email)
   }
 
   setTelephoneNumber (telephoneNumber) {
-    // Validate phone number here
     this.setState({ telephoneNumber })
     this.state.telNumberGrabber(telephoneNumber)
   }
@@ -66,7 +64,6 @@ class AccountBasicInfoInputView extends React.Component {
   }
 
   setConfirmedPassword (password) {
-    // Double check password match here
     this.setState({ password })
     this.state.confirmedPasswordGrabber(password)
   }

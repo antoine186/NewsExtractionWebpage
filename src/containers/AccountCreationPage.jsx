@@ -24,7 +24,6 @@ class AccountCreationPage extends React.Component {
       selectedCountryCode: '',
       selectedStateCode: '',
       selectedStateName: '',
-      selectedCityCode: '',
       selectedCityName: '',
       addressLine1: this.props.addressLine1,
       addressLine2: this.props.addressLine2,
@@ -72,9 +71,8 @@ class AccountCreationPage extends React.Component {
     this.setState({ selectedStateCode })
   }
 
-  selectedCityGrabber (selectedCityName, selectedCityCode) {
+  selectedCityGrabber (selectedCityName) {
     this.setState({ selectedCityName })
-    this.setState({ selectedCityCode })
   }
 
   addressLine1Grabber (addressLine1) {

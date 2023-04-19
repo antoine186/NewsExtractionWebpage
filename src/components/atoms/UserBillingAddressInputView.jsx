@@ -24,7 +24,6 @@ class UserBillingAddressInputView extends React.Component {
       selectedCountryCode: '',
       selectedStateCode: '',
       selectedStateName: '',
-      selectedCityCode: '',
       selectedCityName: '',
       states: '',
       cities: '',
@@ -42,10 +41,12 @@ class UserBillingAddressInputView extends React.Component {
 
   addressLine1Selected (addressLine1) {
     this.setState({ addressLine1 })
+    this.state.addressLine1Grabber(addressLine1)
   }
 
   addressLine2Selected (addressLine2) {
     this.setState({ addressLine2 })
+    this.state.addressLine2Grabber(addressLine2)
   }
 
   countrySelected (selectedCountry) {
@@ -71,14 +72,13 @@ class UserBillingAddressInputView extends React.Component {
     this.setState({ selectedStateCode: selectedState.isoCode })
     this.setState({ selectedStateName: selectedState.name })
 
-    this.state.selectedStateGrabber(selectedState.name, electedState.isoCode)
+    this.state.selectedStateGrabber(selectedState.name, selectedState.isoCode)
   }
 
   citySelected (selectedCity) {
-    this.setState({ selectedCityCode: selectedCity.isoCode })
     this.setState({ selectedCityName: selectedCity.name })
 
-    this.state.selectedCityGrabber(selectedCity.name, selectedCity.isoCode)
+    this.state.selectedCityGrabber(selectedCity.name)
   }
 
   zipCodeSelected (zipCode) {
