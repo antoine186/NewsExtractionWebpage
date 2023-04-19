@@ -10,6 +10,7 @@ import Select from 'react-select'
 import { loadStripe } from '@stripe/stripe-js'
 import { testStripePublicKey } from '../../utils/stripe_configuration/StripeConfig'
 import DateFormatter from '../../utils/DateFormatter'
+import { userInputFieldMaxCharacter } from '../../utils/user_input_config/UserInputConfig'
 
 class AccountBasicInfoInputView extends React.Component {
   constructor (props) {
@@ -81,6 +82,7 @@ class AccountBasicInfoInputView extends React.Component {
                     placeholder="First Name"
                     placeholderTextColor="#003f5c"
                     onChangeText={firstName => this.setState({ firstName })}
+                    maxLength={userInputFieldMaxCharacter}
                 />
             </View>
             <View style={styles.inputView}>
@@ -89,6 +91,7 @@ class AccountBasicInfoInputView extends React.Component {
                     placeholder="Last Name"
                     placeholderTextColor="#003f5c"
                     onChangeText={lastName => this.setState({ lastName })}
+                    maxLength={userInputFieldMaxCharacter}
                 />
             </View>
             <Text style={styles.text}>
@@ -103,6 +106,7 @@ class AccountBasicInfoInputView extends React.Component {
                     placeholder="Email Address"
                     placeholderTextColor="#003f5c"
                     onChangeText={emailAddress => this.setState({ emailAddress })}
+                    maxLength={userInputFieldMaxCharacter}
                 />
             </View>
             <PhoneInput
@@ -120,6 +124,7 @@ class AccountBasicInfoInputView extends React.Component {
                     placeholderTextColor="#003f5c"
                     secureTextEntry={true}
                     onChangeText={password => this.setState({ password })}
+                    maxLength={userInputFieldMaxCharacter}
                 />
             </View>
             <View style={styles.inputView}>
@@ -129,6 +134,7 @@ class AccountBasicInfoInputView extends React.Component {
                     placeholderTextColor="#003f5c"
                     secureTextEntry={true}
                     onChangeText={confirmedPassword => this.setState({ confirmedPassword })}
+                    maxLength={userInputFieldMaxCharacter}
                 />
             </View>
 
@@ -144,6 +150,7 @@ class AccountBasicInfoInputView extends React.Component {
                         placeholder="Address Line 1"
                         placeholderTextColor="#003f5c"
                         onChangeText={addressLine1 => this.setState({ addressLine1 })}
+                        maxLength={userInputFieldMaxCharacter}
                     />
                 </View>
                 <View style={styles.inputView}>
@@ -152,6 +159,7 @@ class AccountBasicInfoInputView extends React.Component {
                         placeholder="Address Line 2"
                         placeholderTextColor="#003f5c"
                         onChangeText={addressLine2 => this.setState({ addressLine2 })}
+                        maxLength={userInputFieldMaxCharacter}
                     />
                 </View>
             </View>
@@ -206,6 +214,7 @@ class AccountBasicInfoInputView extends React.Component {
                     placeholder="Zip code"
                     placeholderTextColor="#003f5c"
                     onChangeText={zipCode => this.setState({ zipCode })}
+                    maxLength={userInputFieldMaxCharacter}
                 />
             </View>
 
