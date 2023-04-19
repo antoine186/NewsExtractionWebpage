@@ -6,6 +6,7 @@ import { api, loginAuthUrl } from '../utils/backend_configuration/BackendConfig'
 import { useSelector, useDispatch } from 'react-redux'
 import { validateUserSession } from '../store/Slices/UserSessionSlice'
 import { useNavigate, Navigate } from 'react-router-dom'
+import { userInputFieldMaxCharacter } from '../utils/user_input_config/UserInputConfig'
 
 function Login () {
   const [username, setUsername] = useState('')
@@ -66,6 +67,7 @@ function Login () {
             placeholder="Email"
             placeholderTextColor="#003f5c"
             onChangeText={(email) => setUsername(email)}
+            maxLength={userInputFieldMaxCharacter}
           />
         </View>
         <View style={styles.inputView}>
@@ -75,6 +77,7 @@ function Login () {
             placeholderTextColor="#003f5c"
             secureTextEntry={true}
             onChangeText={(password) => setPassword(password)}
+            maxLength={userInputFieldMaxCharacter}
           />
         </View>
         {passIncorrect &&

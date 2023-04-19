@@ -9,6 +9,7 @@ import { Country, State, City } from 'country-state-city'
 import Select from 'react-select'
 import { loadStripe } from '@stripe/stripe-js'
 import { testStripePublicKey } from '../../utils/stripe_configuration/StripeConfig'
+import DateFormatter from '../../utils/DateFormatter'
 
 class AccountBasicInfoInputView extends React.Component {
   constructor (props) {
@@ -35,7 +36,10 @@ class AccountBasicInfoInputView extends React.Component {
       selectedCountryCode: '',
       states: '',
       cities: '',
-      stripePromise: loadStripe(testStripePublicKey)
+      stripePromise: loadStripe(testStripePublicKey),
+      addressLine1: this.props.addressLine1,
+      addressLine2: this.props.addressLine2,
+      zipCode: this.props.zipCode
     }
   }
 
@@ -56,6 +60,11 @@ class AccountBasicInfoInputView extends React.Component {
       .map((city) => ({ label: city.name, value: city.id, ...city }))
 
     this.setState({ cities: updatedCities })
+  }
+
+  dateOfBirthSelected (event) {
+    const selectedDate = new Date(event.target.value)
+    this.setState({ dateBirth: DateFormatter(selectedDate) })
   }
 
   render () {
@@ -86,7 +95,7 @@ class AccountBasicInfoInputView extends React.Component {
                 Date of birth
             </Text>
             <br></br>
-            <CappedDatePicker minDate={this.state.minDateOfBirth} />
+            <CappedDatePicker minDate={this.state.minDateOfBirth} onChange={this.dateOfBirthSelected.bind(this)} />
             <br></br>
             <View style={styles.inputView}>
                 <TextInput
@@ -134,7 +143,7 @@ class AccountBasicInfoInputView extends React.Component {
                         style={styles.textInput}
                         placeholder="Address Line 1"
                         placeholderTextColor="#003f5c"
-                        onChangeText={confirmedPassword => this.setState({ confirmedPassword })}
+                        onChangeText={addressLine1 => this.setState({ addressLine1 })}
                     />
                 </View>
                 <View style={styles.inputView}>
@@ -142,7 +151,7 @@ class AccountBasicInfoInputView extends React.Component {
                         style={styles.textInput}
                         placeholder="Address Line 2"
                         placeholderTextColor="#003f5c"
-                        onChangeText={confirmedPassword => this.setState({ confirmedPassword })}
+                        onChangeText={addressLine2 => this.setState({ addressLine2 })}
                     />
                 </View>
             </View>
@@ -196,7 +205,7 @@ class AccountBasicInfoInputView extends React.Component {
                     style={styles.textInput}
                     placeholder="Zip code"
                     placeholderTextColor="#003f5c"
-                    onChangeText={confirmedPassword => this.setState({ confirmedPassword })}
+                    onChangeText={zipCode => this.setState({ zipCode })}
                 />
             </View>
 
