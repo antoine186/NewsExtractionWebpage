@@ -20,13 +20,55 @@ class AccountBasicInfoInputView extends React.Component {
       confirmedPassword: this.props.confirmedPassword,
       dateBirth: this.props.dateBirth,
       minDateOfBirth: '1900-01-01',
-      telephoneNumber: this.props.telephoneNumber
+      telephoneNumber: this.props.telephoneNumber,
+      firstNameGrabber: this.props.firstNameGrabber,
+      lastNameGrabber: this.props.lastNameGrabber,
+      userEmailGrabber: this.props.userEmailGrabber,
+      passwordGrabber: this.props.passwordGrabber,
+      confirmedPasswordGrabber: this.props.confirmedPasswordGrabber,
+      dateBirthGrabber: this.props.dateBirthGrabber,
+      telNumberGrabber: this.props.telNumberGrabber
     }
+  }
+
+  setFirstName (firstName) {
+    this.setState({ firstName })
+    this.state.firstNameGrabber(firstName)
+  }
+
+  setLastName (lastName) {
+    this.setState({ lastName })
+    this.state.lastNameGrabber(lastName)
   }
 
   dateOfBirthSelected (event) {
     const selectedDate = new Date(event.target.value)
-    this.setState({ dateBirth: DateFormatter(selectedDate) })
+    const selectedDateFormatted = DateFormatter(selectedDate)
+    this.setState({ dateBirth: selectedDateFormatted })
+    this.state.dateBirthGrabber(selectedDateFormatted)
+  }
+
+  setUserEmail (email) {
+    // Validate email here
+    this.setState({ email })
+    this.state.userEmailGrabber(email)
+  }
+
+  setTelephoneNumber (telephoneNumber) {
+    // Validate phone number here
+    this.setState({ telephoneNumber })
+    this.state.telNumberGrabber(telephoneNumber)
+  }
+
+  setPassword (password) {
+    this.setState({ password })
+    this.state.passwordGrabber(password)
+  }
+
+  setConfirmedPassword (password) {
+    // Double check password match here
+    this.setState({ password })
+    this.state.confirmedPasswordGrabber(password)
   }
 
   render () {
@@ -42,7 +84,7 @@ class AccountBasicInfoInputView extends React.Component {
                     style={styles.textInput}
                     placeholder="First Name"
                     placeholderTextColor="#003f5c"
-                    onChangeText={firstName => this.setState({ firstName })}
+                    onChangeText={firstName => this.setFirstName(firstName)}
                     maxLength={userInputFieldMaxCharacter}
                 />
             </View>
@@ -51,7 +93,7 @@ class AccountBasicInfoInputView extends React.Component {
                     style={styles.textInput}
                     placeholder="Last Name"
                     placeholderTextColor="#003f5c"
-                    onChangeText={lastName => this.setState({ lastName })}
+                    onChangeText={lastName => this.setLastName(lastName)}
                     maxLength={userInputFieldMaxCharacter}
                 />
             </View>
@@ -66,7 +108,7 @@ class AccountBasicInfoInputView extends React.Component {
                     style={styles.textInput}
                     placeholder="Email Address"
                     placeholderTextColor="#003f5c"
-                    onChangeText={emailAddress => this.setState({ emailAddress })}
+                    onChangeText={emailAddress => this.setUserEmail(emailAddress)}
                     maxLength={userInputFieldMaxCharacter}
                 />
             </View>
@@ -74,7 +116,7 @@ class AccountBasicInfoInputView extends React.Component {
                 placeholder="Telephone number"
                 defaultCountry="US"
                 value={this.state.telephoneNumber}
-                onChange={telephoneNumber => this.setState({ telephoneNumber })}
+                onChange={telephoneNumber => this.setTelephoneNumber(telephoneNumber)}
                 inputComponent={TextInput}
             />
             <br></br>
@@ -84,7 +126,7 @@ class AccountBasicInfoInputView extends React.Component {
                     placeholder="Password"
                     placeholderTextColor="#003f5c"
                     secureTextEntry={true}
-                    onChangeText={password => this.setState({ password })}
+                    onChangeText={password => this.setPassword(password)}
                     maxLength={userInputFieldMaxCharacter}
                 />
             </View>
@@ -94,7 +136,7 @@ class AccountBasicInfoInputView extends React.Component {
                     placeholder="Confirm Password"
                     placeholderTextColor="#003f5c"
                     secureTextEntry={true}
-                    onChangeText={confirmedPassword => this.setState({ confirmedPassword })}
+                    onChangeText={confirmedPassword => this.setConfirmedPassword(confirmedPassword)}
                     maxLength={userInputFieldMaxCharacter}
                 />
             </View>

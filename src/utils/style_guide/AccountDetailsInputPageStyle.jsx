@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
     height: 0.5 * vw,
     marginBottom: 50
   },
-  loginBtn: {
+  submitBtn: {
     width: 8 * vw,
     borderRadius: 25,
     height: 2 * vw,

@@ -23,11 +23,11 @@ class PairedDatePickers extends React.Component {
     return (
         <View>
             <Text>
-            From:
+              From:
             </Text>
             <CappedDatePicker minDate={this.state.minDate} onChange={this.onChange.bind(this)} />
             <label htmlFor="to_date" className="col-form-label">
-                To:
+              To:
             </label>
             <CappedDatePicker minDate={this.state.posteriorMinDate} />
         </View>
