@@ -30,8 +30,22 @@ class UserBillingAddressInputView extends React.Component {
       cities: '',
       addressLine1: this.props.addressLine1,
       addressLine2: this.props.addressLine2,
-      zipCode: this.props.zipCode
+      zipCode: this.props.zipCode,
+      selectedCountryGrabber: this.props.selectedCountryGrabber,
+      selectedStateGrabber: this.props.selectedStateGrabber,
+      selectedCityGrabber: this.props.selectedCityGrabber,
+      addressLine1Grabber: this.props.addressLine1Grabber,
+      addressLine2Grabber: this.props.addressLine2Grabber,
+      zipCodeGrabber: this.props.zipCodeGrabber
     }
+  }
+
+  addressLine1Selected (addressLine1) {
+    this.setState({ addressLine1 })
+  }
+
+  addressLine2Selected (addressLine2) {
+    this.setState({ addressLine2 })
   }
 
   countrySelected (selectedCountry) {
@@ -44,6 +58,8 @@ class UserBillingAddressInputView extends React.Component {
     this.setState({ states: updatedStates })
     this.setState({ selectedCountryCode: countryCode })
     this.setState({ selectedCountryName: selectedCountry.name })
+
+    this.state.selectedCountryGrabber(selectedCountry.name, countryCode)
   }
 
   stateSelected (selectedState) {
@@ -54,11 +70,21 @@ class UserBillingAddressInputView extends React.Component {
     this.setState({ cities: updatedCities })
     this.setState({ selectedStateCode: selectedState.isoCode })
     this.setState({ selectedStateName: selectedState.name })
+
+    this.state.selectedStateGrabber(selectedState.name, electedState.isoCode)
   }
 
   citySelected (selectedCity) {
     this.setState({ selectedCityCode: selectedCity.isoCode })
     this.setState({ selectedCityName: selectedCity.name })
+
+    this.state.selectedCityGrabber(selectedCity.name, selectedCity.isoCode)
+  }
+
+  zipCodeSelected (zipCode) {
+    this.setState({ zipCode })
+
+    this.state.zipCodeGrabber(zipCode)
   }
 
   render () {
@@ -75,7 +101,7 @@ class UserBillingAddressInputView extends React.Component {
                         style={styles.textInput}
                         placeholder="Address Line 1"
                         placeholderTextColor="#003f5c"
-                        onChangeText={addressLine1 => this.setState({ addressLine1 })}
+                        onChangeText={addressLine1 => this.addressLine1Selected(addressLine1)}
                         maxLength={userInputFieldMaxCharacter}
                     />
                 </View>
@@ -84,7 +110,7 @@ class UserBillingAddressInputView extends React.Component {
                         style={styles.textInput}
                         placeholder="Address Line 2"
                         placeholderTextColor="#003f5c"
-                        onChangeText={addressLine2 => this.setState({ addressLine2 })}
+                        onChangeText={addressLine2 => this.addressLine2Selected(addressLine2)}
                         maxLength={userInputFieldMaxCharacter}
                     />
                 </View>
@@ -139,7 +165,7 @@ class UserBillingAddressInputView extends React.Component {
                     style={styles.textInput}
                     placeholder="Zip code"
                     placeholderTextColor="#003f5c"
-                    onChangeText={zipCode => this.setState({ zipCode })}
+                    onChangeText={zipCode => this.zipCodeSelected(zipCode)}
                     maxLength={userInputFieldMaxCharacter}
                 />
             </View>

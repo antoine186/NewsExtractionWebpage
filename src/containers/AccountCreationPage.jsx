@@ -19,7 +19,16 @@ class AccountCreationPage extends React.Component {
       password: this.props.password,
       confirmedPassword: this.props.confirmedPassword,
       dateBirth: this.props.dateBirth,
-      telephoneNumber: this.props.telephoneNumber
+      telephoneNumber: this.props.telephoneNumber,
+      selectedCountryName: '',
+      selectedCountryCode: '',
+      selectedStateCode: '',
+      selectedStateName: '',
+      selectedCityCode: '',
+      selectedCityName: '',
+      addressLine1: this.props.addressLine1,
+      addressLine2: this.props.addressLine2,
+      zipCode: this.props.zipCode
     }
 
     this.handleSubmit = this.handleSubmit.bind(this)
@@ -53,6 +62,33 @@ class AccountCreationPage extends React.Component {
     this.setState({ telephoneNumber })
   }
 
+  selectedCountryGrabber (selectedCountryName, selectedCountryCode) {
+    this.setState({ selectedCountryName })
+    this.setState({ selectedCountryCode })
+  }
+
+  selectedStateGrabber (selectedStateName, selectedStateCode) {
+    this.setState({ selectedStateName })
+    this.setState({ selectedStateCode })
+  }
+
+  selectedCityGrabber (selectedCityName, selectedCityCode) {
+    this.setState({ selectedCityName })
+    this.setState({ selectedCityCode })
+  }
+
+  addressLine1Grabber (addressLine1) {
+    this.setState({ addressLine1 })
+  }
+
+  addressLine2Grabber (addressLine2) {
+    this.setState({ addressLine2 })
+  }
+
+  zipCodeGrabber (zipCode) {
+    this.setState({ zipCode })
+  }
+
   handleSubmit () {
     let handleSubmitProceed = true
 
@@ -74,6 +110,9 @@ class AccountCreationPage extends React.Component {
     })) {
       handleSubmitProceed = false
     }
+
+    // REMOVE THIS LATER
+    console.log(this.state)
   }
 
   render () {
@@ -89,7 +128,14 @@ class AccountCreationPage extends React.Component {
           telNumberGrabber={this.telNumberGrabber.bind(this)}
         />
         <br></br>
-        <UserBillingAddressInputView />
+        <UserBillingAddressInputView
+          selectedCountryGrabber={this.selectedCountryGrabber.bind(this)}
+          selectedStateGrabber={this.selectedStateGrabber.bind(this)}
+          selectedCityGrabber={this.selectedCityGrabber.bind(this)}
+          addressLine1Grabber={this.addressLine1Grabber.bind(this)}
+          addressLine2Grabber={this.addressLine2Grabber.bind(this)}
+          zipCodeGrabber={this.zipCodeGrabber.bind(this)}
+        />
         <br></br>
         <UserPaymentAndBillingInputView />
         <TouchableOpacity style={styles.submitBtn} onPress={this.handleSubmit}>
