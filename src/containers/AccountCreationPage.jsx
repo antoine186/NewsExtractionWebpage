@@ -4,6 +4,9 @@ import UserBillingAddressInputView from '../components/atoms/UserBillingAddressI
 import UserPaymentAndBillingInputView from '../components/atoms/UserPaymentAndBillingInputView'
 import { TouchableOpacity, Text, View, Image, TextInput } from 'react-native'
 import styles from '../utils/style_guide/AccountDetailsInputPageStyle'
+import validator from 'validator'
+import { isValidPhoneNumber } from 'react-phone-number-input'
+import PasswordValidate from '../utils/PasswordValidate'
 
 class AccountCreationPage extends React.Component {
   constructor (props) {
@@ -31,7 +34,7 @@ class AccountCreationPage extends React.Component {
   }
 
   userEmailGrabber (email) {
-    this.setState({ email })
+    this.setState({ emailAddress: email })
   }
 
   passwordGrabber (password) {
@@ -51,7 +54,19 @@ class AccountCreationPage extends React.Component {
   }
 
   handleSubmit () {
-    console.log(this.state.firstName)
+    let handleSubmitProceed = true
+
+    if (!validator.isEmail(this.state.emailAddress)) {
+      handleSubmitProceed = false
+    }
+    if (!isValidPhoneNumber(this.state.telephoneNumber)) {
+      handleSubmitProceed = false
+    }
+    if (!PasswordValidate(this.state.password, this.state.confirmedPassword)) {
+      handleSubmitProceed = false
+    }
+
+    console.log(handleSubmitProceed)
   }
 
   render () {
