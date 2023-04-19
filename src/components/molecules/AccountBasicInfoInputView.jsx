@@ -11,6 +11,8 @@ import { loadStripe } from '@stripe/stripe-js'
 import { testStripePublicKey } from '../../utils/stripe_configuration/StripeConfig'
 import DateFormatter from '../../utils/DateFormatter'
 import { userInputFieldMaxCharacter } from '../../utils/user_input_config/UserInputConfig'
+import CardInput from '../atoms/CardInput'
+import { Elements } from '@stripe/react-stripe-js'
 
 class AccountBasicInfoInputView extends React.Component {
   constructor (props) {
@@ -222,6 +224,12 @@ class AccountBasicInfoInputView extends React.Component {
                 Payment Details
             </Text>
             <br></br>
+            <br></br>
+            <View style={styles.stripeCardElement}>
+                <Elements stripe={this.state.stripePromise}>
+                    <CardInput />
+                </Elements>
+            </View>
         </View>
     )
   }

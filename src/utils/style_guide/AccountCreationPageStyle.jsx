@@ -89,6 +89,9 @@ const styles = StyleSheet.create({
       backgroundColor: state.isFocused && 'lightgray',
       color: state.isFocused && 'black'
     })
+  },
+  stripeCardElement: {
+    width: 15 * vw
   }
 })
 
