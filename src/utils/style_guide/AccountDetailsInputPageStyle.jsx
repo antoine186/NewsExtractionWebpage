@@ -92,6 +92,10 @@ const styles = StyleSheet.create({
   },
   stripeCardElement: {
     width: 15 * vw
+  },
+  subcontainer: {
+    alignItems: 'center',
+    justifyContent: 'center'
   }
 })
 

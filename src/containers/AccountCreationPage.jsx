@@ -1,9 +1,9 @@
 import React from 'react'
 import AccountBasicInfoInputView from '../components/molecules/AccountBasicInfoInputView'
-import styles from '../utils/style_guide/AccountCreationPageStyle'
+import UserBillingAddressInputView from '../components/atoms/UserBillingAddressInputView'
+import UserPaymentAndBillingInputView from '../components/atoms/UserPaymentAndBillingInputView'
 import { TouchableOpacity, Text, View, Image, TextInput } from 'react-native'
-// import PhoneInput from 'react-phone-number-input'
-// import 'react-phone-number-input/style.css'
+import styles from '../utils/style_guide/AccountDetailsInputPageStyle'
 
 class AccountCreationPage extends React.Component {
   constructor (props) {
@@ -15,7 +15,13 @@ class AccountCreationPage extends React.Component {
 
   render () {
     return (
+      <View style={styles.container}>
         <AccountBasicInfoInputView />
+        <br></br>
+        <UserBillingAddressInputView />
+        <br></br>
+        <UserPaymentAndBillingInputView />
+      </View>
     )
   }
 }
