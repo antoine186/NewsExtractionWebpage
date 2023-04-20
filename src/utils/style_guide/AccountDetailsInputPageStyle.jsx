@@ -99,6 +99,9 @@ const styles = StyleSheet.create({
   },
   errorText: {
     color: '#DC143C'
+  },
+  errorTextViewLeft: {
+    marginRight: 1.5 * vw
   }
 })
 

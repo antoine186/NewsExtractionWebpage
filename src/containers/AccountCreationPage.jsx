@@ -19,11 +19,11 @@ class AccountCreationPage extends React.Component {
       confirmedPassword: this.props.confirmedPassword,
       dateBirth: this.props.dateBirth,
       telephoneNumber: this.props.telephoneNumber,
-      selectedCountryName: '',
-      selectedCountryCode: '',
-      selectedStateCode: '',
-      selectedStateName: '',
-      selectedCityName: '',
+      selectedCountryName: this.props.selectedCountryName,
+      selectedCountryCode: this.props.selectedCountryCode,
+      selectedStateCode: this.props.selectedStateCode,
+      selectedStateName: this.props.selectedStateName,
+      selectedCityName: this.props.selectedCityName,
       addressLine1: this.props.addressLine1,
       addressLine2: this.props.addressLine2,
       zipCode: this.props.zipCode,
@@ -36,7 +36,12 @@ class AccountCreationPage extends React.Component {
       passwordEmpty: false,
       passwordsMatch: true,
       passwordFormatIncorrect: false,
-      dateBirthEmpty: false
+      dateBirthEmpty: false,
+      addressLine1Empty: false,
+      countryEmpty: false,
+      stateEmpty: false,
+      cityEmpty: false,
+      zipCodeEmpty: false
     }
 
     this.handleSubmit = this.handleSubmit.bind(this)
@@ -185,6 +190,46 @@ class AccountCreationPage extends React.Component {
       this.setState({ passwordEmpty: false })
     }
 
+    if (this.state.addressLine1 === undefined) {
+      handleSubmitProceed = false
+      this.setState({ addressLine1Empty: true })
+    } else {
+      handleSubmitProceed = true
+      this.setState({ addressLine1Empty: false })
+    }
+
+    if (this.state.selectedCountryName === undefined) {
+      handleSubmitProceed = false
+      this.setState({ countryEmpty: true })
+    } else {
+      handleSubmitProceed = true
+      this.setState({ countryEmpty: false })
+    }
+
+    if (this.state.selectedStateName === undefined) {
+      handleSubmitProceed = false
+      this.setState({ stateEmpty: true })
+    } else {
+      handleSubmitProceed = true
+      this.setState({ stateEmpty: false })
+    }
+
+    if (this.state.selectedCityName === undefined) {
+      handleSubmitProceed = false
+      this.setState({ cityEmpty: true })
+    } else {
+      handleSubmitProceed = true
+      this.setState({ cityEmpty: false })
+    }
+
+    if (this.state.zipCode === undefined) {
+      handleSubmitProceed = false
+      this.setState({ zipCodeEmpty: true })
+    } else {
+      handleSubmitProceed = true
+      this.setState({ zipCodeEmpty: false })
+    }
+
     // REMOVE THIS LATER
     // console.log(this.state)
   }
@@ -219,6 +264,11 @@ class AccountCreationPage extends React.Component {
           addressLine1Grabber={this.addressLine1Grabber.bind(this)}
           addressLine2Grabber={this.addressLine2Grabber.bind(this)}
           zipCodeGrabber={this.zipCodeGrabber.bind(this)}
+          addressLine1Empty={this.state.addressLine1Empty}
+          countryEmpty={this.state.countryEmpty}
+          stateEmpty={this.state.stateEmpty}
+          cityEmpty={this.state.cityEmpty}
+          zipCodeEmpty={this.state.zipCodeEmpty}
         />
         <br></br>
         <TouchableOpacity style={styles.submitBtn} onPress={this.handleSubmit}>
