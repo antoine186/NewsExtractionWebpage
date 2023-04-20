@@ -4,15 +4,17 @@ import storage from 'redux-persist/lib/storage'
 import { persistReducer, persistStore } from 'redux-persist'
 import thunk from 'redux-thunk'
 import { combineReducers } from 'redux'
+import AccountDataReducer from './Slices/AccountDataSlice'
 
 const rootReducer = combineReducers({
-  userSession: userSessionReducer
+  userSession: userSessionReducer,
+  accountData: AccountDataReducer
 })
 
 const persistConfig = {
   key: 'root',
   storage,
-  whiteList: ['userSession']
+  whiteList: ['userSession', 'accountData']
 }
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)
