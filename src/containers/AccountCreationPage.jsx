@@ -6,8 +6,8 @@ import styles from '../utils/style_guide/AccountDetailsInputPageStyle'
 import validator from 'validator'
 import { isValidPhoneNumber } from 'react-phone-number-input'
 import PasswordValidate from '../utils/PasswordValidate'
-import { useSelector, useDispatch } from 'react-redux'
 import { setAccountData } from '../store/Slices/AccountDataSlice'
+import { connect } from 'react-redux'
 
 class AccountCreationPage extends React.Component {
   constructor (props) {
@@ -232,8 +232,7 @@ class AccountCreationPage extends React.Component {
       this.setState({ zipCodeEmpty: false })
     }
 
-    const dispatch = useDispatch()
-    dispatch(setAccountData(this.state))
+    this.props.setAccountData(this.state)
 
     // REMOVE THIS LATER
     // console.log(this.state)
@@ -284,4 +283,9 @@ class AccountCreationPage extends React.Component {
   }
 }
 
-export default AccountCreationPage
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setAccountData: (value) => dispatch(setAccountData(value))
+  }
+};
+export default connect(null, mapDispatchToProps)(AccountCreationPage)

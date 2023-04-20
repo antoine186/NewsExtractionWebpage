@@ -13,11 +13,11 @@ export const AccountDataSlice = createSlice({
   name: 'accountData',
   initialState,
   reducers: {
-    setAccountData: (state) => {
-      state.accountData = state
+    setAccountData: (state, value) => {
+      state.accountData = value
     },
-    clearAccountData: (state) => {
-      state.accountData = state
+    clearAccountData: (state, value) => {
+      state.accountData = value
     }
   },
 })
