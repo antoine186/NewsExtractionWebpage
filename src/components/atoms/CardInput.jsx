@@ -20,8 +20,17 @@ const CARD_ELEMENT_OPTIONS = {
   }
 }
 
-export default function CardInput () {
-  return (
-    <CardElement options={CARD_ELEMENT_OPTIONS} />
-  )
+class CardInput extends React.Component {
+
+  onChange (value) {
+    console.log(value)
+  }
+
+  render () {
+    return (
+      <CardElement options={CARD_ELEMENT_OPTIONS} onChange={value => this.onChange(value)} />
+    )
+  }
 }
+
+export default CardInput

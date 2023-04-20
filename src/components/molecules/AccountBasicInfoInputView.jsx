@@ -27,7 +27,17 @@ class AccountBasicInfoInputView extends React.Component {
       passwordGrabber: this.props.passwordGrabber,
       confirmedPasswordGrabber: this.props.confirmedPasswordGrabber,
       dateBirthGrabber: this.props.dateBirthGrabber,
-      telNumberGrabber: this.props.telNumberGrabber
+      telNumberGrabber: this.props.telNumberGrabber,
+      firstNameEmpty: this.props.firstNameEmpty,
+      lastNameEmpty: this.props.lastNameEmpty,
+      dateBirthEmpty: this.props.dateBirthEmpty,
+      emailEmpty: this.props.emailEmpty,
+      validEmail: this.props.validEmail,
+      telephoneEmpty: this.props.telephoneEmpty,
+      validTelephone: this.props.validTelephone,
+      passwordsMatch: this.props.passwordsMatch,
+      passwordFormatIncorrect: this.props.passwordFormatIncorrect,
+      passwordEmpty: this.props.passwordEmpty
     }
   }
 
@@ -70,74 +80,158 @@ class AccountBasicInfoInputView extends React.Component {
 
   render () {
     return (
-        <View style={styles.subcontainer}>
-            <Text style={styles.titleText}>
-                Your New Account
-            </Text>
-            <br></br>
+      <View style={styles.subcontainer}>
+        <Text style={styles.titleText}>
+          Your New Account
+        </Text>
+        <br></br>
 
-            <View style={styles.inputView}>
-                <TextInput
-                    style={styles.textInput}
-                    placeholder="First Name"
-                    placeholderTextColor="#003f5c"
-                    onChangeText={firstName => this.setFirstName(firstName)}
-                    maxLength={userInputFieldMaxCharacter}
-                />
-            </View>
-            <View style={styles.inputView}>
-                <TextInput
-                    style={styles.textInput}
-                    placeholder="Last Name"
-                    placeholderTextColor="#003f5c"
-                    onChangeText={lastName => this.setLastName(lastName)}
-                    maxLength={userInputFieldMaxCharacter}
-                />
-            </View>
-            <Text style={styles.text}>
-                Date of birth
+        <View style={styles.inputView}>
+          <TextInput
+            style={styles.textInput}
+            placeholder="First Name"
+            placeholderTextColor="#003f5c"
+            onChangeText={firstName => this.setFirstName(firstName)}
+            maxLength={userInputFieldMaxCharacter}
+          />
+        </View>
+
+        {this.props.firstNameEmpty &&
+          <View>
+            <Text style={styles.errorText}>
+              Please fill in your firstname *
             </Text>
             <br></br>
-            <CappedDatePicker minDate={this.state.minDateOfBirth} onChange={this.dateOfBirthSelected.bind(this)} />
-            <br></br>
-            <View style={styles.inputView}>
-                <TextInput
-                    style={styles.textInput}
-                    placeholder="Email Address"
-                    placeholderTextColor="#003f5c"
-                    onChangeText={emailAddress => this.setUserEmail(emailAddress)}
-                    maxLength={userInputFieldMaxCharacter}
-                />
-            </View>
-            <PhoneInput
-                placeholder="Telephone number"
-                defaultCountry="US"
-                value={this.state.telephoneNumber}
-                onChange={telephoneNumber => this.setTelephoneNumber(telephoneNumber)}
-                inputComponent={TextInput}
-            />
-            <br></br>
-            <View style={styles.inputView}>
-                <TextInput
-                    style={styles.textInput}
-                    placeholder="Password"
-                    placeholderTextColor="#003f5c"
-                    secureTextEntry={true}
-                    onChangeText={password => this.setPassword(password)}
-                    maxLength={userInputFieldMaxCharacter}
-                />
-            </View>
-            <View style={styles.inputView}>
-                <TextInput
-                    style={styles.textInput}
-                    placeholder="Confirm Password"
-                    placeholderTextColor="#003f5c"
-                    secureTextEntry={true}
-                    onChangeText={confirmedPassword => this.setConfirmedPassword(confirmedPassword)}
-                    maxLength={userInputFieldMaxCharacter}
-                />
-            </View>
+          </View>
+        }
+
+        <View style={styles.inputView}>
+          <TextInput
+            style={styles.textInput}
+            placeholder="Last Name"
+            placeholderTextColor="#003f5c"
+            onChangeText={lastName => this.setLastName(lastName)}
+            maxLength={userInputFieldMaxCharacter}
+          />
         </View>
+
+        {this.props.lastNameEmpty &&
+          <View>
+            <Text style={styles.errorText}>
+              Please fill in your lastname *
+            </Text>
+            <br></br>
+          </View>
+        }
+
+        <Text style={styles.text}>
+          Date of birth
+        </Text>
+        <br></br>
+        <CappedDatePicker minDate={this.state.minDateOfBirth} onChange={this.dateOfBirthSelected.bind(this)} />
+        <br></br>
+        {this.props.dateBirthEmpty &&
+          <View>
+            <Text style={styles.errorText}>
+              Please select your date of birth *
+            </Text>
+            <br></br>
+          </View>
+        }
+        <View style={styles.inputView}>
+          <TextInput
+            style={styles.textInput}
+            placeholder="Email Address"
+            placeholderTextColor="#003f5c"
+            onChangeText={emailAddress => this.setUserEmail(emailAddress)}
+            maxLength={userInputFieldMaxCharacter}
+          />
+        </View>
+        {this.props.emailEmpty &&
+          <View>
+            <Text style={styles.errorText}>
+              Please fill in your email address *
+            </Text>
+            <br></br>
+          </View>
+        }
+        {!this.props.validEmail &&
+          <View>
+            <Text style={styles.errorText}>
+              Please enter a valid email address *
+            </Text>
+            <br></br>
+          </View>
+        }
+        <PhoneInput
+          placeholder="Telephone number"
+          defaultCountry="US"
+          value={this.state.telephoneNumber}
+          onChange={telephoneNumber => this.setTelephoneNumber(telephoneNumber)}
+          inputComponent={TextInput}
+        />
+        <br></br>
+        {this.props.telephoneEmpty &&
+          <View>
+            <Text style={styles.errorText}>
+              Please fill in your telephone number *
+            </Text>
+            <br></br>
+          </View>
+        }
+        {!this.props.validTelephone &&
+          <View>
+            <Text style={styles.errorText}>
+              Please enter a valid telephone number *
+            </Text>
+            <br></br>
+          </View>
+        }
+        <View style={styles.inputView}>
+          <TextInput
+            style={styles.textInput}
+            placeholder="Password"
+            placeholderTextColor="#003f5c"
+            secureTextEntry={true}
+            onChangeText={password => this.setPassword(password)}
+            maxLength={userInputFieldMaxCharacter}
+          />
+        </View>
+        {this.props.passwordEmpty &&
+          <View>
+            <Text style={styles.errorText}>
+              Please fill in your password *
+            </Text>
+            <br></br>
+          </View>
+        }
+        {this.props.passwordFormatIncorrect &&
+          <View>
+            <Text style={styles.errorText}>
+              Passwords should be at least 8 characters long and have at least 1 uppercase, 1 lowercase character, and finally 1 number *
+            </Text>
+            <br></br>
+          </View>
+        }
+        {!this.props.passwordsMatch &&
+          <View>
+            <Text style={styles.errorText}>
+              Passwords don't match *
+            </Text>
+            <br></br>
+          </View>
+        }
+        <View style={styles.inputView}>
+          <TextInput
+            style={styles.textInput}
+            placeholder="Confirm Password"
+            placeholderTextColor="#003f5c"
+            secureTextEntry={true}
+            onChangeText={confirmedPassword => this.setConfirmedPassword(confirmedPassword)}
+            maxLength={userInputFieldMaxCharacter}
+          />
+        </View>
+      </View>
     )
   }
 }

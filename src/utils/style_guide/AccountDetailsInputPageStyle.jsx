@@ -96,6 +96,9 @@ const styles = StyleSheet.create({
   subcontainer: {
     alignItems: 'center',
     justifyContent: 'center'
+  },
+  errorText: {
+    color: '#DC143C'
   }
 })
 

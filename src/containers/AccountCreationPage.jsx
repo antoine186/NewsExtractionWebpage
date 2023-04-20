@@ -1,7 +1,6 @@
 import React from 'react'
 import AccountBasicInfoInputView from '../components/molecules/AccountBasicInfoInputView'
 import UserBillingAddressInputView from '../components/atoms/UserBillingAddressInputView'
-import UserPaymentAndBillingInputView from '../components/atoms/UserPaymentAndBillingInputView'
 import { TouchableOpacity, Text, View, Image, TextInput } from 'react-native'
 import styles from '../utils/style_guide/AccountDetailsInputPageStyle'
 import validator from 'validator'
@@ -27,7 +26,17 @@ class AccountCreationPage extends React.Component {
       selectedCityName: '',
       addressLine1: this.props.addressLine1,
       addressLine2: this.props.addressLine2,
-      zipCode: this.props.zipCode
+      zipCode: this.props.zipCode,
+      firstNameEmpty: false,
+      lastNameEmpty: false,
+      emailEmpty: false,
+      validEmail: true,
+      telephoneEmpty: false,
+      validTelephone: true,
+      passwordEmpty: false,
+      passwordsMatch: true,
+      passwordFormatIncorrect: false,
+      dateBirthEmpty: false
     }
 
     this.handleSubmit = this.handleSubmit.bind(this)
@@ -90,27 +99,58 @@ class AccountCreationPage extends React.Component {
   handleSubmit () {
     let handleSubmitProceed = true
 
-    if (!validator.isEmail(this.state.emailAddress)) {
+    if (this.state.firstName === undefined) {
       handleSubmitProceed = false
+      this.setState({ firstNameEmpty: true })
     }
-    if (!isValidPhoneNumber(this.state.telephoneNumber)) {
+    if (this.state.lastName === undefined) {
       handleSubmitProceed = false
+      this.setState({ lastNameEmpty: true })
     }
-    if (!PasswordValidate(this.state.password, this.state.confirmedPassword)) {
+    if (this.state.dateBirth === undefined) {
       handleSubmitProceed = false
+      this.setState({ dateBirthEmpty: true })
     }
-    if (!validator.isStrongPassword(this.state.password, {
-      minLength: 8,
-      minLowercase: 1,
-      minUppercase: 1,
-      minNumbers: 1,
-      minSymbols: 1
-    })) {
+    if (this.state.emailAddress === undefined) {
       handleSubmitProceed = false
+      this.setState({ emailEmpty: true })
+    } else {
+      if (!validator.isEmail(this.state.emailAddress)) {
+        handleSubmitProceed = false
+        this.setState({ validEmail: false })
+      }
+    }
+    if (this.state.telephoneNumber === undefined) {
+      handleSubmitProceed = false
+      this.setState({ telephoneEmpty: true })
+    } else {
+      if (!isValidPhoneNumber(this.state.telephoneNumber)) {
+        handleSubmitProceed = false
+        this.setState({ validTelephone: false })
+      }
+    }
+    if (this.state.password === undefined) {
+      handleSubmitProceed = false
+      this.setState({ passwordEmpty: true })
+    } else {
+      if (!PasswordValidate(this.state.password, this.state.confirmedPassword)) {
+        handleSubmitProceed = false
+        this.setState({ passwordsMatch: false })
+      }
+      if (!validator.isStrongPassword(this.state.password, {
+        minLength: 8,
+        minLowercase: 1,
+        minUppercase: 1,
+        minNumbers: 1,
+        minSymbols: 1
+      })) {
+        handleSubmitProceed = false
+        this.setState({ passwordFormatIncorrect: false })
+      }
     }
 
     // REMOVE THIS LATER
-    console.log(this.state)
+    // console.log(this.state)
   }
 
   render () {
@@ -124,6 +164,16 @@ class AccountCreationPage extends React.Component {
           confirmedPasswordGrabber={this.confirmedPasswordGrabber.bind(this)}
           dateBirthGrabber={this.dateBirthGrabber.bind(this)}
           telNumberGrabber={this.telNumberGrabber.bind(this)}
+          firstNameEmpty={this.state.firstNameEmpty}
+          lastNameEmpty={this.state.lastNameEmpty}
+          dateBirthEmpty={this.state.dateBirthEmpty}
+          emailEmpty={this.state.emailEmpty}
+          validEmail={this.state.validEmail}
+          telephoneEmpty={this.state.telephoneEmpty}
+          validTelephone={this.state.validTelephone}
+          passwordsMatch={this.state.passwordsMatch}
+          passwordFormatIncorrect={this.state.passwordFormatIncorrect}
+          passwordEmpty={this.state.passwordEmpty}
         />
         <br></br>
         <UserBillingAddressInputView
@@ -135,9 +185,8 @@ class AccountCreationPage extends React.Component {
           zipCodeGrabber={this.zipCodeGrabber.bind(this)}
         />
         <br></br>
-        <UserPaymentAndBillingInputView />
         <TouchableOpacity style={styles.submitBtn} onPress={this.handleSubmit}>
-          <Text style={styles.loginText}>Create</Text>
+          <Text>Next</Text>
         </TouchableOpacity>
       </View>
     )
