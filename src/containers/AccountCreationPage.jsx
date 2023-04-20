@@ -102,15 +102,27 @@ class AccountCreationPage extends React.Component {
     if (this.state.firstName === undefined) {
       handleSubmitProceed = false
       this.setState({ firstNameEmpty: true })
+    } else {
+      handleSubmitProceed = true
+      this.setState({ firstNameEmpty: false })
     }
+
     if (this.state.lastName === undefined) {
       handleSubmitProceed = false
       this.setState({ lastNameEmpty: true })
+    } else {
+      handleSubmitProceed = true
+      this.setState({ lastNameEmpty: false })
     }
+
     if (this.state.dateBirth === undefined) {
       handleSubmitProceed = false
       this.setState({ dateBirthEmpty: true })
+    } else {
+      handleSubmitProceed = true
+      this.setState({ dateBirthEmpty: false })
     }
+
     if (this.state.emailAddress === undefined) {
       handleSubmitProceed = false
       this.setState({ emailEmpty: true })
@@ -118,8 +130,15 @@ class AccountCreationPage extends React.Component {
       if (!validator.isEmail(this.state.emailAddress)) {
         handleSubmitProceed = false
         this.setState({ validEmail: false })
+      } else {
+        handleSubmitProceed = true
+        this.setState({ validEmail: true })
       }
+
+      handleSubmitProceed = true
+      this.setState({ emailEmpty: false })
     }
+
     if (this.state.telephoneNumber === undefined) {
       handleSubmitProceed = false
       this.setState({ telephoneEmpty: true })
@@ -127,8 +146,15 @@ class AccountCreationPage extends React.Component {
       if (!isValidPhoneNumber(this.state.telephoneNumber)) {
         handleSubmitProceed = false
         this.setState({ validTelephone: false })
+      } else {
+        handleSubmitProceed = true
+        this.setState({ validTelephone: true })
       }
+
+      handleSubmitProceed = true
+      this.setState({ telephoneEmpty: false })
     }
+
     if (this.state.password === undefined) {
       handleSubmitProceed = false
       this.setState({ passwordEmpty: true })
@@ -136,7 +162,11 @@ class AccountCreationPage extends React.Component {
       if (!PasswordValidate(this.state.password, this.state.confirmedPassword)) {
         handleSubmitProceed = false
         this.setState({ passwordsMatch: false })
+      } else {
+        handleSubmitProceed = true
+        this.setState({ passwordsMatch: true })
       }
+
       if (!validator.isStrongPassword(this.state.password, {
         minLength: 8,
         minLowercase: 1,
@@ -146,7 +176,13 @@ class AccountCreationPage extends React.Component {
       })) {
         handleSubmitProceed = false
         this.setState({ passwordFormatIncorrect: false })
+      } else {
+        handleSubmitProceed = true
+        this.setState({ passwordFormatIncorrect: true })
       }
+
+      handleSubmitProceed = true
+      this.setState({ passwordEmpty: false })
     }
 
     // REMOVE THIS LATER
