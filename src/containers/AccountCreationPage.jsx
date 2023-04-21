@@ -110,7 +110,6 @@ class AccountCreationPage extends React.Component {
       handleSubmitProceed = false
       this.setState({ firstNameEmpty: true })
     } else {
-      handleSubmitProceed = true
       this.setState({ firstNameEmpty: false })
     }
 
@@ -118,7 +117,6 @@ class AccountCreationPage extends React.Component {
       handleSubmitProceed = false
       this.setState({ lastNameEmpty: true })
     } else {
-      handleSubmitProceed = true
       this.setState({ lastNameEmpty: false })
     }
 
@@ -126,7 +124,6 @@ class AccountCreationPage extends React.Component {
       handleSubmitProceed = false
       this.setState({ dateBirthEmpty: true })
     } else {
-      handleSubmitProceed = true
       this.setState({ dateBirthEmpty: false })
     }
 
@@ -138,11 +135,9 @@ class AccountCreationPage extends React.Component {
         handleSubmitProceed = false
         this.setState({ validEmail: false })
       } else {
-        handleSubmitProceed = true
         this.setState({ validEmail: true })
       }
 
-      handleSubmitProceed = true
       this.setState({ emailEmpty: false })
     }
 
@@ -154,11 +149,9 @@ class AccountCreationPage extends React.Component {
         handleSubmitProceed = false
         this.setState({ validTelephone: false })
       } else {
-        handleSubmitProceed = true
         this.setState({ validTelephone: true })
       }
 
-      handleSubmitProceed = true
       this.setState({ telephoneEmpty: false })
     }
 
@@ -170,7 +163,6 @@ class AccountCreationPage extends React.Component {
         handleSubmitProceed = false
         this.setState({ passwordsMatch: false })
       } else {
-        handleSubmitProceed = true
         this.setState({ passwordsMatch: true })
       }
 
@@ -182,13 +174,11 @@ class AccountCreationPage extends React.Component {
         minSymbols: 1
       })) {
         handleSubmitProceed = false
-        this.setState({ passwordFormatIncorrect: false })
-      } else {
-        handleSubmitProceed = true
         this.setState({ passwordFormatIncorrect: true })
+      } else {
+        this.setState({ passwordFormatIncorrect: false })
       }
 
-      handleSubmitProceed = true
       this.setState({ passwordEmpty: false })
     }
 
@@ -196,7 +186,6 @@ class AccountCreationPage extends React.Component {
       handleSubmitProceed = false
       this.setState({ addressLine1Empty: true })
     } else {
-      handleSubmitProceed = true
       this.setState({ addressLine1Empty: false })
     }
 
@@ -204,7 +193,6 @@ class AccountCreationPage extends React.Component {
       handleSubmitProceed = false
       this.setState({ countryEmpty: true })
     } else {
-      handleSubmitProceed = true
       this.setState({ countryEmpty: false })
     }
 
@@ -212,7 +200,6 @@ class AccountCreationPage extends React.Component {
       handleSubmitProceed = false
       this.setState({ stateEmpty: true })
     } else {
-      handleSubmitProceed = true
       this.setState({ stateEmpty: false })
     }
 
@@ -220,7 +207,6 @@ class AccountCreationPage extends React.Component {
       handleSubmitProceed = false
       this.setState({ cityEmpty: true })
     } else {
-      handleSubmitProceed = true
       this.setState({ cityEmpty: false })
     }
 
@@ -228,14 +214,12 @@ class AccountCreationPage extends React.Component {
       handleSubmitProceed = false
       this.setState({ zipCodeEmpty: true })
     } else {
-      handleSubmitProceed = true
       this.setState({ zipCodeEmpty: false })
     }
 
-    this.props.setAccountData(this.state)
-
-    // REMOVE THIS LATER
-    // console.log(this.state)
+    if (handleSubmitProceed) {
+      this.props.setAccountData(this.state)
+    }
   }
 
   render () {
