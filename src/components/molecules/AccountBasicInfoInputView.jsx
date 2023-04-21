@@ -7,6 +7,8 @@ import 'react-phone-number-input/style.css'
 import CappedDatePicker from '../atoms/CappedDatePicker'
 import DateFormatter from '../../utils/DateFormatter'
 import { userInputFieldMaxCharacter } from '../../utils/user_input_config/UserInputConfig'
+import { mockingConfig } from '../../utils/debug_configuration/MockingConfig'
+import AccountCreationPageMock from '../../mocking/AccountCreationPageMock'
 
 class AccountBasicInfoInputView extends React.Component {
   constructor (props) {
@@ -38,6 +40,10 @@ class AccountBasicInfoInputView extends React.Component {
       passwordsMatch: this.props.passwordsMatch,
       passwordFormatIncorrect: this.props.passwordFormatIncorrect,
       passwordEmpty: this.props.passwordEmpty
+    }
+
+    if (mockingConfig) {
+      AccountCreationPageMock(this)
     }
   }
 
@@ -166,6 +172,7 @@ class AccountBasicInfoInputView extends React.Component {
         <PhoneInput
           placeholder="Telephone number"
           defaultCountry="US"
+          // defaultValue={this.state.telephoneNumber}
           value={this.state.telephoneNumber}
           onChange={telephoneNumber => this.setTelephoneNumber(telephoneNumber)}
           inputComponent={TextInput}
