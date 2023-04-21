@@ -5,6 +5,8 @@ import { Country, State, City } from 'country-state-city'
 import Select from 'react-select'
 import styles from '../../utils/style_guide/AccountDetailsInputPageStyle'
 import { userInputFieldMaxCharacter } from '../../utils/user_input_config/UserInputConfig'
+import { mockingConfig } from '../../utils/debug_configuration/MockingConfig'
+import AccountCreationAddressMock from '../../mocking/AccountCreationAddressMock'
 
 class UserBillingAddressInputView extends React.Component {
   constructor (props) {
@@ -41,6 +43,10 @@ class UserBillingAddressInputView extends React.Component {
       stateEmpty: this.props.stateEmpty,
       cityEmpty: this.props.cityEmpty,
       zipCodeEmpty: this.props.zipCodeEmpty
+    }
+
+    if (mockingConfig) {
+      AccountCreationAddressMock(this)
     }
   }
 
@@ -106,6 +112,7 @@ class UserBillingAddressInputView extends React.Component {
               style={styles.textInput}
               placeholder="Address Line 1"
               placeholderTextColor="#003f5c"
+              value={this.state.addressLine1}
               onChangeText={addressLine1 => this.addressLine1Selected(addressLine1)}
               maxLength={userInputFieldMaxCharacter}
             />
@@ -115,6 +122,7 @@ class UserBillingAddressInputView extends React.Component {
               style={styles.textInput}
               placeholder="Address Line 2"
               placeholderTextColor="#003f5c"
+              value={this.state.addressLine2}
               onChangeText={addressLine2 => this.addressLine2Selected(addressLine2)}
               maxLength={userInputFieldMaxCharacter}
             />
@@ -140,6 +148,12 @@ class UserBillingAddressInputView extends React.Component {
               label="Country"
               placeholder="Country"
               options={this.state.countries}
+              value={{ label: this.state.selectedCountryName, value: this.state.selectedCountryName }}
+              onFocus={e => {
+                if (e.target.autocomplete) {
+                  e.target.autocomplete = 'nope'
+                }
+              }}
               onChange={(value) => {
                 this.countrySelected(value)
               }}
@@ -154,6 +168,12 @@ class UserBillingAddressInputView extends React.Component {
               label="State"
               placeholder="State"
               options={this.state.states}
+              value={{ label: this.state.selectedStateName, value: this.state.selectedStateName }}
+              onFocus={e => {
+                if (e.target.autocomplete) {
+                  e.target.autocomplete = 'nope'
+                }
+              }}
               onChange={(value) => {
                 this.stateSelected(value)
               }}
@@ -168,6 +188,12 @@ class UserBillingAddressInputView extends React.Component {
               label="Cities"
               placeholder="City"
               options={this.state.cities}
+              value={{ label: this.state.selectedCityName, value: this.state.selectedCityName }}
+              onFocus={e => {
+                if (e.target.autocomplete) {
+                  e.target.autocomplete = 'nope'
+                }
+              }}
               onChange={(value) => {
                 this.citySelected(value)
               }}
@@ -208,18 +234,19 @@ class UserBillingAddressInputView extends React.Component {
             style={styles.textInput}
             placeholder="Zip code"
             placeholderTextColor="#003f5c"
+            value={this.state.zipCode}
             onChangeText={zipCode => this.zipCodeSelected(zipCode)}
             maxLength={userInputFieldMaxCharacter}
           />
         </View>
         {this.props.zipCodeEmpty &&
-            <View>
-              <Text style={styles.errorText}>
-                Please fill in your zip/postal code *
-              </Text>
-              <br></br>
-            </View>
-          }
+          <View>
+            <Text style={styles.errorText}>
+              Please fill in your zip/postal code *
+            </Text>
+            <br></br>
+          </View>
+        }
       </View>
     )
   }

@@ -8,7 +8,7 @@ import CappedDatePicker from '../atoms/CappedDatePicker'
 import DateFormatter from '../../utils/DateFormatter'
 import { userInputFieldMaxCharacter } from '../../utils/user_input_config/UserInputConfig'
 import { mockingConfig } from '../../utils/debug_configuration/MockingConfig'
-import AccountCreationPageMock from '../../mocking/AccountCreationPageMock'
+import AccountCreationBasicDataMock from '../../mocking/AccountCreationBasicDataMock'
 
 class AccountBasicInfoInputView extends React.Component {
   constructor (props) {
@@ -43,7 +43,7 @@ class AccountBasicInfoInputView extends React.Component {
     }
 
     if (mockingConfig) {
-      AccountCreationPageMock(this)
+      AccountCreationBasicDataMock(this)
     }
   }
 
@@ -65,7 +65,7 @@ class AccountBasicInfoInputView extends React.Component {
   }
 
   setUserEmail (email) {
-    this.setState({ email })
+    this.setState({ emailAddress: email })
     this.state.userEmailGrabber(email)
   }
 
@@ -179,7 +179,6 @@ class AccountBasicInfoInputView extends React.Component {
         <PhoneInput
           placeholder="Telephone number"
           defaultCountry="US"
-          // defaultValue={this.state.telephoneNumber}
           value={this.state.telephoneNumber}
           onChange={telephoneNumber => this.setTelephoneNumber(telephoneNumber)}
           inputComponent={TextInput}
