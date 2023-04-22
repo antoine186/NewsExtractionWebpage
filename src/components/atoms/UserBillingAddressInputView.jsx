@@ -47,6 +47,12 @@ class UserBillingAddressInputView extends React.Component {
 
     if (mockingConfig) {
       AccountCreationAddressMock(this)
+      this.addressLine1Selected(this.state.addressLine1)
+      this.addressLine2Selected(this.state.addressLine2)
+      this.mockedCountrySelected(this.state.selectedCountryName, this.state.selectedCountryCode)
+      this.mockedStateSelected(this.state.selectedStateName, this.state.selectedStateCode, this.state.selectedCountryCode)
+      this.mockedCitySelected(this.state.selectedCityName)
+      this.zipCodeSelected(this.state.zipCode)
     }
   }
 
@@ -74,6 +80,20 @@ class UserBillingAddressInputView extends React.Component {
     this.state.selectedCountryGrabber(selectedCountry.name, countryCode)
   }
 
+  mockedCountrySelected (selectedCountryName, selectedCountryCode) {
+    const countryCode = selectedCountryCode
+
+    const updatedStates = State
+      .getStatesOfCountry(countryCode)
+      .map((state) => ({ label: state.name, value: state.id, ...state }))
+
+    this.setState({ states: updatedStates })
+    this.setState({ selectedCountryCode: countryCode })
+    this.setState({ selectedCountryName: selectedCountryName })
+
+    this.state.selectedCountryGrabber(selectedCountryName, selectedCountryCode)
+  }
+
   stateSelected (selectedState) {
     const updatedCities = City
       .getCitiesOfState(this.state.selectedCountryCode, selectedState.isoCode)
@@ -86,10 +106,28 @@ class UserBillingAddressInputView extends React.Component {
     this.state.selectedStateGrabber(selectedState.name, selectedState.isoCode)
   }
 
+  mockedStateSelected (selectedStateName, selectedStateCode, selectedCountryCode) {
+    const updatedCities = City
+      .getCitiesOfState(selectedCountryCode, selectedStateCode)
+      .map((city) => ({ label: city.name, value: city.id, ...city }))
+
+    this.setState({ cities: updatedCities })
+    this.setState({ selectedStateCode: selectedStateCode })
+    this.setState({ selectedStateName: selectedStateName })
+
+    this.state.selectedStateGrabber(selectedStateName, selectedStateCode)
+  }
+
   citySelected (selectedCity) {
     this.setState({ selectedCityName: selectedCity.name })
 
     this.state.selectedCityGrabber(selectedCity.name)
+  }
+
+  mockedCitySelected (selectedCityName) {
+    this.setState({ selectedCityName: selectedCityName })
+
+    this.state.selectedCityGrabber(selectedCityName)
   }
 
   zipCodeSelected (zipCode) {
