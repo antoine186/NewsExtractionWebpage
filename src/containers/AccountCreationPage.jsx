@@ -8,6 +8,8 @@ import { isValidPhoneNumber } from 'react-phone-number-input'
 import PasswordValidate from '../utils/PasswordValidate'
 import { setAccountData } from '../store/Slices/AccountDataSlice'
 import { connect } from 'react-redux'
+import TelephoneNumberSplitter from '../utils/TelephoneNumberSplitter'
+import AccountCreationStatePayloadExtract from '../utils/account_creation_helpers/AccountCreationStatePayloadExtract'
 
 class AccountCreationPage extends React.Component {
   constructor (props) {
@@ -21,6 +23,7 @@ class AccountCreationPage extends React.Component {
       confirmedPassword: this.props.confirmedPassword,
       dateBirth: this.props.dateBirth,
       telephoneNumber: this.props.telephoneNumber,
+      telephoneAreaCode: this.props.telephoneAreaCode,
       selectedCountryName: this.props.selectedCountryName,
       selectedCountryCode: this.props.selectedCountryCode,
       selectedStateCode: this.props.selectedStateCode,
@@ -105,6 +108,7 @@ class AccountCreationPage extends React.Component {
 
   handleSubmit () {
     let handleSubmitProceed = true
+    let parseTelephoneNumberObject
 
     if (this.state.firstName === undefined) {
       handleSubmitProceed = false
@@ -150,6 +154,8 @@ class AccountCreationPage extends React.Component {
         this.setState({ validTelephone: false })
       } else {
         this.setState({ validTelephone: true })
+
+        parseTelephoneNumberObject = TelephoneNumberSplitter(this.state.telephoneNumber)
       }
 
       this.setState({ telephoneEmpty: false })
@@ -218,8 +224,8 @@ class AccountCreationPage extends React.Component {
     }
 
     if (handleSubmitProceed) {
-      this.props.setAccountData(this.state)
-      console.log('We submitted account creation')
+      const accountCreationData = AccountCreationStatePayloadExtract(this, parseTelephoneNumberObject.formattedPhoneNumber, parseTelephoneNumberObject.telephoneAreaCode)
+      this.props.setAccountData(accountCreationData)
     }
   }
 
