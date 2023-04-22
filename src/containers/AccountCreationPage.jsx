@@ -10,6 +10,8 @@ import { setAccountData } from '../store/Slices/AccountDataSlice'
 import { connect } from 'react-redux'
 import TelephoneNumberSplitter from '../utils/TelephoneNumberSplitter'
 import AccountCreationStatePayloadExtract from '../utils/account_creation_helpers/AccountCreationStatePayloadExtract'
+import { api, basicAccountCreateUrl } from '../utils/backend_configuration/BackendConfig'
+import { mockingConfig } from '../utils/debug_configuration/MockingConfig'
 
 class AccountCreationPage extends React.Component {
   constructor (props) {
@@ -225,7 +227,25 @@ class AccountCreationPage extends React.Component {
 
     if (handleSubmitProceed) {
       const accountCreationData = AccountCreationStatePayloadExtract(this, parseTelephoneNumberObject.formattedPhoneNumber, parseTelephoneNumberObject.telephoneAreaCode)
-      this.props.setAccountData(accountCreationData)
+
+      if (mockingConfig) {
+        //
+      } else {
+        api.post(basicAccountCreateUrl, {
+          accountCreationData
+        }, {
+          withCredentials: true
+        }
+        ).then(response => {
+          if (response.data) {
+            this.props.setAccountData(accountCreationData)
+            // navigate('/')
+          } else {
+            // DO SOMETHING HERE TO HANDLE ACCOUNT CREATION FAILURE
+          }
+        }
+        )
+      }
     }
   }
 
@@ -278,5 +298,5 @@ const mapDispatchToProps = (dispatch) => {
   return {
     setAccountData: (value) => dispatch(setAccountData(value))
   }
-};
+}
 export default connect(null, mapDispatchToProps)(AccountCreationPage)

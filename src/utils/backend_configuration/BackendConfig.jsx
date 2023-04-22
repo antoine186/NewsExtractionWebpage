@@ -5,6 +5,7 @@ export const backendUrl = 'http://localhost:80/api'
 export const loginAuthUrl = '/auth-login'
 export const sessionAuthUrl = '/session-validate'
 export const searchUrl = '/search'
+export const basicAccountCreateUrl = '/basic-account-create'
 
 export const api = axios.create({
   baseURL: backendUrl
