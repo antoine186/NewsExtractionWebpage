@@ -219,6 +219,7 @@ class AccountCreationPage extends React.Component {
 
     if (handleSubmitProceed) {
       this.props.setAccountData(this.state)
+      console.log('We submitted account creation')
     }
   }
 

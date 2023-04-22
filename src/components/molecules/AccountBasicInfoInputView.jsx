@@ -44,6 +44,13 @@ class AccountBasicInfoInputView extends React.Component {
 
     if (mockingConfig) {
       AccountCreationBasicDataMock(this)
+      this.setFirstName(this.state.firstName)
+      this.setLastName(this.state.lastName)
+      this.mockedDateOfBirthSelected(this.state.dateBirth)
+      this.setUserEmail(this.state.emailAddress)
+      this.setTelephoneNumber(this.state.telephoneNumber)
+      this.setPassword(this.state.password)
+      this.setConfirmedPassword(this.state.confirmedPassword)
     }
   }
 
@@ -62,6 +69,11 @@ class AccountBasicInfoInputView extends React.Component {
     const selectedDateFormatted = DateFormatter(selectedDate)
     this.setState({ dateBirth: selectedDateFormatted })
     this.state.dateBirthGrabber(selectedDateFormatted)
+  }
+
+  mockedDateOfBirthSelected (dateBirth) {
+    this.setState({ dateBirth: dateBirth })
+    this.state.dateBirthGrabber(dateBirth)
   }
 
   setUserEmail (email) {
