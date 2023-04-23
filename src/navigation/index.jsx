@@ -7,6 +7,7 @@ import { store, persistor } from '../store/Store'
 import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react'
 import AccountCreationPage from '../containers/AccountCreationPage'
+import PaymentPage from '../containers/PaymentPage'
 
 function App () {
   return (
@@ -19,6 +20,7 @@ function App () {
                             <Route index element={<EmotionalSearchPage />} />
                             <Route path="login" element={<Login />} />
                             <Route path="account-create" element={<AccountCreationPage />}/>
+                            <Route path="payment" element={<PaymentPage />} />
                         </Routes>
                     </HashRouter>
                 </React.StrictMode>

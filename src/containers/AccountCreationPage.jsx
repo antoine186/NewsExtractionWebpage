@@ -12,6 +12,7 @@ import TelephoneNumberSplitter from '../utils/TelephoneNumberSplitter'
 import AccountCreationStatePayloadExtract from '../utils/account_creation_helpers/AccountCreationStatePayloadExtract'
 import { api, basicAccountCreateUrl } from '../utils/backend_configuration/BackendConfig'
 import { mockingConfig } from '../utils/debug_configuration/MockingConfig'
+import { Navigate } from 'react-router-dom'
 
 class AccountCreationPage extends React.Component {
   constructor (props) {
@@ -50,7 +51,8 @@ class AccountCreationPage extends React.Component {
       countryEmpty: false,
       stateEmpty: false,
       cityEmpty: false,
-      zipCodeEmpty: false
+      zipCodeEmpty: false,
+      goToPayment: false
     }
 
     this.handleSubmit = this.handleSubmit.bind(this)
@@ -230,8 +232,9 @@ class AccountCreationPage extends React.Component {
     if (handleSubmitProceed) {
       const accountCreationData = AccountCreationStatePayloadExtract(this, parseTelephoneNumberObject.formattedPhoneNumber, parseTelephoneNumberObject.telephoneAreaCode)
 
-      if (!mockingConfig) {
-        //
+      if (mockingConfig) {
+        this.props.setAccountData(accountCreationData)
+        this.setState({ goToPayment: true })
       } else {
         api.post(basicAccountCreateUrl, {
           accountCreationData
@@ -257,8 +260,10 @@ class AccountCreationPage extends React.Component {
   }
 
   render () {
-    return (
+    if (!this.state.goToPayment) {
+      return (
       <View style={styles.container}>
+        <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0" />
         <AccountBasicInfoInputView
           firstNameGrabber={this.firstNameGrabber.bind(this)}
           lastNameGrabber={this.lastNameGrabber.bind(this)}
@@ -299,7 +304,15 @@ class AccountCreationPage extends React.Component {
           <Text>Next</Text>
         </TouchableOpacity>
       </View>
-    )
+      )
+    } else {
+      return (
+        <View>
+          <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0" />
+          <Navigate to='/payment' />
+        </View>
+      )
+    }
   }
 }
 

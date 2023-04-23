@@ -21,7 +21,6 @@ const CARD_ELEMENT_OPTIONS = {
 }
 
 class CardInput extends React.Component {
-
   onChange (value) {
     console.log(value)
   }
