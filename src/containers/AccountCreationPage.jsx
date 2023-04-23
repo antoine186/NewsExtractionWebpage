@@ -250,7 +250,7 @@ class AccountCreationPage extends React.Component {
           if (response.data.operation_success) {
             this.props.setAccountData(accountCreationData, this.props.setStripeCustomerId)
 
-            StripeCustomerCreate(accountCreationData)
+            StripeCustomerCreate(accountCreationData, this.props.setStripeCustomerId)
 
             this.setState({ goToPayment: true })
           } else {
