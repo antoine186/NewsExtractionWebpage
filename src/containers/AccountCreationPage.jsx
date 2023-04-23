@@ -244,7 +244,7 @@ class AccountCreationPage extends React.Component {
         ).then(response => {
           if (response.data.operation_success) {
             this.props.setAccountData(accountCreationData)
-            // navigate('/')
+            this.setState({ goToPayment: true })
           } else {
             if (response.data.error_message === 'The account associated with your email already exists') {
               this.setState({ emailAlreadyExists: true })
