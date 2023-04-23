@@ -16,8 +16,8 @@ export const AccountDataSlice = createSlice({
     setAccountData: (state, value) => {
       state.accountData = value
     },
-    clearAccountData: (state, value) => {
-      state.accountData = value
+    clearAccountData: (state) => {
+      state.accountData = {}
     }
   },
 })

@@ -3,6 +3,9 @@ import { Elements } from '@stripe/react-stripe-js'
 import CardInput from '../components/atoms/CardInput'
 import { loadStripe } from '@stripe/stripe-js'
 import { testStripePublicKey } from '../utils/stripe_configuration/StripeConfig'
+import { TouchableOpacity, Text, View, Image, TextInput } from 'react-native'
+import styles from '../utils/style_guide/AccountDetailsInputPageStyle'
+import { connect } from 'react-redux'
 
 class PaymentPage extends Component {
   constructor (props) {
@@ -17,11 +20,28 @@ class PaymentPage extends Component {
 
   render () {
     return (
-        <Elements stripe={this.state.stripePromise}>
-            <CardInput />
-        </Elements>
+        <View style={styles.container}>
+            <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0" />
+            <Text style={styles.titleText}>
+                Your Payment Details
+            </Text>
+            <br></br>
+            <br></br>
+            <br></br>
+            <View style={styles.stripeCardElement}>
+                <Elements stripe={this.state.stripePromise}>
+                    <CardInput />
+                </Elements>
+            </View>
+        </View>
     )
   }
 }
 
-export default PaymentPage
+const mapStateToProps = state => {
+  return {
+    accountData: state.accountData
+  }
+}
+
+export default connect(mapStateToProps)(PaymentPage)

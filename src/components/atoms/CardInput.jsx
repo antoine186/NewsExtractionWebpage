@@ -21,13 +21,23 @@ const CARD_ELEMENT_OPTIONS = {
 }
 
 class CardInput extends React.Component {
+  constructor (props) {
+    super(props)
+
+    this.state = {
+    }
+  }
+
   onChange (value) {
     console.log(value)
   }
 
   render () {
     return (
-      <CardElement options={CARD_ELEMENT_OPTIONS} onChange={value => this.onChange(value)} />
+      <CardElement
+        options={CARD_ELEMENT_OPTIONS}
+        onChange={value => this.onChange(value)}
+      />
     )
   }
 }
