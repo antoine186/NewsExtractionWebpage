@@ -15,6 +15,7 @@ import { mockingConfig } from '../utils/debug_configuration/MockingConfig'
 import { Navigate } from 'react-router-dom'
 import StripeCustomerCreate from '../utils/account_creation_helpers/StripeCustomerCreate'
 import { setStripeCustomerId } from '../store/Slices/StripeCustomerIdSlice'
+import { setstripeSubscription } from '../store/Slices/StripeSubscriptionSlice'
 
 class AccountCreationPage extends React.Component {
   constructor (props) {
@@ -237,7 +238,8 @@ class AccountCreationPage extends React.Component {
       if (mockingConfig) {
         this.props.setAccountData(accountCreationData)
 
-        StripeCustomerCreate(accountCreationData, this.props.setStripeCustomerId)
+        StripeCustomerCreate(accountCreationData, this.props.setStripeCustomerId,
+          this.props.setstripeSubscription)
 
         this.setState({ goToPayment: true })
       } else {
@@ -250,7 +252,8 @@ class AccountCreationPage extends React.Component {
           if (response.data.operation_success) {
             this.props.setAccountData(accountCreationData, this.props.setStripeCustomerId)
 
-            StripeCustomerCreate(accountCreationData, this.props.setStripeCustomerId)
+            StripeCustomerCreate(accountCreationData, this.props.setStripeCustomerId,
+              this.props.setstripeSubscription)
 
             this.setState({ goToPayment: true })
           } else {
@@ -327,7 +330,8 @@ class AccountCreationPage extends React.Component {
 const mapDispatchToProps = (dispatch) => {
   return {
     setAccountData: (value) => dispatch(setAccountData(value)),
-    setStripeCustomerId: (value) => dispatch(setStripeCustomerId(value))
+    setStripeCustomerId: (value) => dispatch(setStripeCustomerId(value)),
+    setstripeSubscription: (value) => dispatch(setstripeSubscription(value))
   }
 }
 export default connect(null, mapDispatchToProps)(AccountCreationPage)

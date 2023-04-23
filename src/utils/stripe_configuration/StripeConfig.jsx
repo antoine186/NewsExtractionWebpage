@@ -1,2 +1,3 @@
 
-export const testStripePublicKey = 'pk_test_51MyG0LFAAs2DFWSVSYjOg0bO20EGAVi3LDtGBypqn3ScKzcn9fV9FpC0QmMHWNw9L831L3R1X7xo4Xf6K2yplsh600khIw33yT'
+export const stripePublicKey = 'pk_test_51MyG0LFAAs2DFWSVSYjOg0bO20EGAVi3LDtGBypqn3ScKzcn9fV9FpC0QmMHWNw9L831L3R1X7xo4Xf6K2yplsh600khIw33yT'
+export const basicSubscriptionPriceId = 'price_1MyHTjFAAs2DFWSVFgOtB42j'

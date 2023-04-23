@@ -7,6 +7,7 @@ export const sessionAuthUrl = '/session-validate'
 export const searchUrl = '/search'
 export const basicAccountCreateUrl = '/basic-account-create'
 export const stripeCustomerCreate = '/stripe-customer-create'
+export const subscriptionCreate = '/subscription_create'
 
 export const api = axios.create({
   baseURL: backendUrl

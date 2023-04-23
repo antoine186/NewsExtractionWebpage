@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Elements } from '@stripe/react-stripe-js'
 import CardInput from '../components/atoms/CardInput'
 import { loadStripe } from '@stripe/stripe-js'
-import { testStripePublicKey } from '../utils/stripe_configuration/StripeConfig'
+import { stripePublicKey } from '../utils/stripe_configuration/StripeConfig'
 import { TouchableOpacity, Text, View, Image, TextInput } from 'react-native'
 import styles from '../utils/style_guide/AccountDetailsInputPageStyle'
 import { connect } from 'react-redux'
@@ -11,7 +11,7 @@ class PaymentPage extends Component {
   constructor (props) {
     super(props)
 
-    const stripePromise = loadStripe(testStripePublicKey)
+    const stripePromise = loadStripe(stripePublicKey)
 
     this.state = {
       stripePromise

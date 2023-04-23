@@ -6,11 +6,13 @@ import thunk from 'redux-thunk'
 import { combineReducers } from 'redux'
 import AccountDataReducer from './Slices/AccountDataSlice'
 import StripeCustomerIdReducer from './Slices/StripeCustomerIdSlice'
+import StripeSubscriptionReducer from './Slices/StripeSubscriptionSlice'
 
 const rootReducer = combineReducers({
   userSession: userSessionReducer,
   accountData: AccountDataReducer,
-  clearStripeCustomerId: StripeCustomerIdReducer
+  stripeCustomerId: StripeCustomerIdReducer,
+  stripeSubscription: StripeSubscriptionReducer
 })
 
 const persistConfig = {
@@ -19,7 +21,8 @@ const persistConfig = {
   whiteList: [
     'userSession',
     'accountData',
-    'clearStripeCustomerId'
+    'stripeCustomerId',
+    'stripeSubscription'
   ]
 }
 

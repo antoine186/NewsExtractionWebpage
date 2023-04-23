@@ -5,14 +5,14 @@ import styles from '../../utils/style_guide/AccountDetailsInputPageStyle'
 import CardInput from './CardInput'
 import { Elements } from '@stripe/react-stripe-js'
 import { loadStripe } from '@stripe/stripe-js'
-import { testStripePublicKey } from '../../utils/stripe_configuration/StripeConfig'
+import { stripePublicKey } from '../../utils/stripe_configuration/StripeConfig'
 
 class UserPaymentAndBillingInputView extends React.Component {
   constructor (props) {
     super(props)
 
     this.state = {
-      stripePromise: loadStripe(testStripePublicKey)
+      stripePromise: loadStripe(stripePublicKey)
     }
   }
 
