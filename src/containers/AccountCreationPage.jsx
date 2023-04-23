@@ -37,6 +37,8 @@ class AccountCreationPage extends React.Component {
       firstNameEmpty: false,
       lastNameEmpty: false,
       emailEmpty: false,
+      emailAlreadyExists: false,
+      somethingWentWrong: false,
       validEmail: true,
       telephoneEmpty: false,
       validTelephone: true,
@@ -228,7 +230,7 @@ class AccountCreationPage extends React.Component {
     if (handleSubmitProceed) {
       const accountCreationData = AccountCreationStatePayloadExtract(this, parseTelephoneNumberObject.formattedPhoneNumber, parseTelephoneNumberObject.telephoneAreaCode)
 
-      if (mockingConfig) {
+      if (!mockingConfig) {
         //
       } else {
         api.post(basicAccountCreateUrl, {
@@ -237,11 +239,16 @@ class AccountCreationPage extends React.Component {
           withCredentials: true
         }
         ).then(response => {
-          if (response.data) {
+          if (response.data.operation_success) {
             this.props.setAccountData(accountCreationData)
             // navigate('/')
           } else {
-            // DO SOMETHING HERE TO HANDLE ACCOUNT CREATION FAILURE
+            if (response.data.error_message === 'The account associated with your email already exists') {
+              this.setState({ emailAlreadyExists: true })
+            } else if (response.data.error_message === 'Something went wrong, please try again later') {
+              this.setState({ somethingWentWrong: true })
+              this.setState({ emailAlreadyExists: false })
+            }
           }
         }
         )
@@ -264,6 +271,8 @@ class AccountCreationPage extends React.Component {
           lastNameEmpty={this.state.lastNameEmpty}
           dateBirthEmpty={this.state.dateBirthEmpty}
           emailEmpty={this.state.emailEmpty}
+          emailAlreadyExists={this.state.emailAlreadyExists}
+          somethingWentWrong={this.state.somethingWentWrong}
           validEmail={this.state.validEmail}
           telephoneEmpty={this.state.telephoneEmpty}
           validTelephone={this.state.validTelephone}

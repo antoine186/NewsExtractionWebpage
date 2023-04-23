@@ -34,6 +34,8 @@ class AccountBasicInfoInputView extends React.Component {
       lastNameEmpty: this.props.lastNameEmpty,
       dateBirthEmpty: this.props.dateBirthEmpty,
       emailEmpty: this.props.emailEmpty,
+      emailAlreadyExists: this.props.emailAlreadyExists,
+      somethingWentWrong: this.props.somethingWentWrong,
       validEmail: this.props.validEmail,
       telephoneEmpty: this.props.telephoneEmpty,
       validTelephone: this.props.validTelephone,
@@ -184,6 +186,14 @@ class AccountBasicInfoInputView extends React.Component {
           <View>
             <Text style={styles.errorText}>
               Please enter a valid email address *
+            </Text>
+            <br></br>
+          </View>
+        }
+        {this.props.emailAlreadyExists &&
+          <View>
+            <Text style={styles.errorText}>
+              The account associated with your email already exists *
             </Text>
             <br></br>
           </View>
