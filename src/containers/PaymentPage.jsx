@@ -6,6 +6,7 @@ import { stripePublicKey } from '../utils/stripe_configuration/StripeConfig'
 import { TouchableOpacity, Text, View, Image, TextInput } from 'react-native'
 import styles from '../utils/style_guide/AccountDetailsInputPageStyle'
 import { connect } from 'react-redux'
+import { Helmet } from "react-helmet"
 
 class PaymentPage extends Component {
   constructor (props) {
@@ -20,20 +21,23 @@ class PaymentPage extends Component {
 
   render () {
     return (
-        <View style={styles.container}>
-            <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0" />
-            <Text style={styles.titleText}>
-                Your Payment Details
-            </Text>
-            <br></br>
-            <br></br>
-            <br></br>
-            <View style={styles.stripeCardElement}>
-                <Elements stripe={this.state.stripePromise}>
-                    <CardInput />
-                </Elements>
-            </View>
+      <View style={styles.container}>
+        <Helmet>
+          <script src="https://js.stripe.com/v3/"></script>
+          <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0" />
+        </Helmet>
+        <Text style={styles.titleText}>
+          Your Payment Details
+        </Text>
+        <br></br>
+        <br></br>
+        <br></br>
+        <View style={styles.stripeCardElement}>
+          <Elements stripe={this.state.stripePromise}>
+            <CardInput />
+          </Elements>
         </View>
+      </View>
     )
   }
 }

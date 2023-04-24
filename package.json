@@ -24,6 +24,7 @@
     "rc-table": "^7.31.1",
     "react": "18.2.0",
     "react-dom": "^18.2.0",
+    "react-helmet": "^6.1.0",
     "react-native": "0.71.3",
     "react-native-viewport-units": "^0.0.5",
     "react-native-web": "^0.18.12",
