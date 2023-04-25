@@ -106,7 +106,7 @@ class EmotionalSearchPage extends Component {
     } else {
       return (
         <View>
-        <TopBar />
+        <TopBar settingsEnabled={true} />
         <View style={styles.container}>
           <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0" />
             <View style={styles.header}>

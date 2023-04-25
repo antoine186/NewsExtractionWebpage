@@ -6,7 +6,7 @@ import TopBar from "../molecules/TopBar"
 function Completion (props) {
   return (
     <View style={styles.container}>
-    <TopBar />
+    <TopBar settingsEnabled={false} />
     <View style={styles.container}>
       <h1> Thank You & Welcome to Emotional Machines! 🎉</h1>
     </View>

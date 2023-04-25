@@ -25,7 +25,7 @@ class PaymentPage extends Component {
   render () {
     return (
       <View style={styles.container}>
-      <TopBar />
+      <TopBar settingsEnabled={false} />
         <View style={styles.container}>
           <Helmet>
             <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0" />

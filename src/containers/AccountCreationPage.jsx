@@ -266,7 +266,7 @@ class AccountCreationPage extends React.Component {
     if (!this.state.goToPayment) {
       return (
       <View style={styles.container}>
-      <TopBar />
+      <TopBar settingsEnabled={false} />
         <View style={styles.container}>
           <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0" />
           <AccountBasicInfoInputView

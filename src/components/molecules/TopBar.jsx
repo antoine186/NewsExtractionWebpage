@@ -9,7 +9,7 @@ import { StyleSheet, Text, View, TextInput, TouchableOpacity, Image } from 'reac
 const { vw, vh, vmin, vmax } = require('react-native-viewport-units')
 import SettingsDropDown from '../atoms/SettingsDropDown'
 
-export default function TopBar () {
+export default function TopBar (prop) {
   return (
     <View style={styles.container}>
       <MDBNavbar light bgColor='light' style={styles.allowOverflow}>
@@ -21,7 +21,9 @@ export default function TopBar () {
                   source={require('../../assets/images/EMOfficialLogo.png')}
                   href={`${window.location.origin}`}
               />
-              <SettingsDropDown style={styles.settings}/>
+              {prop.settingsEnabled &&
+                <SettingsDropDown style={styles.settings}/>
+              }
             </View>
           </MDBNavbarBrand>
         </MDBContainer>

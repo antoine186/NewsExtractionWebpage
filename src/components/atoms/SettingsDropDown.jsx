@@ -5,12 +5,15 @@ import MenuItem from '@mui/material/MenuItem'
 import FormControl from '@mui/material/FormControl'
 import Select, { SelectChangeEvent } from '@mui/material/Select'
 const { vw, vh, vmin, vmax } = require('react-native-viewport-units')
+import { useNavigate, Navigate } from 'react-router-dom'
 
 function SettingsDropDown () {
   const [setting, setSettings] = React.useState('')
+  const navigate = useNavigate()
 
   const handleChange = (event) => {
     setSettings(event.target.value)
+    navigate()
   }
 
   return (
