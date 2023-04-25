@@ -16,6 +16,7 @@ import { Navigate } from 'react-router-dom'
 import StripeCustomerCreate from '../utils/account_creation_helpers/StripeCustomerCreate'
 import { setStripeCustomerId } from '../store/Slices/StripeCustomerIdSlice'
 import { setstripeSubscription } from '../store/Slices/StripeSubscriptionSlice'
+import TopBar from '../components/molecules/TopBar'
 
 class AccountCreationPage extends React.Component {
   constructor (props) {
@@ -265,46 +266,49 @@ class AccountCreationPage extends React.Component {
     if (!this.state.goToPayment) {
       return (
       <View style={styles.container}>
-        <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0" />
-        <AccountBasicInfoInputView
-          firstNameGrabber={this.firstNameGrabber.bind(this)}
-          lastNameGrabber={this.lastNameGrabber.bind(this)}
-          userEmailGrabber={this.userEmailGrabber.bind(this)}
-          passwordGrabber={this.passwordGrabber.bind(this)}
-          confirmedPasswordGrabber={this.confirmedPasswordGrabber.bind(this)}
-          dateBirthGrabber={this.dateBirthGrabber.bind(this)}
-          telNumberGrabber={this.telNumberGrabber.bind(this)}
-          firstNameEmpty={this.state.firstNameEmpty}
-          lastNameEmpty={this.state.lastNameEmpty}
-          dateBirthEmpty={this.state.dateBirthEmpty}
-          emailEmpty={this.state.emailEmpty}
-          emailAlreadyExists={this.state.emailAlreadyExists}
-          somethingWentWrong={this.state.somethingWentWrong}
-          validEmail={this.state.validEmail}
-          telephoneEmpty={this.state.telephoneEmpty}
-          validTelephone={this.state.validTelephone}
-          passwordsMatch={this.state.passwordsMatch}
-          passwordFormatIncorrect={this.state.passwordFormatIncorrect}
-          passwordEmpty={this.state.passwordEmpty}
-        />
-        <br></br>
-        <UserBillingAddressInputView
-          selectedCountryGrabber={this.selectedCountryGrabber.bind(this)}
-          selectedStateGrabber={this.selectedStateGrabber.bind(this)}
-          selectedCityGrabber={this.selectedCityGrabber.bind(this)}
-          addressLine1Grabber={this.addressLine1Grabber.bind(this)}
-          addressLine2Grabber={this.addressLine2Grabber.bind(this)}
-          zipCodeGrabber={this.zipCodeGrabber.bind(this)}
-          addressLine1Empty={this.state.addressLine1Empty}
-          countryEmpty={this.state.countryEmpty}
-          stateEmpty={this.state.stateEmpty}
-          cityEmpty={this.state.cityEmpty}
-          zipCodeEmpty={this.state.zipCodeEmpty}
-        />
-        <br></br>
-        <TouchableOpacity style={styles.submitBtn} onPress={this.handleSubmit}>
-          <Text>Next</Text>
-        </TouchableOpacity>
+      <TopBar />
+        <View style={styles.container}>
+          <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0" />
+          <AccountBasicInfoInputView
+            firstNameGrabber={this.firstNameGrabber.bind(this)}
+            lastNameGrabber={this.lastNameGrabber.bind(this)}
+            userEmailGrabber={this.userEmailGrabber.bind(this)}
+            passwordGrabber={this.passwordGrabber.bind(this)}
+            confirmedPasswordGrabber={this.confirmedPasswordGrabber.bind(this)}
+            dateBirthGrabber={this.dateBirthGrabber.bind(this)}
+            telNumberGrabber={this.telNumberGrabber.bind(this)}
+            firstNameEmpty={this.state.firstNameEmpty}
+            lastNameEmpty={this.state.lastNameEmpty}
+            dateBirthEmpty={this.state.dateBirthEmpty}
+            emailEmpty={this.state.emailEmpty}
+            emailAlreadyExists={this.state.emailAlreadyExists}
+            somethingWentWrong={this.state.somethingWentWrong}
+            validEmail={this.state.validEmail}
+            telephoneEmpty={this.state.telephoneEmpty}
+            validTelephone={this.state.validTelephone}
+            passwordsMatch={this.state.passwordsMatch}
+            passwordFormatIncorrect={this.state.passwordFormatIncorrect}
+            passwordEmpty={this.state.passwordEmpty}
+          />
+          <br></br>
+          <UserBillingAddressInputView
+            selectedCountryGrabber={this.selectedCountryGrabber.bind(this)}
+            selectedStateGrabber={this.selectedStateGrabber.bind(this)}
+            selectedCityGrabber={this.selectedCityGrabber.bind(this)}
+            addressLine1Grabber={this.addressLine1Grabber.bind(this)}
+            addressLine2Grabber={this.addressLine2Grabber.bind(this)}
+            zipCodeGrabber={this.zipCodeGrabber.bind(this)}
+            addressLine1Empty={this.state.addressLine1Empty}
+            countryEmpty={this.state.countryEmpty}
+            stateEmpty={this.state.stateEmpty}
+            cityEmpty={this.state.cityEmpty}
+            zipCodeEmpty={this.state.zipCodeEmpty}
+          />
+          <br></br>
+          <TouchableOpacity style={styles.submitBtn} onPress={this.handleSubmit}>
+            <Text>Next</Text>
+          </TouchableOpacity>
+        </View>
       </View>
       )
     } else {

@@ -12,6 +12,7 @@ import ArticlesResultTableDataWrangler from './search_helper_functions/ArticlesR
 import ClipLoader from 'react-spinners/ClipLoader'
 import SearchOverallEmoResultTable from '../components/molecules/SearchOverallEmoResultTable'
 import EmoEngagementStringFormatter from './search_helper_functions/EmoEngagementStringFormatter'
+import TopBar from '../components/molecules/TopBar'
 
 function Link(props) {
   return <Text {...props} accessibilityRole="link" style={StyleSheet.compose(styles.link, props.style)} />
@@ -104,6 +105,8 @@ class EmotionalSearchPage extends Component {
       )
     } else {
       return (
+        <View>
+        <TopBar />
         <View style={styles.container}>
           <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0" />
             <View style={styles.header}>
@@ -178,6 +181,7 @@ class EmotionalSearchPage extends Component {
             }
             <SearchOverallEmoResultTable tableData={this.state.searchOverallEmoResultTableData} />
             <SearchArticlesResultTable tableData={this.state.searchArticlesResultTableData} />
+        </View>
         </View>
       )
     }
