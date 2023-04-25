@@ -110,13 +110,12 @@ class EmotionalSearchPage extends Component {
         <View style={styles.container}>
           <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0" />
             <View style={styles.header}>
-              <Text style={styles.title}>Emotional Machines (Beta - Please Use on Desktop Browser)</Text>
+              <Text style={styles.titleText}>Emotional Machines Search (Beta)</Text>
             </View>
             <View class="form-group form-row">
               <View class="col-10">
-                <Text style={styles.text}>
-                  Search Topic Emotions
-                </Text>
+                <br></br>
+                <br></br>
                 <TextInput
                   editable
                   multiline

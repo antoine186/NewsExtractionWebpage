@@ -17,6 +17,10 @@ export default function CheckoutForm () {
       return
     }
 
+    const user = await stripe.customers.retrieve(customerID);
+    const sub = user.subscriptions.data[0].id
+    stripe.subscriptions.del(sub, { at_period_end: false })
+
     setIsProcessing(true)
 
     const { error } = await stripe.confirmPayment({

@@ -20,6 +20,10 @@ const styles = StyleSheet.create({
     marginVertical: 1.2 * vw,
     textAlign: 'center'
   },
+  titleText: {
+    color: '#AD3978',
+    fontSize: 1.2 * vw
+  },
   text: {
     lineHeight: 1 * vw,
     fontSize: 0.8 * vw,
