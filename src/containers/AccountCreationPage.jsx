@@ -235,38 +235,29 @@ class AccountCreationPage extends React.Component {
     if (handleSubmitProceed) {
       const accountCreationData = AccountCreationStatePayloadExtract(this, parseTelephoneNumberObject.formattedPhoneNumber, parseTelephoneNumberObject.telephoneAreaCode)
 
-      if (mockingConfig) {
-        this.props.setAccountData(accountCreationData)
+      api.post(basicAccountCreateUrl, {
+        accountCreationData
+      }, {
+        withCredentials: true
+      }
+      ).then(response => {
+        if (response.data.operation_success) {
+          this.props.setAccountData(accountCreationData)
 
-        StripeCustomerCreate(accountCreationData, this.props.setStripeCustomerId,
-          this.props.setstripeSubscription)
+          StripeCustomerCreate(accountCreationData, this.props.setStripeCustomerId,
+            this.props.setstripeSubscription)
 
-        this.setState({ goToPayment: true })
-      } else {
-        api.post(basicAccountCreateUrl, {
-          accountCreationData
-        }, {
-          withCredentials: true
-        }
-        ).then(response => {
-          if (response.data.operation_success) {
-            this.props.setAccountData(accountCreationData, this.props.setStripeCustomerId)
-
-            StripeCustomerCreate(accountCreationData, this.props.setStripeCustomerId,
-              this.props.setstripeSubscription)
-
-            this.setState({ goToPayment: true })
-          } else {
-            if (response.data.error_message === 'The account associated with your email already exists') {
-              this.setState({ emailAlreadyExists: true })
-            } else if (response.data.error_message === 'Something went wrong, please try again later') {
-              this.setState({ somethingWentWrong: true })
-              this.setState({ emailAlreadyExists: false })
-            }
+          this.setState({ goToPayment: true })
+        } else {
+          if (response.data.error_message === 'The account associated with your email already exists') {
+            this.setState({ emailAlreadyExists: true })
+          } else if (response.data.error_message === 'Something went wrong, please try again later') {
+            this.setState({ somethingWentWrong: true })
+            this.setState({ emailAlreadyExists: false })
           }
         }
-        )
       }
+      )
     }
   }
 

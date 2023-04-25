@@ -8,6 +8,7 @@ import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react'
 import AccountCreationPage from '../containers/AccountCreationPage'
 import PaymentPage from '../containers/PaymentPage'
+import Completion from '../components/atoms/Completion'
 
 function App () {
   return (
@@ -21,6 +22,7 @@ function App () {
                             <Route path="login" element={<Login />} />
                             <Route path="account-create" element={<AccountCreationPage />}/>
                             <Route path="payment" element={<PaymentPage />} />
+                            <Route path="completion" element={<Completion />}/>
                         </Routes>
                     </HashRouter>
                 </React.StrictMode>
