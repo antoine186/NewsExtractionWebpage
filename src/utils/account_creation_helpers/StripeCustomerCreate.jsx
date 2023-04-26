@@ -14,7 +14,7 @@ function StripeCustomerCreate (accountCreationData, setStripeCustomerId, setstri
       api.post(subscriptionCreate, {
         priceId: basicSubscriptionPriceId,
         stripeCustomerId: response.data.responsePayload.stripe_customer_id,
-        emailAddress: accountCreationData.payload.emailAddress
+        emailAddress: accountCreationData.emailAddress
       }, {
         withCredentials: true
       }
