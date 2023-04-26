@@ -10,6 +10,8 @@ import { Helmet } from "react-helmet"
 import { CardElement } from '@stripe/react-stripe-js'
 import CheckoutForm from '../components/atoms/CheckoutForm'
 import TopBar from '../components/molecules/TopBar'
+import { basicSubscriptionPricePerMonth } from '../utils/essential_numbers_strings/PaymentNumbersStrings'
+import CheckEmptyObject from '../utils/CheckEmptyObject'
 
 class PaymentPage extends Component {
   constructor (props) {
@@ -25,7 +27,7 @@ class PaymentPage extends Component {
   render () {
     return (
       <View style={styles.container}>
-      <TopBar settingsEnabled={false} />
+      <TopBar settingsEnabled={this.props.userSession.validated} />
         <View style={styles.container}>
           <Helmet>
             <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -33,6 +35,19 @@ class PaymentPage extends Component {
           <Text style={styles.titleText}>
             Your Payment Details
           </Text>
+          {(this.props.userSession.validated && CheckEmptyObject(this.props.stripeSubscription.stripeSubscription)) &&
+            <Text style={styles.titleText}>
+              You don't have an active subscription.
+              Please add your payment details to get a {basicSubscriptionPricePerMonth} USD per month subscription
+            </Text>
+          }
+          {(this.props.userSession.validated && !CheckEmptyObject(this.props.stripeSubscription.stripeSubscription)) &&
+            <Text style={styles.titleText}>
+            {console.log(this.props.stripeSubscription.stripeSubscription)}
+              You have an active subscription.
+              You can change your payment details here.
+            </Text>
+          }
           <br></br>
           <br></br>
           <br></br>
@@ -51,7 +66,8 @@ class PaymentPage extends Component {
 
 const mapStateToProps = state => {
   return {
-    stripeSubscription: state.stripeSubscription
+    stripeSubscription: state.stripeSubscription,
+    userSession: state.userSession
   }
 }
 

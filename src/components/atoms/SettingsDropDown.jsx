@@ -13,7 +13,10 @@ function SettingsDropDown () {
 
   const handleChange = (event) => {
     setSettings(event.target.value)
-    navigate()
+
+    if (event.target.value === 'subscription') {
+      navigate('/payment')
+    }
   }
 
   return (
