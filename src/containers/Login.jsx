@@ -2,13 +2,13 @@ import React, { useState } from 'react'
 import { StatusBar } from 'expo-status-bar'
 import { TouchableOpacity, Text, View, Image, TextInput } from 'react-native'
 import styles from '../utils/style_guide/LoginPageStyle'
-import { api, loginAuthUrl } from '../utils/backend_configuration/BackendConfig'
+import { api, loginAuthUrl, getSubscriptionId, getSubscriptionStatus } from '../utils/backend_configuration/BackendConfig'
 import { useSelector, useDispatch } from 'react-redux'
 import { validateUserSession } from '../store/Slices/UserSessionSlice'
 import { useNavigate, Navigate } from 'react-router-dom'
 import { userInputFieldMaxCharacter } from '../utils/user_input_config/UserInputConfig'
-import { getSubscriptionId } from '../utils/backend_configuration/BackendConfig'
-import { setAccountData } from '../store/Slices/AccountDataSlice'
+import { setValidSubscription } from '../store/Slices/ValidSubscriptionSlice'
+import { setstripeSubscription } from '../store/Slices/StripeSubscriptionSlice'
 
 function Login () {
   const [username, setUsername] = useState('')
@@ -35,8 +35,8 @@ function Login () {
     e.preventDefault()
 
     api.post(loginAuthUrl, {
-      username: username,
-      password: password
+      username,
+      password
     }, {
       withCredentials: true
     }
@@ -45,15 +45,32 @@ function Login () {
         dispatch(validateUserSession())
 
         api.post(getSubscriptionId, {
-          username: username
+          username
         }, {
           withCredentials: true
         }
         ).then(response => {
           if (response.data.operation_success) {
-            dispatch(setAccountData(response.data.responsePayload.stripe_subscription_id))
+            dispatch(setstripeSubscription(response.data.responsePayload))
+
+            api.post(getSubscriptionStatus, {
+              stripeSubscriptionId: response.data.responsePayload.stripe_subscription_id
+            }, {
+              withCredentials: true
+            }
+            ).then(response => {
+              if (response.data.operation_success) {
+                if (response.data.responsePayload.stripe_subscription_status === 'active' ||
+                response.data.responsePayload.stripe_subscription_status === 'trialing') {
+                  dispatch(setValidSubscription(true))
+                } else {
+                  dispatch(setValidSubscription(false))
+                }
+              } else { /* empty */ }
+            }
+            )
           } else {
-            dispatch(setAccountData('nosubscription'))
+            dispatch(setValidSubscription(false))
           }
         }
         )
@@ -67,6 +84,7 @@ function Login () {
   }
 
   function accountCreate () {
+    dispatch(setValidSubscription(false))
     navigate('/account-create')
   }
 

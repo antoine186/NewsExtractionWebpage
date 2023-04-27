@@ -13,10 +13,9 @@ import AccountCreationStatePayloadExtract from '../utils/account_creation_helper
 import { api, basicAccountCreateUrl } from '../utils/backend_configuration/BackendConfig'
 import { mockingConfig } from '../utils/debug_configuration/MockingConfig'
 import { Navigate } from 'react-router-dom'
+import TopBar from '../components/molecules/TopBar'
 import StripeCustomerCreate from '../utils/account_creation_helpers/StripeCustomerCreate'
 import { setStripeCustomerId } from '../store/Slices/StripeCustomerIdSlice'
-import { setstripeSubscription } from '../store/Slices/StripeSubscriptionSlice'
-import TopBar from '../components/molecules/TopBar'
 
 class AccountCreationPage extends React.Component {
   constructor (props) {
@@ -245,9 +244,7 @@ class AccountCreationPage extends React.Component {
         if (response.data.operation_success) {
           this.props.setAccountData(accountCreationData)
 
-          StripeCustomerCreate(accountCreationData, this.props.setStripeCustomerId,
-            this.props.setstripeSubscription)
-
+          StripeCustomerCreate(accountCreationData, this.props.setStripeCustomerId)
           this.setState({ goToPayment: true })
         } else {
           if (response.data.error_message === 'The account associated with your email already exists') {
@@ -325,8 +322,7 @@ class AccountCreationPage extends React.Component {
 const mapDispatchToProps = (dispatch) => {
   return {
     setAccountData: (value) => dispatch(setAccountData(value)),
-    setStripeCustomerId: (value) => dispatch(setStripeCustomerId(value)),
-    setstripeSubscription: (value) => dispatch(setstripeSubscription(value))
+    setStripeCustomerId: (value) => dispatch(setStripeCustomerId(value))
   }
 }
 export default connect(null, mapDispatchToProps)(AccountCreationPage)

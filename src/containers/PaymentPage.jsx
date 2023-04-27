@@ -1,18 +1,19 @@
 import React, { Component } from 'react'
 import { Elements } from '@stripe/react-stripe-js'
-import CardInput from '../components/atoms/CardInput'
 import { loadStripe } from '@stripe/stripe-js'
 import { stripePublicKey } from '../utils/stripe_configuration/StripeConfig'
 import { TouchableOpacity, Text, View, Image, TextInput } from 'react-native'
 import styles from '../utils/style_guide/AccountDetailsInputPageStyle'
 import { connect } from 'react-redux'
-import { Helmet } from "react-helmet"
-import { CardElement } from '@stripe/react-stripe-js'
+import { Helmet } from 'react-helmet'
 import CheckoutForm from '../components/atoms/CheckoutForm'
 import TopBar from '../components/molecules/TopBar'
 import { basicSubscriptionPricePerMonth } from '../utils/essential_numbers_strings/PaymentNumbersStrings'
-import CheckEmptyObject from '../utils/CheckEmptyObject'
-import { api, getSubscriptionStatus } from '../utils/backend_configuration/BackendConfig'
+import { api, getSubscriptionStatus, getSubscriptionId, subscriptionCreate } from '../utils/backend_configuration/BackendConfig'
+import { setAccountData } from '../store/Slices/AccountDataSlice'
+import { setstripeSubscription } from '../store/Slices/StripeSubscriptionSlice'
+import { setValidSubscription } from '../store/Slices/ValidSubscriptionSlice'
+import { basicSubscriptionPriceId } from '../utils/stripe_configuration/StripeConfig'
 
 class PaymentPage extends Component {
   constructor (props) {
@@ -22,26 +23,51 @@ class PaymentPage extends Component {
 
     this.state = {
       stripePromise,
-      activeSubscription: true
+      paymentSucceeded: false
     }
 
-    this.getSubscriptionStatus()
-  }
+    api.post(getSubscriptionId, {
+      username: this.props.accountData.accountData.payload.emailAddress
+    }, {
+      withCredentials: true
+    }
+    ).then(response => {
+      if (response.data.operation_success) {
+        this.props.setstripeSubscription(response.data.responsePayload)
 
-  getSubscriptionStatus () {
-    if (CheckEmptyObject(this.props.stripeSubscription.stripeSubscription)) {
-      this.setState({ activeSubscription: false })
-    } else {
-      api.post(getSubscriptionStatus, {
-        stripeSubscriptionId: this.props.stripeSubscription.stripeSubscription.payload.subscription_id
+        api.post(getSubscriptionStatus, {
+          stripeSubscriptionId: response.data.responsePayload.stripe_subscription_id
+        }, {
+          withCredentials: true
+        }
+        ).then(response => {
+          if (response.data.operation_success) {
+            if (response.data.responsePayload.stripe_subscription_status === 'active' ||
+            response.data.responsePayload.stripe_subscription_status === 'trialing') {
+              this.props.setValidSubscription(true)
+            } else {
+              this.props.setValidSubscription(false)
+            }
+          } else { /* empty */ }
+        }
+        )
+      } else {
+        setValidSubscription(false)
+      }
+    }
+    )
+
+    if (!this.props.validSubscription.validSubscription.payload) {
+      api.post(subscriptionCreate, {
+        priceId: basicSubscriptionPriceId,
+        stripeCustomerId: this.props.stripeCustomerId.stripeCustomerId.payload.stripe_customer_id,
+        emailAddress: this.props.accountData.accountData.payload.emailAddress
       }, {
         withCredentials: true
       }
       ).then(response => {
         if (response.data.operation_success) {
-          if (response.data.responsePayload.stripe_subscription_status === 'incomplete') {
-            this.setState({ activeSubscription: false })
-          }
+          this.props.setstripeSubscription(response.data.responsePayload)
         } else { /* empty */ }
       }
       )
@@ -59,13 +85,13 @@ class PaymentPage extends Component {
           <Text style={styles.titleText}>
             Your Payment Details
           </Text>
-          {(this.props.userSession.validated && !this.state.activeSubscription) &&
+          {(this.props.userSession.validated && !this.props.validSubscription.validSubscription.payload) &&
             <Text style={styles.titleText2}>
               You don't have an active subscription.
               Please add your payment details to get a {basicSubscriptionPricePerMonth} USD per month subscription
             </Text>
           }
-          {(this.props.userSession.validated && this.state.activeSubscription) &&
+          {(this.props.userSession.validated && this.props.validSubscription.validSubscription.payload) &&
             <Text style={styles.titleText2}>
             {console.log(this.props.stripeSubscription.stripeSubscription)}
               You have an active subscription.
@@ -75,12 +101,19 @@ class PaymentPage extends Component {
           <br></br>
           <br></br>
           <br></br>
-          {this.props.stripeSubscription.stripeSubscription.payload &&
-          <View style={styles.stripeCardElement}>
-            <Elements stripe={this.state.stripePromise} options={{ clientSecret: this.props.stripeSubscription.stripeSubscription.payload.client_secret }}>
-              <CheckoutForm />
-            </Elements>
-          </View>
+          {!this.props.validSubscription.validSubscription.payload &&
+            <View style={styles.stripeCardElement}>
+              <Elements stripe={this.state.stripePromise} options={{ clientSecret: this.props.stripeSubscription.stripeSubscription.payload.client_secret }}>
+                <CheckoutForm amendPaymentMethod={false} />
+              </Elements>
+            </View>
+          }
+          {this.props.validSubscription.validSubscription.payload &&
+            <View style={styles.stripeCardElement}>
+              <Elements stripe={this.state.stripePromise} options={{ clientSecret: this.props.stripeSubscription.stripeSubscription.payload.client_secret }}>
+                <CheckoutForm amendPaymentMethod={true} />
+              </Elements>
+            </View>
           }
         </View>
       </View>
@@ -91,8 +124,19 @@ class PaymentPage extends Component {
 const mapStateToProps = state => {
   return {
     stripeSubscription: state.stripeSubscription,
-    userSession: state.userSession
+    userSession: state.userSession,
+    accountData: state.accountData,
+    stripeCustomerId: state.stripeCustomerId,
+    validSubscription: state.validSubscription
   }
 }
 
-export default connect(mapStateToProps)(PaymentPage)
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setAccountData: (value) => dispatch(setAccountData(value)),
+    setstripeSubscription: (value) => dispatch(setstripeSubscription(value)),
+    setValidSubscription: (value) => dispatch(setValidSubscription(value))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(PaymentPage)

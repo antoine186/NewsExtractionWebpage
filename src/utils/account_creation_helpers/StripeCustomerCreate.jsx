@@ -1,7 +1,6 @@
-import { api, stripeCustomerCreate, subscriptionCreate } from '../backend_configuration/BackendConfig'
-import { basicSubscriptionPriceId } from '../stripe_configuration/StripeConfig'
+import { api, stripeCustomerCreate } from '../backend_configuration/BackendConfig'
 
-function StripeCustomerCreate (accountCreationData, setStripeCustomerId, setstripeSubscription) {
+function StripeCustomerCreate (accountCreationData, setStripeCustomerId) {
   api.post(stripeCustomerCreate, {
     accountCreationData
   }, {
@@ -9,22 +8,7 @@ function StripeCustomerCreate (accountCreationData, setStripeCustomerId, setstri
   }
   ).then(response => {
     if (response.data.operation_success) {
-      setStripeCustomerId(response.data.responsePayload.stripe_customer_id)
-
-      api.post(subscriptionCreate, {
-        priceId: basicSubscriptionPriceId,
-        stripeCustomerId: response.data.responsePayload.stripe_customer_id,
-        emailAddress: accountCreationData.emailAddress
-      }, {
-        withCredentials: true
-      }
-      ).then(response => {
-        if (response.data.operation_success) {
-          console.log(response.data.responsePayload)
-          setstripeSubscription(response.data.responsePayload)
-        } else { /* empty */ }
-      }
-      )
+      setStripeCustomerId(response.data.responsePayload)
     } else { /* empty */ }
   }
   )

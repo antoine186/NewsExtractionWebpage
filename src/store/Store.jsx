@@ -7,12 +7,14 @@ import { combineReducers } from 'redux'
 import AccountDataReducer from './Slices/AccountDataSlice'
 import StripeCustomerIdReducer from './Slices/StripeCustomerIdSlice'
 import StripeSubscriptionReducer from './Slices/StripeSubscriptionSlice'
+import ValidSubscriptionReducer from './Slices/ValidSubscriptionSlice'
 
 const rootReducer = combineReducers({
   userSession: userSessionReducer,
   accountData: AccountDataReducer,
   stripeCustomerId: StripeCustomerIdReducer,
-  stripeSubscription: StripeSubscriptionReducer
+  stripeSubscription: StripeSubscriptionReducer,
+  validSubscription: ValidSubscriptionReducer
 })
 
 const persistConfig = {
@@ -22,7 +24,8 @@ const persistConfig = {
     'userSession',
     'accountData',
     'stripeCustomerId',
-    'stripeSubscription'
+    'stripeSubscription',
+    'validSubscription'
   ]
 }
 

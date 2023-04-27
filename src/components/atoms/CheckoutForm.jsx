@@ -1,12 +1,21 @@
 import { PaymentElement, useStripe, useElements } from '@stripe/react-stripe-js'
 import React, { useState } from 'react'
+import { useSelector } from 'react-redux'
+import { api, storeNewSubscription } from '../../utils/backend_configuration/BackendConfig'
+import { setValidSubscription } from '../../store/Slices/ValidSubscriptionSlice'
+import { useDispatch } from 'react-redux'
 
-export default function CheckoutForm () {
+export default function CheckoutForm (props) {
   const stripe = useStripe()
   const elements = useElements()
 
   const [message, setMessage] = useState(null)
   const [isProcessing, setIsProcessing] = useState(false)
+
+  const accountData = useSelector(state => state.accountData)
+  const stripeSubscription = useSelector(state => state.stripeSubscription)
+
+  const dispatch = useDispatch()
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -16,10 +25,6 @@ export default function CheckoutForm () {
       // Make sure to disable form submission until Stripe.js has loaded.
       return
     }
-
-    const user = await stripe.customers.retrieve(customerID);
-    const sub = user.subscriptions.data[0].id
-    stripe.subscriptions.del(sub, { at_period_end: false })
 
     setIsProcessing(true)
 
@@ -36,6 +41,17 @@ export default function CheckoutForm () {
     } else {
       setMessage('An unexpected error occured.')
     }
+
+    api.post(storeNewSubscription, {
+      emailAddress: accountData.emailAddress,
+      stripeSubscriptionId: stripeSubscription.stripe_subscription_id,
+      subscriptionStatus: 'active'
+    }, {
+      withCredentials: true
+    }
+    )
+
+    dispatch(setValidSubscription(true))
 
     setIsProcessing(false)
   }
