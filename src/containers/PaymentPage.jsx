@@ -12,6 +12,7 @@ import CheckoutForm from '../components/atoms/CheckoutForm'
 import TopBar from '../components/molecules/TopBar'
 import { basicSubscriptionPricePerMonth } from '../utils/essential_numbers_strings/PaymentNumbersStrings'
 import CheckEmptyObject from '../utils/CheckEmptyObject'
+import { api, getSubscriptionStatus } from '../utils/backend_configuration/BackendConfig'
 
 class PaymentPage extends Component {
   constructor (props) {
@@ -20,7 +21,30 @@ class PaymentPage extends Component {
     const stripePromise = loadStripe(stripePublicKey)
 
     this.state = {
-      stripePromise
+      stripePromise,
+      activeSubscription: true
+    }
+
+    this.getSubscriptionStatus()
+  }
+
+  getSubscriptionStatus () {
+    if (CheckEmptyObject(this.props.stripeSubscription.stripeSubscription)) {
+      this.setState({ activeSubscription: false })
+    } else {
+      api.post(getSubscriptionStatus, {
+        stripeSubscriptionId: this.props.stripeSubscription.stripeSubscription.payload.subscription_id
+      }, {
+        withCredentials: true
+      }
+      ).then(response => {
+        if (response.data.operation_success) {
+          if (response.data.responsePayload.stripe_subscription_status === 'incomplete') {
+            this.setState({ activeSubscription: false })
+          }
+        } else { /* empty */ }
+      }
+      )
     }
   }
 
@@ -35,14 +59,14 @@ class PaymentPage extends Component {
           <Text style={styles.titleText}>
             Your Payment Details
           </Text>
-          {(this.props.userSession.validated && CheckEmptyObject(this.props.stripeSubscription.stripeSubscription)) &&
-            <Text style={styles.titleText}>
+          {(this.props.userSession.validated && !this.state.activeSubscription) &&
+            <Text style={styles.titleText2}>
               You don't have an active subscription.
               Please add your payment details to get a {basicSubscriptionPricePerMonth} USD per month subscription
             </Text>
           }
-          {(this.props.userSession.validated && !CheckEmptyObject(this.props.stripeSubscription.stripeSubscription)) &&
-            <Text style={styles.titleText}>
+          {(this.props.userSession.validated && this.state.activeSubscription) &&
+            <Text style={styles.titleText2}>
             {console.log(this.props.stripeSubscription.stripeSubscription)}
               You have an active subscription.
               You can change your payment details here.

@@ -8,6 +8,8 @@ export const searchUrl = '/search'
 export const basicAccountCreateUrl = '/basic-account-create'
 export const stripeCustomerCreate = '/stripe-customer-create'
 export const subscriptionCreate = '/subscription_create'
+export const getSubscriptionStatus = '/get-subscription-status'
+export const getSubscriptionId = '/get_subscription_id'
 
 export const api = axios.create({
   baseURL: backendUrl

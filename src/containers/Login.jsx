@@ -7,6 +7,8 @@ import { useSelector, useDispatch } from 'react-redux'
 import { validateUserSession } from '../store/Slices/UserSessionSlice'
 import { useNavigate, Navigate } from 'react-router-dom'
 import { userInputFieldMaxCharacter } from '../utils/user_input_config/UserInputConfig'
+import { getSubscriptionId } from '../utils/backend_configuration/BackendConfig'
+import { setAccountData } from '../store/Slices/AccountDataSlice'
 
 function Login () {
   const [username, setUsername] = useState('')
@@ -41,6 +43,21 @@ function Login () {
     ).then(response => {
       if (response.data) {
         dispatch(validateUserSession())
+
+        api.post(getSubscriptionId, {
+          username: username
+        }, {
+          withCredentials: true
+        }
+        ).then(response => {
+          if (response.data.operation_success) {
+            dispatch(setAccountData(response.data.responsePayload.stripe_subscription_id))
+          } else {
+            dispatch(setAccountData('nosubscription'))
+          }
+        }
+        )
+
         navigate('/')
       } else {
         setPassIncorrect(true)

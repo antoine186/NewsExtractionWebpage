@@ -59,6 +59,10 @@ const styles = StyleSheet.create({
     color: '#AD3978',
     fontSize: 1.2 * vw
   },
+  titleText2: {
+    color: '#AD3978',
+    fontSize: 0.8 * vw
+  },
   rowContainer: {
     flexDirection: 'row'
   },
