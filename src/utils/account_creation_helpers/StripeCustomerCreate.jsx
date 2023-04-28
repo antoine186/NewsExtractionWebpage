@@ -1,4 +1,4 @@
-import { api, stripeCustomerCreate } from '../backend_configuration/BackendConfig'
+import { api, stripeCustomerCreate, deleteAccount } from '../backend_configuration/BackendConfig'
 
 function StripeCustomerCreate (accountCreationData, setStripeCustomerId) {
   api.post(stripeCustomerCreate, {
@@ -9,7 +9,15 @@ function StripeCustomerCreate (accountCreationData, setStripeCustomerId) {
   ).then(response => {
     if (response.data.operation_success) {
       setStripeCustomerId(response.data.responsePayload)
-    } else { /* empty */ }
+    } else {
+      console.log('Failed to create the stripe customer id')
+      api.post(deleteAccount, {
+        accountCreationData
+      }, {
+        withCredentials: true
+      }
+      )
+    }
   }
   )
 }

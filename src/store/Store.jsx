@@ -8,13 +8,15 @@ import AccountDataReducer from './Slices/AccountDataSlice'
 import StripeCustomerIdReducer from './Slices/StripeCustomerIdSlice'
 import StripeSubscriptionReducer from './Slices/StripeSubscriptionSlice'
 import ValidSubscriptionReducer from './Slices/ValidSubscriptionSlice'
+import subscriptionAlreadyCreatedReducer from './Slices/subscriptionAlreadyCreatedSlice'
 
 const rootReducer = combineReducers({
   userSession: userSessionReducer,
   accountData: AccountDataReducer,
   stripeCustomerId: StripeCustomerIdReducer,
   stripeSubscription: StripeSubscriptionReducer,
-  validSubscription: ValidSubscriptionReducer
+  validSubscription: ValidSubscriptionReducer,
+  subscriptionAlreadyCreated: subscriptionAlreadyCreatedReducer
 })
 
 const persistConfig = {
@@ -25,7 +27,8 @@ const persistConfig = {
     'accountData',
     'stripeCustomerId',
     'stripeSubscription',
-    'validSubscription'
+    'validSubscription',
+    'subscriptionAlreadyCreated'
   ]
 }
 

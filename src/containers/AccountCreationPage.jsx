@@ -55,7 +55,8 @@ class AccountCreationPage extends React.Component {
       stateEmpty: false,
       cityEmpty: false,
       zipCodeEmpty: false,
-      goToPayment: false
+      goToPayment: false,
+      errorCreateStripeCustomer: false
     }
 
     this.handleSubmit = this.handleSubmit.bind(this)
@@ -113,6 +114,10 @@ class AccountCreationPage extends React.Component {
 
   zipCodeGrabber (zipCode) {
     this.setState({ zipCode })
+  }
+
+  errorCreateStripeCustomerGrabber (error) {
+    this.setState({ errorCreateStripeCustomer: error })
   }
 
   handleSubmit () {
@@ -244,8 +249,12 @@ class AccountCreationPage extends React.Component {
         if (response.data.operation_success) {
           this.props.setAccountData(accountCreationData)
 
-          StripeCustomerCreate(accountCreationData, this.props.setStripeCustomerId)
-          this.setState({ goToPayment: true })
+          StripeCustomerCreate(accountCreationData, this.props.setStripeCustomerId,
+            this.errorCreateStripeCustomerGrabber.bind(this))
+
+          if (!this.state.errorCreateStripeCustomer) {
+            this.setState({ goToPayment: true })
+          }
         } else {
           if (response.data.error_message === 'The account associated with your email already exists') {
             this.setState({ emailAlreadyExists: true })
@@ -305,6 +314,12 @@ class AccountCreationPage extends React.Component {
           <TouchableOpacity style={styles.submitBtn} onPress={this.handleSubmit}>
             <Text>Next</Text>
           </TouchableOpacity>
+          {this.state.errorCreateStripeCustomer &&
+            <Text style={styles.errorText}>
+              There was a processing error whilst creating your account.
+              Please try again in a few moments.
+            </Text>
+          }
         </View>
       </View>
       )

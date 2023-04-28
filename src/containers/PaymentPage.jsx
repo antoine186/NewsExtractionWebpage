@@ -14,6 +14,8 @@ import { setAccountData } from '../store/Slices/AccountDataSlice'
 import { setstripeSubscription } from '../store/Slices/StripeSubscriptionSlice'
 import { setValidSubscription } from '../store/Slices/ValidSubscriptionSlice'
 import { basicSubscriptionPriceId } from '../utils/stripe_configuration/StripeConfig'
+import { setSubscriptionAlreadyCreated } from '../store/Slices/subscriptionAlreadyCreatedSlice'
+import { clearSubscriptionAlreadyCreated } from '../store/Slices/subscriptionAlreadyCreatedSlice'
 
 class PaymentPage extends Component {
   constructor (props) {
@@ -22,8 +24,7 @@ class PaymentPage extends Component {
     const stripePromise = loadStripe(stripePublicKey)
 
     this.state = {
-      stripePromise,
-      paymentSucceeded: false
+      stripePromise
     }
 
     api.post(getSubscriptionId, {
@@ -33,6 +34,7 @@ class PaymentPage extends Component {
     }
     ).then(response => {
       if (response.data.operation_success) {
+        console.log('Found existing subscription')
         this.props.setstripeSubscription(response.data.responsePayload)
 
         api.post(getSubscriptionStatus, {
@@ -42,6 +44,7 @@ class PaymentPage extends Component {
         }
         ).then(response => {
           if (response.data.operation_success) {
+            console.log(response.data.responsePayload.stripe_subscription_status)
             if (response.data.responsePayload.stripe_subscription_status === 'active' ||
             response.data.responsePayload.stripe_subscription_status === 'trialing') {
               this.props.setValidSubscription(true)
@@ -52,12 +55,14 @@ class PaymentPage extends Component {
         }
         )
       } else {
+        console.log('No existing subscription')
         setValidSubscription(false)
       }
     }
     )
 
-    if (!this.props.validSubscription.validSubscription.payload) {
+    if (!this.props.validSubscription.validSubscription.payload && !this.props.subscriptionAlreadyCreated.subscriptionAlreadyCreated) {
+      console.log('Attempted subscription creation')
       api.post(subscriptionCreate, {
         priceId: basicSubscriptionPriceId,
         stripeCustomerId: this.props.stripeCustomerId.stripeCustomerId.payload.stripe_customer_id,
@@ -67,8 +72,12 @@ class PaymentPage extends Component {
       }
       ).then(response => {
         if (response.data.operation_success) {
+          console.log('Created subscription')
+          this.props.setSubscriptionAlreadyCreated()
           this.props.setstripeSubscription(response.data.responsePayload)
-        } else { /* empty */ }
+        } else {
+          console.log('Subscription creation failed')
+        }
       }
       )
     }
@@ -93,7 +102,6 @@ class PaymentPage extends Component {
           }
           {(this.props.userSession.validated && this.props.validSubscription.validSubscription.payload) &&
             <Text style={styles.titleText2}>
-            {console.log(this.props.stripeSubscription.stripeSubscription)}
               You have an active subscription.
               You can change your payment details here.
             </Text>
@@ -127,7 +135,8 @@ const mapStateToProps = state => {
     userSession: state.userSession,
     accountData: state.accountData,
     stripeCustomerId: state.stripeCustomerId,
-    validSubscription: state.validSubscription
+    validSubscription: state.validSubscription,
+    subscriptionAlreadyCreated: state.subscriptionAlreadyCreated
   }
 }
 
@@ -135,7 +144,9 @@ const mapDispatchToProps = (dispatch) => {
   return {
     setAccountData: (value) => dispatch(setAccountData(value)),
     setstripeSubscription: (value) => dispatch(setstripeSubscription(value)),
-    setValidSubscription: (value) => dispatch(setValidSubscription(value))
+    setValidSubscription: (value) => dispatch(setValidSubscription(value)),
+    setSubscriptionAlreadyCreated: () => dispatch(setSubscriptionAlreadyCreated()),
+    clearSubscriptionAlreadyCreated: () => dispatch(clearSubscriptionAlreadyCreated())
   }
 }
 

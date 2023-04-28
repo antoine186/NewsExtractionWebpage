@@ -1,9 +1,5 @@
 import { PaymentElement, useStripe, useElements } from '@stripe/react-stripe-js'
 import React, { useState } from 'react'
-import { useSelector } from 'react-redux'
-import { api, storeNewSubscription } from '../../utils/backend_configuration/BackendConfig'
-import { setValidSubscription } from '../../store/Slices/ValidSubscriptionSlice'
-import { useDispatch } from 'react-redux'
 
 export default function CheckoutForm (props) {
   const stripe = useStripe()
@@ -12,13 +8,9 @@ export default function CheckoutForm (props) {
   const [message, setMessage] = useState(null)
   const [isProcessing, setIsProcessing] = useState(false)
 
-  const accountData = useSelector(state => state.accountData)
-  const stripeSubscription = useSelector(state => state.stripeSubscription)
-
-  const dispatch = useDispatch()
-
   const handleSubmit = async (e) => {
     e.preventDefault()
+    console.log('Entered the handle submit')
 
     if (!stripe || !elements) {
       // Stripe.js has not yet loaded.
@@ -36,22 +28,13 @@ export default function CheckoutForm (props) {
       }
     })
 
+    console.log(error)
+
     if (error.type === 'card_error' || error.type === 'validation_error') {
       setMessage(error.message)
     } else {
       setMessage('An unexpected error occured.')
     }
-
-    api.post(storeNewSubscription, {
-      emailAddress: accountData.emailAddress,
-      stripeSubscriptionId: stripeSubscription.stripe_subscription_id,
-      subscriptionStatus: 'active'
-    }, {
-      withCredentials: true
-    }
-    )
-
-    dispatch(setValidSubscription(true))
 
     setIsProcessing(false)
   }
