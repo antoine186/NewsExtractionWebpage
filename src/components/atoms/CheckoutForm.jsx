@@ -10,7 +10,7 @@ export default function CheckoutForm (props) {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    console.log('Entered the handle submit')
+    console.log('Entered payment form submit handler')
 
     if (!stripe || !elements) {
       // Stripe.js has not yet loaded.
@@ -19,6 +19,8 @@ export default function CheckoutForm (props) {
     }
 
     setIsProcessing(true)
+
+    console.log(elements)
 
     const { error } = await stripe.confirmPayment({
       elements,

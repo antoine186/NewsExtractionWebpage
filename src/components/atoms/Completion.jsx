@@ -4,15 +4,18 @@ import styles from '../../utils/style_guide/AccountDetailsInputPageStyle'
 import TopBar from '../molecules/TopBar'
 import { api, storeNewSubscription, updateSubscriptionStatus } from '../../utils/backend_configuration/BackendConfig'
 import { setValidSubscription } from '../../store/Slices/ValidSubscriptionSlice'
-import { clearSubscriptionAlreadyCreated } from '../../store/Slices/subscriptionAlreadyCreatedSlice'
+import { useSelector } from 'react-redux'
+import { clearAmendPayment } from '../../store/Slices/AmendPaymentSlice'
+import { useSelector, useDispatch } from 'react-redux'
 
 function Completion (props) {
   const accountData = useSelector(state => state.accountData)
   const stripeSubscription = useSelector(state => state.stripeSubscription)
+  const amendPaymentState = useSelector(state => state.amendPaymentState)
 
   const dispatch = useDispatch()
 
-  if (!props.amendPaymentMethod) {
+  if (!amendPaymentState) {
     console.log('Storing the new sub')
     api.post(storeNewSubscription, {
       emailAddress: accountData.accountData.payload.emailAddress,
@@ -33,8 +36,8 @@ function Completion (props) {
     )
   }
 
+  dispatch(clearAmendPayment())
   dispatch(setValidSubscription(true))
-  dispatch(clearSubscriptionAlreadyCreated())
 
   return (
     <View style={styles.container}>
