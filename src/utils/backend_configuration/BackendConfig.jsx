@@ -13,6 +13,8 @@ export const getSubscriptionId = '/get_subscription_id'
 export const storeNewSubscription = '/store_new_subscription'
 export const updateSubscriptionStatus = '/update_subscription_status'
 export const deleteAccount = '/delete_account'
+export const retrieveSubscriptionDetails = '/retrieve_subscription_details'
+export const retrieveAccountData = '/retrieve_account_data'
 
 export const api = axios.create({
   baseURL: backendUrl

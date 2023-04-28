@@ -15,6 +15,7 @@ import { setstripeSubscription } from '../store/Slices/StripeSubscriptionSlice'
 import { setValidSubscription } from '../store/Slices/ValidSubscriptionSlice'
 import { basicSubscriptionPriceId } from '../utils/stripe_configuration/StripeConfig'
 import { setAmendPayment } from '../store/Slices/AmendPaymentSlice'
+import { retrieveSubscriptionDetails } from '../utils/backend_configuration/BackendConfig'
 
 class PaymentPage extends Component {
   constructor (props) {
@@ -27,7 +28,7 @@ class PaymentPage extends Component {
       subscriptionCreationFailed: false
     }
 
-    api.post(getSubscriptionId, {
+    api.post(retrieveSubscriptionDetails, {
       username: this.props.accountData.accountData.payload.emailAddress
     }, {
       withCredentials: true
@@ -121,7 +122,7 @@ class PaymentPage extends Component {
           }
           {!this.state.subscriptionCreationFailed && this.props.validSubscription.validSubscription.payload && this.props.amendPaymentState.amendPaymentState &&
             <View style={styles.stripeCardElement}>
-              <Elements stripe={this.state.stripePromise} options={{ clientSecret: this.props.stripeSubscription.stripeSubscription.payload.client_secret }}>
+              <Elements stripe={this.state.stripePromise} options={{ clientSecret: this.props.stripeSubscription.stripeSubscription.payload.client_secret,  }}>
                 <CheckoutForm amendPaymentMethod={true} />
               </Elements>
             </View>
