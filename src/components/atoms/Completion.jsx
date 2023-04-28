@@ -6,7 +6,7 @@ import { api, storeNewSubscription, updateSubscriptionStatus } from '../../utils
 import { setValidSubscription } from '../../store/Slices/ValidSubscriptionSlice'
 import { useSelector } from 'react-redux'
 import { clearAmendPayment } from '../../store/Slices/AmendPaymentSlice'
-import { useSelector, useDispatch } from 'react-redux'
+import { useDispatch } from 'react-redux'
 
 function Completion (props) {
   const accountData = useSelector(state => state.accountData)
