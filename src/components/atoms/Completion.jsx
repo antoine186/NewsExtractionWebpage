@@ -15,7 +15,7 @@ function Completion (props) {
 
   const dispatch = useDispatch()
 
-  if (!amendPaymentState) {
+  if (!amendPaymentState.amendPaymentState) {
     console.log('Storing the new sub')
     api.post(storeNewSubscription, {
       emailAddress: accountData.accountData.payload.emailAddress,
@@ -28,7 +28,7 @@ function Completion (props) {
   } else {
     console.log('Updating an existing sub')
     api.post(updateSubscriptionStatus, {
-      stripeSubscriptionId: stripeSubscription.stripe_subscription_id,
+      stripeSubscriptionId: stripeSubscription.stripeSubscription.payload.stripe_subscription_id,
       subscriptionStatus: 'active'
     }, {
       withCredentials: true

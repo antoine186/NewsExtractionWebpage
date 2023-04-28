@@ -35,7 +35,7 @@ export default function CheckoutForm (props) {
     if (error.type === 'card_error' || error.type === 'validation_error') {
       setMessage(error.message)
     } else {
-      setMessage('An unexpected error occured.')
+      setMessage('An unexpected error occured. Please refresh the page')
     }
 
     setIsProcessing(false)
