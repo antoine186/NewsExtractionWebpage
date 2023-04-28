@@ -63,28 +63,36 @@ class PaymentPage extends Component {
     }
     )
 
-    console.log(this.props.stripeSubscription.stripeSubscription.payload)
-    console.log(this.props.amendPaymentState.amendPaymentState)
-    if (!this.props.validSubscription.validSubscription.payload) {
+    if (!this.props.validSubscription.validSubscription.payload && this.props.stripeCustomerId.stripeCustomerId.payload !== undefined) {
       console.log('Attempted subscription creation')
-      api.post(subscriptionCreate, {
-        priceId: basicSubscriptionPriceId,
-        stripeCustomerId: this.props.stripeCustomerId.stripeCustomerId.payload.stripe_customer_id,
-        emailAddress: this.props.accountData.accountData.payload.emailAddress
-      }, {
-        withCredentials: true
-      }
-      ).then(response => {
-        if (response.data.operation_success) {
-          console.log('Created subscription')
-          this.props.setstripeSubscription(response.data.responsePayload)
-        } else {
-          console.log('Subscription creation failed')
-          this.setState({ subscriptionCreationFailed: true })
-        }
-      }
-      )
+      this.createMissingSubscription()
     }
+  }
+
+  componentDidUpdate (prevProps, prevState) {
+    if (prevProps.stripeCustomerId.stripeCustomerId.payload !== this.props.stripeCustomerId.stripeCustomerId.payload) {
+      this.createMissingSubscription()
+    }
+  }
+
+  createMissingSubscription () {
+    api.post(subscriptionCreate, {
+      priceId: basicSubscriptionPriceId,
+      stripeCustomerId: this.props.stripeCustomerId.stripeCustomerId.payload.stripe_customer_id,
+      emailAddress: this.props.accountData.accountData.payload.emailAddress
+    }, {
+      withCredentials: true
+    }
+    ).then(response => {
+      if (response.data.operation_success) {
+        console.log('Created subscription')
+        this.props.setstripeSubscription(response.data.responsePayload)
+      } else {
+        console.log('Subscription creation failed')
+        this.setState({ subscriptionCreationFailed: true })
+      }
+    }
+    )
   }
 
   render () {
@@ -113,16 +121,16 @@ class PaymentPage extends Component {
           <br></br>
           <br></br>
           <br></br>
-          {!this.state.subscriptionCreationFailed && !this.props.validSubscription.validSubscription.payload &&
+          {!this.state.subscriptionCreationFailed && !this.props.validSubscription.validSubscription.payload && this.props.stripeSubscription.stripeSubscription.payload !== undefined &&
             <View style={styles.stripeCardElement}>
               <Elements stripe={this.state.stripePromise} options={{ clientSecret: this.props.stripeSubscription.stripeSubscription.payload.client_secret }}>
                 <CheckoutForm amendPaymentMethod={false} />
               </Elements>
             </View>
           }
-          {!this.state.subscriptionCreationFailed && this.props.validSubscription.validSubscription.payload && this.props.amendPaymentState.amendPaymentState &&
+          {!this.state.subscriptionCreationFailed && this.props.validSubscription.validSubscription.payload && this.props.amendPaymentState.amendPaymentState && this.props.stripeSubscription.stripeSubscription.payload !== undefined &&
             <View style={styles.stripeCardElement}>
-              <Elements stripe={this.state.stripePromise} options={{ clientSecret: this.props.stripeSubscription.stripeSubscription.payload.client_secret,  }}>
+              <Elements stripe={this.state.stripePromise} options={{ clientSecret: this.props.stripeSubscription.stripeSubscription.payload.client_secret }}>
                 <CheckoutForm amendPaymentMethod={true} />
               </Elements>
             </View>
