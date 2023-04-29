@@ -120,6 +120,10 @@ class AccountCreationPage extends React.Component {
     this.setState({ errorCreateStripeCustomer: error })
   }
 
+  goToPaymentGrabber (goToPayment) {
+    this.setState({ goToPayment })
+  }
+
   handleSubmit () {
     let handleSubmitProceed = true
     let parseTelephoneNumberObject
@@ -250,11 +254,7 @@ class AccountCreationPage extends React.Component {
           this.props.setAccountData(accountCreationData)
 
           StripeCustomerCreate(accountCreationData, this.props.setStripeCustomerId,
-            this.errorCreateStripeCustomerGrabber.bind(this))
-
-          if (!this.state.errorCreateStripeCustomer) {
-            this.setState({ goToPayment: true })
-          }
+            this.goToPaymentGrabber.bind(this), this.errorCreateStripeCustomerGrabber.bind(this))
         } else {
           if (response.data.error_message === 'The account associated with your email already exists') {
             this.setState({ emailAlreadyExists: true })

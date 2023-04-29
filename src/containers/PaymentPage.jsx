@@ -16,10 +16,16 @@ import { setValidSubscription } from '../store/Slices/ValidSubscriptionSlice'
 import { basicSubscriptionPriceId } from '../utils/stripe_configuration/StripeConfig'
 import { setAmendPayment } from '../store/Slices/AmendPaymentSlice'
 import { retrieveSubscriptionDetails } from '../utils/backend_configuration/BackendConfig'
+import { clearstripeSubscription } from '../store/Slices/StripeSubscriptionSlice'
 
 class PaymentPage extends Component {
   constructor (props) {
     super(props)
+
+    if (this.props.stripeSubscription.stripeSubscription.payload !== undefined) {
+      console.log('Clearing subscription on payment page start')
+      this.props.clearstripeSubscription()
+    }
 
     const stripePromise = loadStripe(stripePublicKey)
 
@@ -52,6 +58,7 @@ class PaymentPage extends Component {
               this.props.setValidSubscription(true)
             } else {
               this.props.setValidSubscription(false)
+              this.createMissingSubscription()
             }
           } else { /* empty */ }
         }
@@ -59,20 +66,10 @@ class PaymentPage extends Component {
       } else {
         console.log('No existing subscription')
         setValidSubscription(false)
+        this.createMissingSubscription()
       }
     }
     )
-
-    if (!this.props.validSubscription.validSubscription.payload && this.props.stripeCustomerId.stripeCustomerId.payload !== undefined) {
-      console.log('Attempted subscription creation')
-      this.createMissingSubscription()
-    }
-  }
-
-  componentDidUpdate (prevProps, prevState) {
-    if (prevProps.stripeCustomerId.stripeCustomerId.payload !== this.props.stripeCustomerId.stripeCustomerId.payload) {
-      this.createMissingSubscription()
-    }
   }
 
   createMissingSubscription () {
@@ -123,14 +120,21 @@ class PaymentPage extends Component {
           <br></br>
           {!this.state.subscriptionCreationFailed && !this.props.validSubscription.validSubscription.payload && this.props.stripeSubscription.stripeSubscription.payload !== undefined &&
             <View style={styles.stripeCardElement}>
-              <Elements stripe={this.state.stripePromise} options={{ clientSecret: this.props.stripeSubscription.stripeSubscription.payload.client_secret }}>
+              <Elements 
+                stripe={this.state.stripePromise}
+                options={{ clientSecret: this.props.stripeSubscription.stripeSubscription.payload.client_secret }}>
+                key={this.props.stripeSubscription.stripeSubscription.payload.client_secret}
                 <CheckoutForm amendPaymentMethod={false} />
               </Elements>
             </View>
           }
           {!this.state.subscriptionCreationFailed && this.props.validSubscription.validSubscription.payload && this.props.amendPaymentState.amendPaymentState && this.props.stripeSubscription.stripeSubscription.payload !== undefined &&
             <View style={styles.stripeCardElement}>
-              <Elements stripe={this.state.stripePromise} options={{ clientSecret: this.props.stripeSubscription.stripeSubscription.payload.client_secret }}>
+              <Elements 
+                stripe={this.state.stripePromise}
+                options={{ clientSecret: this.props.stripeSubscription.stripeSubscription.payload.client_secret }}
+                key={this.props.stripeSubscription.stripeSubscription.payload.client_secret}
+              >
                 <CheckoutForm amendPaymentMethod={true} />
               </Elements>
             </View>
@@ -163,7 +167,8 @@ const mapDispatchToProps = (dispatch) => {
     setAccountData: (value) => dispatch(setAccountData(value)),
     setstripeSubscription: (value) => dispatch(setstripeSubscription(value)),
     setValidSubscription: (value) => dispatch(setValidSubscription(value)),
-    setAmendPayment: () => dispatch(setAmendPayment())
+    setAmendPayment: () => dispatch(setAmendPayment()),
+    clearstripeSubscription: () => dispatch(clearstripeSubscription())
   }
 }
 
