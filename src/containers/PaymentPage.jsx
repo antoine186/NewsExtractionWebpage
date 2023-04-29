@@ -120,17 +120,18 @@ class PaymentPage extends Component {
           <br></br>
           {!this.state.subscriptionCreationFailed && !this.props.validSubscription.validSubscription.payload && this.props.stripeSubscription.stripeSubscription.payload !== undefined &&
             <View style={styles.stripeCardElement}>
-              <Elements 
+              <Elements
                 stripe={this.state.stripePromise}
-                options={{ clientSecret: this.props.stripeSubscription.stripeSubscription.payload.client_secret }}>
+                options={{ clientSecret: this.props.stripeSubscription.stripeSubscription.payload.client_secret }}
                 key={this.props.stripeSubscription.stripeSubscription.payload.client_secret}
+              >
                 <CheckoutForm amendPaymentMethod={false} />
               </Elements>
             </View>
           }
           {!this.state.subscriptionCreationFailed && this.props.validSubscription.validSubscription.payload && this.props.amendPaymentState.amendPaymentState && this.props.stripeSubscription.stripeSubscription.payload !== undefined &&
             <View style={styles.stripeCardElement}>
-              <Elements 
+              <Elements
                 stripe={this.state.stripePromise}
                 options={{ clientSecret: this.props.stripeSubscription.stripeSubscription.payload.client_secret }}
                 key={this.props.stripeSubscription.stripeSubscription.payload.client_secret}
