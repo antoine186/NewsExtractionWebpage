@@ -26,7 +26,7 @@ function Login () {
     if (event.key === 'Enter') {
       event.preventDefault()
 
-      if (loginButtonRef.current !== undefined) {
+      if (loginButtonRef.current !== undefined && loginButtonRef.current !== null) {
         loginButtonRef.current.click()
       }
     }
