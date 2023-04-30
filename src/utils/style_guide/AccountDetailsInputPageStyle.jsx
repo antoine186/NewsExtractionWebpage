@@ -108,9 +108,9 @@ const styles = StyleSheet.create({
     marginRight: 1.5 * vw
   },
   button: {
-    width: 16 * vw,
+    width: 6 * vw,
     borderRadius: 25,
-    height: 5 * vw,
+    height: 2 * vw,
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: 2 * vw,

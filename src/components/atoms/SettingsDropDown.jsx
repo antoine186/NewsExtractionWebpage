@@ -4,18 +4,38 @@ import InputLabel from '@mui/material/InputLabel'
 import MenuItem from '@mui/material/MenuItem'
 import FormControl from '@mui/material/FormControl'
 import Select, { SelectChangeEvent } from '@mui/material/Select'
-const { vw, vh, vmin, vmax } = require('react-native-viewport-units')
 import { useNavigate, Navigate } from 'react-router-dom'
+import ClearEntireStore from '../../utils/session_helpers/ClearEntireStore'
+import ManualStoreClearing from '../../utils/session_helpers/ManualStoreClearing'
+import { useEffect } from 'react'
+import { useSelector } from 'react-redux'
+const { vw, vh, vmin, vmax } = require('react-native-viewport-units')
 
 function SettingsDropDown () {
   const [setting, setSettings] = React.useState('')
+  const [manualClearStore, setManualClearStore] = React.useState(false)
+
   const navigate = useNavigate()
+
+  const userSession = useSelector(state => state.userSession)
+
+  useEffect(() => {
+    if (userSession.validated === false) {
+      console.log('Logged out')
+      navigate('/login')
+    }
+  }, [userSession])
 
   const handleChange = (event) => {
     setSettings(event.target.value)
 
     if (event.target.value === 'subscription') {
       navigate('/payment')
+    } else if (event.target.value === 'log-out') {
+      setManualClearStore(true)
+      ClearEntireStore()
+
+      navigate('/')
     }
   }
 
@@ -28,9 +48,11 @@ function SettingsDropDown () {
           label="Setting"
           onChange={handleChange}
         >
-          <MenuItem value={'profile'}>User Profile</MenuItem>
           <MenuItem value={'subscription'}>Subscription</MenuItem>
-          <MenuItem value={'reportBug'}>Report Bug</MenuItem>
+          <MenuItem value={'log-out'}>Log Out</MenuItem>
+          {manualClearStore &&
+            <ManualStoreClearing />
+          }
         </Select>
       </FormControl>
     </Box>

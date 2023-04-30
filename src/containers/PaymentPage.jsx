@@ -24,7 +24,7 @@ import { setStripeCustomerId, clearStripeCustomerId } from '../store/Slices/Stri
 import { setAmendPayment, clearAmendPayment } from '../store/Slices/AmendPaymentSlice'
 
 class PaymentPage extends Component {
-  constructor(props) {
+  constructor (props) {
     super(props)
 
     if (this.props.stripeSubscription.stripeSubscription.payload !== undefined) {
@@ -41,6 +41,18 @@ class PaymentPage extends Component {
     } */
 
     this.props.clearStripeCustomerId()
+
+    api.post(getStripeCustomerId, {
+      username: this.props.accountData.accountData.payload.emailAddress
+    }, {
+      withCredentials: true
+    }
+    ).then(response => {
+      if (response.data.operation_success) {
+        this.props.setStripeCustomerId(response.data.responsePayload)
+      }
+    }
+    )
 
     this.props.clearAmendPayment()
 
@@ -117,7 +129,7 @@ class PaymentPage extends Component {
     )
   }
 
-  createMissingSubscription() {
+  createMissingSubscription () {
     if (this.props.stripeCustomerId.stripeCustomerId.payload !== undefined) {
       api.post(subscriptionCreate, {
         priceId: basicSubscriptionPriceId,
@@ -136,10 +148,13 @@ class PaymentPage extends Component {
         }
       }
       )
+    } else {
+      console.log('Forced updated the page')
+      this.forceUpdate()
     }
   }
 
-  cancelExistingSubscription() {
+  cancelExistingSubscription () {
     api.post(deleteSubscription, {
       username: this.props.accountData.accountData.payload.emailAddress,
       stripeSubscriptionId: this.props.stripeSubscription.stripeSubscription.payload.stripe_subscription_id
@@ -156,8 +171,10 @@ class PaymentPage extends Component {
         }
         ).then(response => {
           if (response.data.operation_success) {
+            console.log('Subscription deleted successfully')
             this.props.setStripeCustomerId(response.data.responsePayload)
             this.props.setValidSubscription(false)
+            this.props.clearAmendPayment()
             this.createMissingSubscription()
           }
         }
@@ -169,7 +186,7 @@ class PaymentPage extends Component {
     )
   }
 
-  render() {
+  render () {
     return (
       <View style={styles.container}>
         <TopBar settingsEnabled={this.props.userSession.validated} />
