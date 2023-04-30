@@ -9,6 +9,7 @@ import StripeCustomerIdReducer from './Slices/StripeCustomerIdSlice'
 import StripeSubscriptionReducer from './Slices/StripeSubscriptionSlice'
 import ValidSubscriptionReducer from './Slices/ValidSubscriptionSlice'
 import AmendPaymentReducer from './Slices/AmendPaymentSlice'
+import SetupIntentReducer from './Slices/SetupIntentSlice'
 
 const rootReducer = combineReducers({
   userSession: userSessionReducer,
@@ -16,7 +17,8 @@ const rootReducer = combineReducers({
   stripeCustomerId: StripeCustomerIdReducer,
   stripeSubscription: StripeSubscriptionReducer,
   validSubscription: ValidSubscriptionReducer,
-  amendPaymentState: AmendPaymentReducer
+  amendPaymentState: AmendPaymentReducer,
+  setupIntentState: SetupIntentReducer
 })
 
 export const persistConfig = {
@@ -28,7 +30,8 @@ export const persistConfig = {
     'stripeCustomerId',
     'stripeSubscription',
     'validSubscription',
-    'amendPaymentState'
+    'amendPaymentState',
+    'setupIntentState'
   ]
 }
 

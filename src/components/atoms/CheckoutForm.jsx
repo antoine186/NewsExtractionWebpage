@@ -21,14 +21,29 @@ export default function CheckoutForm (props) {
     setIsProcessing(true)
 
     console.log(elements)
+    let error
 
-    const { error } = await stripe.confirmPayment({
+    /* if (props.amendPaymentMethod) {
+      console.log('In amendment checkout form')
+
+      elements.submit()
+      error = await stripe.confirmSetup({
+        elements,
+        clientSecret: props.clientSecret,
+        confirmParams: {
+          // Return URL where the customer should be redirected after the SetupIntent is confirmed.
+          return_url: `${window.location.origin}#/completion`
+        }
+      })
+    } else { */
+    error = await stripe.confirmPayment({
       elements,
       confirmParams: {
         // Make sure to change this to your payment completion page
         return_url: `${window.location.origin}#/completion`
       }
     })
+    //}
 
     console.log(error)
 

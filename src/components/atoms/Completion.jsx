@@ -19,6 +19,8 @@ function Completion (props) {
   const amendPaymentState = useSelector(state => state.amendPaymentState)
   const userSession = useSelector(state => state.userSession)
 
+  const amendPaymentCompletion = amendPaymentState.amendPaymentState
+
   const dispatch = useDispatch()
 
   if (!CheckEmptyObject(accountData.accountData)) {
@@ -58,10 +60,16 @@ function Completion (props) {
 
   return (
     <View style={styles.container}>
-    <TopBar settingsEnabled={false} />
-    <View style={styles.container}>
-      <h1> Thank You & Welcome to Emotional Machines! 🎉</h1>
-    </View>
+      <TopBar settingsEnabled={false} />
+      <View style={styles.container}>
+        {/*amendPaymentCompletion &&
+          <h1> Thank You & Welcome to Emotional Machines! 🎉</h1>
+        */}
+        <h1> Thank You & Welcome to Emotional Machines! 🎉</h1>
+        {/*!amendPaymentCompletion &&
+          <h1> Thank You for updating your payment method! 🎉</h1>
+        */}
+      </View>
     </View>
   )
 }

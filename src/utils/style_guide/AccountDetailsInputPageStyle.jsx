@@ -106,6 +106,15 @@ const styles = StyleSheet.create({
   },
   errorTextViewLeft: {
     marginRight: 1.5 * vw
+  },
+  button: {
+    width: 16 * vw,
+    borderRadius: 25,
+    height: 5 * vw,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 2 * vw,
+    backgroundColor: '#FF1493'
   }
 })
 

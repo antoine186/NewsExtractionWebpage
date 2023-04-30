@@ -15,6 +15,9 @@ export const updateSubscriptionStatus = '/update_subscription_status'
 export const deleteAccount = '/delete_account'
 export const retrieveSubscriptionDetails = '/retrieve_subscription_details'
 export const retrieveAccountData = '/retrieve_account_data'
+export const setupintentCreation = '/setupintent_creation'
+export const getStripeCustomerId = '/get_stripe_customer_id'
+export const deleteSubscription = '/delete_subscription'
 
 export const api = axios.create({
   baseURL: backendUrl
