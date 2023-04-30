@@ -9,6 +9,7 @@ import { PersistGate } from 'redux-persist/integration/react'
 import AccountCreationPage from '../containers/AccountCreationPage'
 import PaymentPage from '../containers/PaymentPage'
 import Completion from '../components/atoms/Completion'
+import SessionController from '../components/atoms/SessionController'
 
 function App () {
   return (
@@ -27,6 +28,7 @@ function App () {
                     </HashRouter>
                 </React.StrictMode>
             </PersistGate>
+            <SessionController />
         </Provider>
   )
 }
