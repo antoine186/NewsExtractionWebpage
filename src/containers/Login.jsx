@@ -101,6 +101,11 @@ function Login () {
     navigate('/account-create')
   }
 
+  function passwordForget () {
+    dispatch(setValidSubscription(false))
+    navigate('/forgot-password')
+  }
+
   if (userSessionValidated) {
     return <Navigate to='/' />
   } else {
@@ -137,7 +142,7 @@ function Login () {
           </View>
         }
         <TouchableOpacity>
-          <Text style={styles.textButton}>Forgot Password?</Text>
+          <Text style={styles.textButton} onPress={passwordForget}>Forgot Password?</Text>
         </TouchableOpacity>
         <TouchableOpacity>
           <Text style={styles.textButton} onPress={accountCreate}>
