@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import { TouchableOpacity, Text, View, Image, TextInput } from 'react-native'
 import { userInputFieldMaxCharacter } from '../utils/user_input_config/UserInputConfig'
 import TopBar from '../components/molecules/TopBar'
-import { api } from '../utils/backend_configuration/BackendConfig'
+import { api, forgotPassword } from '../utils/backend_configuration/BackendConfig'
 
 function ForgotPasswordPage () {
   const [username, setUsername] = useState('')
@@ -11,13 +11,14 @@ function ForgotPasswordPage () {
   const handleSubmit = (e) => {
     e.preventDefault()
 
-    api.post(retrieveAccountData, {
+    api.post(forgotPassword, {
       username
     }, {
       withCredentials: true
     }
     ).then(response => {
       if (response.data.operation_success) {
+        console.log('Password reset email sent')
       }
     }
     )
