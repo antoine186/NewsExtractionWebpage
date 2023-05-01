@@ -4,12 +4,22 @@ import { TouchableOpacity, Text, View, Image, TextInput } from 'react-native'
 import { userInputFieldMaxCharacter } from '../utils/user_input_config/UserInputConfig'
 import TopBar from '../components/molecules/TopBar'
 import { api, forgotPassword } from '../utils/backend_configuration/BackendConfig'
+import { useNavigate, Navigate } from 'react-router-dom'
+import { setPasswordResetAccountState } from '../store/Slices/PasswordResetAccountSlice'
+import { useSelector, useDispatch } from 'react-redux'
+import { clearPasswordResetAccountState } from '../store/Slices/PasswordResetAccountSlice'
 
 function ForgotPasswordPage () {
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+
   const [username, setUsername] = useState('')
+  const [invalidAccount, setInvalidAccount] = useState(false)
 
   const handleSubmit = (e) => {
     e.preventDefault()
+
+    dispatch(setPasswordResetAccountState(username))
 
     api.post(forgotPassword, {
       username
@@ -19,6 +29,12 @@ function ForgotPasswordPage () {
     ).then(response => {
       if (response.data.operation_success) {
         console.log('Password reset email sent')
+
+        navigate('/reset-password')
+      } else {
+        console.log('Email does not exist')
+        setInvalidAccount(true)
+        dispatch(clearPasswordResetAccountState())
       }
     }
     )
@@ -45,6 +61,15 @@ function ForgotPasswordPage () {
                 maxLength={userInputFieldMaxCharacter}
             />
         </View>
+        {invalidAccount &&
+          <View>
+            <br></br>
+            <Text style={styles.errorText}>
+              This account does not exist.
+            </Text>
+            <br></br>
+          </View>
+        }
         <br></br>
         <TouchableOpacity style={styles.submitBtn} onPress={handleSubmit}>
           <Text style={styles.loginText}>Next</Text>

@@ -11,6 +11,7 @@ import PaymentPage from '../containers/PaymentPage'
 import Completion from '../components/atoms/Completion'
 import SessionController from '../components/atoms/SessionController'
 import ForgotPasswordPage from '../containers/ForgotPasswordPage'
+import PasswordResetPage from '../containers/PasswordResetPage'
 
 function App () {
   return (
@@ -26,6 +27,7 @@ function App () {
                             <Route path="payment" element={<PaymentPage />} />
                             <Route path="completion" element={<Completion />}/>
                             <Route path="forgot-password" element={<ForgotPasswordPage />} />
+                            <Route path="reset-password" element={<PasswordResetPage />} />
                         </Routes>
                     </HashRouter>
                 </React.StrictMode>

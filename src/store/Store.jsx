@@ -10,6 +10,7 @@ import StripeSubscriptionReducer from './Slices/StripeSubscriptionSlice'
 import ValidSubscriptionReducer from './Slices/ValidSubscriptionSlice'
 import AmendPaymentReducer from './Slices/AmendPaymentSlice'
 import SetupIntentReducer from './Slices/SetupIntentSlice'
+import PasswordResetAccountReducer from './Slices/PasswordResetAccountSlice'
 
 const rootReducer = combineReducers({
   userSession: userSessionReducer,
@@ -18,7 +19,8 @@ const rootReducer = combineReducers({
   stripeSubscription: StripeSubscriptionReducer,
   validSubscription: ValidSubscriptionReducer,
   amendPaymentState: AmendPaymentReducer,
-  setupIntentState: SetupIntentReducer
+  setupIntentState: SetupIntentReducer,
+  passwordResetAccountState: PasswordResetAccountReducer
 })
 
 export const persistConfig = {
@@ -31,7 +33,8 @@ export const persistConfig = {
     'stripeSubscription',
     'validSubscription',
     'amendPaymentState',
-    'setupIntentState'
+    'setupIntentState',
+    'passwordResetAccountState'
   ]
 }
 
