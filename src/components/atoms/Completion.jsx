@@ -5,25 +5,26 @@ import TopBar from '../molecules/TopBar'
 import { api, storeNewSubscription, updateSubscriptionStatus } from '../../utils/backend_configuration/BackendConfig'
 import { useSelector } from 'react-redux'
 import ClearEntireStore from '../../utils/session_helpers/ClearEntireStore'
-import CheckEmptyObject from '../../utils/CheckEmptyObject'
 import { clearAccountData } from '../../store/Slices/AccountDataSlice'
 import { useDispatch } from 'react-redux'
 import { clearAmendPayment } from '../../store/Slices/AmendPaymentSlice'
 import { clearStripeCustomerId } from '../../store/Slices/StripeCustomerIdSlice'
 import { clearstripeSubscription } from '../../store/Slices/StripeSubscriptionSlice'
 import { clearValidSubscription } from '../../store/Slices/ValidSubscriptionSlice'
+import { setSubscriptionStoredState } from '../../store/Slices/SubscriptionStoredSlice'
 
 function Completion (props) {
   const accountData = useSelector(state => state.accountData)
   const stripeSubscription = useSelector(state => state.stripeSubscription)
   const amendPaymentState = useSelector(state => state.amendPaymentState)
   const userSession = useSelector(state => state.userSession)
+  const subscriptionStoredState = useSelector(state => state.subscriptionStoredState)
 
   const amendPaymentCompletion = amendPaymentState.amendPaymentState
 
   const dispatch = useDispatch()
 
-  if (!CheckEmptyObject(accountData.accountData)) {
+  if (!subscriptionStoredState.subscriptionStoredState) {
     if (!amendPaymentState.amendPaymentState) {
       console.log('Storing the new sub')
       api.post(storeNewSubscription, {
@@ -44,6 +45,8 @@ function Completion (props) {
       }
       )
     }
+
+    dispatch(setSubscriptionStoredState())
 
     if (!userSession.validated) {
       console.log('Clearing account data as we completed payment outside user session')

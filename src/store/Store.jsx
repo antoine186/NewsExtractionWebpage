@@ -11,6 +11,7 @@ import ValidSubscriptionReducer from './Slices/ValidSubscriptionSlice'
 import AmendPaymentReducer from './Slices/AmendPaymentSlice'
 import SetupIntentReducer from './Slices/SetupIntentSlice'
 import PasswordResetAccountReducer from './Slices/PasswordResetAccountSlice'
+import SubscriptionStoredReducer from './Slices/SubscriptionStoredSlice'
 
 const rootReducer = combineReducers({
   userSession: userSessionReducer,
@@ -20,7 +21,8 @@ const rootReducer = combineReducers({
   validSubscription: ValidSubscriptionReducer,
   amendPaymentState: AmendPaymentReducer,
   setupIntentState: SetupIntentReducer,
-  passwordResetAccountState: PasswordResetAccountReducer
+  passwordResetAccountState: PasswordResetAccountReducer,
+  subscriptionStoredState: SubscriptionStoredReducer
 })
 
 export const persistConfig = {
@@ -34,7 +36,8 @@ export const persistConfig = {
     'validSubscription',
     'amendPaymentState',
     'setupIntentState',
-    'passwordResetAccountState'
+    'passwordResetAccountState',
+    'subscriptionStoredState'
   ]
 }
 

@@ -18,10 +18,9 @@ import { setValidSubscription } from '../store/Slices/ValidSubscriptionSlice'
 // import { setSetupIntentState } from '../store/Slices/SetupIntentSlice'
 // import { clearSetupIntentState } from '../store/Slices/SetupIntentSlice'
 import { deleteSubscription } from '../utils/backend_configuration/BackendConfig'
-
 import { setStripeCustomerId, clearStripeCustomerId } from '../store/Slices/StripeCustomerIdSlice'
-
 import { setAmendPayment, clearAmendPayment } from '../store/Slices/AmendPaymentSlice'
+import { clearSubscriptionStoredState } from '../store/Slices/SubscriptionStoredSlice'
 
 class PaymentPage extends Component {
   constructor (props) {
@@ -41,6 +40,7 @@ class PaymentPage extends Component {
     } */
 
     this.props.clearStripeCustomerId()
+    this.props.clearSubscriptionStoredState()
 
     api.post(getStripeCustomerId, {
       username: this.props.accountData.accountData.payload.emailAddress
@@ -276,9 +276,10 @@ const mapDispatchToProps = (dispatch) => {
     clearstripeSubscription: () => dispatch(clearstripeSubscription()),
     clearAmendPayment: () => dispatch(clearAmendPayment()),
     setStripeCustomerId: (value) => dispatch(setStripeCustomerId(value)),
-    clearStripeCustomerId: () => dispatch(clearStripeCustomerId())
+    clearStripeCustomerId: () => dispatch(clearStripeCustomerId()),
     // setSetupIntentState: (value) => dispatch(setSetupIntentState(value)),
     // clearSetupIntentState: () => dispatch(clearSetupIntentState())
+    clearSubscriptionStoredState: () => dispatch(clearSubscriptionStoredState())
   }
 }
 
