@@ -13,8 +13,26 @@ class LandingSwitchingPage extends Component {
     super(props)
 
     this.state = {
-      userSessionValidated: this.props.userSession.validated
+      userSessionValidated: this.props.userSession.validated,
+      searchShow: true,
+      tagShow: false,
+      progression: false,
+      linking: false
     }
+
+    this.toggleClickSearch = this.toggleClickSearch.bind(this)
+  }
+
+  clearToggleChoice () {
+    this.setState({ searchShow: false })
+    this.setState({ tagShow: false })
+    this.setState({ progression: false })
+    this.setState({ linking: false })
+  }
+
+  toggleClickSearch () {
+    console.log('Toggling to search')
+    this.setState({ searchShow: true })
   }
 
   render () {
@@ -39,7 +57,7 @@ class LandingSwitchingPage extends Component {
                     exclusive
                     // onChange={handleAlignment}
                 >
-                    <ToggleButton value="search">
+                    <ToggleButton value="search" onClick={this.toggleClickSearch}>
                         <Image style={styles.image} source={require('../assets/images/magnifying-glass-search-icon-png-transparent.png')} />
                     </ToggleButton>
                     <ToggleButton value="tag">
@@ -52,7 +70,9 @@ class LandingSwitchingPage extends Component {
                         <Image style={styles.image} source={require('../assets/images/node_graph.png')} />
                     </ToggleButton>
                 </ToggleButtonGroup>
-                <EmotionalSearchPage />
+                {this.state.searchShow &&
+                    <EmotionalSearchPage />
+                }
             </View>
         </View>
       )
