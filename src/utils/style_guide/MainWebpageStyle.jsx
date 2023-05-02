@@ -54,6 +54,11 @@ const styles = StyleSheet.create({
     marginBottom: 0.5 * vw,
     height: 2.5 * vw,
     width: 2.5 * vw
+  },
+  articleCard: {
+    marginBottom: 0.5 * vw,
+    height: 8 * vw,
+    width: 25 * vw
   }
 })
 

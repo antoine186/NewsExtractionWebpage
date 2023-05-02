@@ -78,7 +78,7 @@ class LandingSwitchingPage extends Component {
             </View>
         </View>
       )
-    } else {
+    } else if (this.state.userSessionValidated && !this.props.validSubscription.validSubscription.payload) {
       return (
         <View>
             <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0" />

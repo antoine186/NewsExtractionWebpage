@@ -10,6 +10,7 @@ import ArticlesResultTableDataWrangler from './search_helper_functions/ArticlesR
 import ClipLoader from 'react-spinners/ClipLoader'
 import SearchOverallEmoResultTable from '../components/molecules/SearchOverallEmoResultTable'
 import EmoEngagementStringFormatter from './search_helper_functions/EmoEngagementStringFormatter'
+import EmoSearchBasicResultCard from '../components/molecules/EmoSearchBasicResultCard'
 
 function Link (props) {
   return <Text {...props} accessibilityRole="link" style={StyleSheet.compose(styles.link, props.style)} />
@@ -124,20 +125,6 @@ class EmotionalSearchPage extends Component {
               }
             </View>
           </View>
-          {!this.state.searchingInitiated &&
-            <View>
-              <br></br>
-              <br></br>
-              <Text style={styles.text}>
-                <strong>Upcoming Features! Stay Posted:</strong>
-                <ul>
-                  <li>Tags: Each customer can tag up to 5 topics. Emotional engagement will be reported back to them daily</li>
-                  <li>Increased metadata regarding the most emotionally engaged articles such as how long, what kinds of keywords used and etc...</li>
-                  <li>Emotional concepts driving the emotional engagement. For instance, what kind of subtopics is consistently brought up in angry articles?</li>
-                </ul>
-              </Text>
-            </View>
-          }
           <br></br>
           {this.state.searchingInitiated && !this.state.anyResponseFromServer &&
             <View>
@@ -170,6 +157,7 @@ class EmotionalSearchPage extends Component {
           }
           <SearchOverallEmoResultTable tableData={this.state.searchOverallEmoResultTableData} />
           <SearchArticlesResultTable tableData={this.state.searchArticlesResultTableData} />
+          <EmoSearchBasicResultCard />
         </View>
     )
   }
