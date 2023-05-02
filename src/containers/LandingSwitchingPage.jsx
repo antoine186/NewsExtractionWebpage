@@ -20,6 +20,7 @@ class LandingSwitchingPage extends Component {
       linking: false
     }
 
+    this.clearToggleChoice = this.clearToggleChoice.bind(this)
     this.toggleClickSearch = this.toggleClickSearch.bind(this)
   }
 
@@ -32,6 +33,7 @@ class LandingSwitchingPage extends Component {
 
   toggleClickSearch () {
     console.log('Toggling to search')
+    this.clearToggleChoice()
     this.setState({ searchShow: true })
   }
 
