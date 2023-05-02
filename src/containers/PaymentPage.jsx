@@ -42,18 +42,6 @@ class PaymentPage extends Component {
     this.props.clearStripeCustomerId()
     this.props.clearSubscriptionStoredState()
 
-    api.post(getStripeCustomerId, {
-      username: this.props.accountData.accountData.payload.emailAddress
-    }, {
-      withCredentials: true
-    }
-    ).then(response => {
-      if (response.data.operation_success) {
-        this.props.setStripeCustomerId(response.data.responsePayload)
-      }
-    }
-    )
-
     this.props.clearAmendPayment()
 
     const stripePromise = loadStripe(stripePublicKey)
@@ -63,70 +51,84 @@ class PaymentPage extends Component {
       subscriptionCreationFailed: false
     }
 
-    api.post(retrieveSubscriptionDetails, {
-      username: this.props.accountData.accountData.payload.emailAddress
-    }, {
-      withCredentials: true
-    }
-    ).then(response => {
-      if (response.data.operation_success) {
-        console.log('Found existing subscription')
-        this.props.setstripeSubscription(response.data.responsePayload)
-        this.props.setValidSubscription(true)
-
-        api.post(getSubscriptionStatus, {
-          stripeSubscriptionId: response.data.responsePayload.stripe_subscription_id
-        }, {
-          withCredentials: true
-        }
-        ).then(response => {
-          if (response.data.operation_success) {
-            console.log(response.data.responsePayload.stripe_subscription_status)
-            if (response.data.responsePayload.stripe_subscription_status === 'active' ||
-              response.data.responsePayload.stripe_subscription_status === 'trialing') {
-              console.log('In payment amendment mode')
-
-              // this.props.setValidSubscription(true)
-              this.props.setAmendPayment()
-            } else {
-              console.log('Subscription cancelled or expired. Creating a new subscription.')
-
-              api.post(getStripeCustomerId, {
-                username: this.props.accountData.accountData.payload.emailAddress
-              }, {
-                withCredentials: true
-              }
-              ).then(response => {
-                if (response.data.operation_success) {
-                  this.props.setStripeCustomerId(response.data.responsePayload)
-                  this.props.setValidSubscription(false)
-                  this.createMissingSubscription()
-                }
-              }
-              )
-            }
-          } else { /* empty */ }
-        }
-        )
-      } else {
-        console.log('No existing subscription')
-
-        api.post(getStripeCustomerId, {
-          username: this.props.accountData.accountData.payload.emailAddress
-        }, {
-          withCredentials: true
-        }
-        ).then(response => {
-          if (response.data.operation_success) {
-            this.props.setStripeCustomerId(response.data.responsePayload)
-            this.props.setValidSubscription(false)
-            this.createMissingSubscription()
-          }
-        }
-        )
+    if (this.props.accountData.accountData.payload !== undefined) {
+      api.post(getStripeCustomerId, {
+        username: this.props.accountData.accountData.payload.emailAddress
+      }, {
+        withCredentials: true
       }
+      ).then(response => {
+        if (response.data.operation_success) {
+          this.props.setStripeCustomerId(response.data.responsePayload)
+        }
+      }
+      )
+
+      api.post(retrieveSubscriptionDetails, {
+        username: this.props.accountData.accountData.payload.emailAddress
+      }, {
+        withCredentials: true
+      }
+      ).then(response => {
+        if (response.data.operation_success) {
+          console.log('Found existing subscription')
+          this.props.setstripeSubscription(response.data.responsePayload)
+          this.props.setValidSubscription(true)
+
+          api.post(getSubscriptionStatus, {
+            stripeSubscriptionId: response.data.responsePayload.stripe_subscription_id
+          }, {
+            withCredentials: true
+          }
+          ).then(response => {
+            if (response.data.operation_success) {
+              console.log(response.data.responsePayload.stripe_subscription_status)
+              if (response.data.responsePayload.stripe_subscription_status === 'active' ||
+                response.data.responsePayload.stripe_subscription_status === 'trialing') {
+                console.log('In payment amendment mode')
+
+                // this.props.setValidSubscription(true)
+                this.props.setAmendPayment()
+              } else {
+                console.log('Subscription cancelled or expired. Creating a new subscription.')
+
+                api.post(getStripeCustomerId, {
+                  username: this.props.accountData.accountData.payload.emailAddress
+                }, {
+                  withCredentials: true
+                }
+                ).then(response => {
+                  if (response.data.operation_success) {
+                    this.props.setStripeCustomerId(response.data.responsePayload)
+                    this.props.setValidSubscription(false)
+                    this.createMissingSubscription()
+                  }
+                }
+                )
+              }
+            } else { /* empty */ }
+          }
+          )
+        } else {
+          console.log('No existing subscription')
+
+          api.post(getStripeCustomerId, {
+            username: this.props.accountData.accountData.payload.emailAddress
+          }, {
+            withCredentials: true
+          }
+          ).then(response => {
+            if (response.data.operation_success) {
+              this.props.setStripeCustomerId(response.data.responsePayload)
+              this.props.setValidSubscription(false)
+              this.createMissingSubscription()
+            }
+          }
+          )
+        }
+      }
+      )
     }
-    )
   }
 
   createMissingSubscription () {

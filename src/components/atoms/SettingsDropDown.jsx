@@ -9,6 +9,7 @@ import ClearEntireStore from '../../utils/session_helpers/ClearEntireStore'
 import ManualStoreClearing from '../../utils/session_helpers/ManualStoreClearing'
 import { useEffect } from 'react'
 import { useSelector } from 'react-redux'
+import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native'
 const { vw, vh, vmin, vmax } = require('react-native-viewport-units')
 
 function SettingsDropDown () {
@@ -32,10 +33,9 @@ function SettingsDropDown () {
     if (event.target.value === 'subscription') {
       navigate('/payment')
     } else if (event.target.value === 'log-out') {
+      console.log('Attempting to logout')
       setManualClearStore(true)
       ClearEntireStore()
-
-      navigate('/')
     }
   }
 
@@ -51,7 +51,10 @@ function SettingsDropDown () {
           <MenuItem value={'subscription'}>Subscription</MenuItem>
           <MenuItem value={'log-out'}>Log Out</MenuItem>
           {manualClearStore &&
+          <View>
             <ManualStoreClearing />
+            <Navigate to='/' />
+          </View>
           }
         </Select>
       </FormControl>

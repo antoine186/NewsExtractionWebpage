@@ -103,7 +103,7 @@ class EmotionalSearchPage extends Component {
           <Navigate to='/login' />
         </View>
       )
-    } else {
+    } else if (this.props.validSubscription.validSubscription.payload) {
       return (
         <View>
         <TopBar settingsEnabled={true} />
@@ -183,6 +183,13 @@ class EmotionalSearchPage extends Component {
         </View>
         </View>
       )
+    } else {
+      return (
+        <View>
+          <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0" />
+          <Navigate to='/payment' />
+        </View>
+      )
     }
   }
 }
@@ -203,7 +210,8 @@ EmotionalSearchPage.defaultProps = {
 
 const mapStateToProps = state => {
   return {
-    userSession: state.userSession
+    userSession: state.userSession,
+    validSubscription: state.validSubscription
   }
 }
 

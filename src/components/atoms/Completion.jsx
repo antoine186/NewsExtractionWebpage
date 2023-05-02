@@ -12,6 +12,7 @@ import { clearStripeCustomerId } from '../../store/Slices/StripeCustomerIdSlice'
 import { clearstripeSubscription } from '../../store/Slices/StripeSubscriptionSlice'
 import { clearValidSubscription } from '../../store/Slices/ValidSubscriptionSlice'
 import { setSubscriptionStoredState } from '../../store/Slices/SubscriptionStoredSlice'
+import { setValidSubscription } from '../../store/Slices/ValidSubscriptionSlice'
 
 function Completion (props) {
   const accountData = useSelector(state => state.accountData)
@@ -58,6 +59,8 @@ function Completion (props) {
       dispatch(clearValidSubscription())
 
       ClearEntireStore()
+    } else {
+      dispatch(setValidSubscription(true))
     }
   }
 
