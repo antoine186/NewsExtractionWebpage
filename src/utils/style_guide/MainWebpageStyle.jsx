@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
   },
   articleCard: {
     marginBottom: 0.5 * vw,
-    height: 8 * vw,
+    // height: 8 * vw,
     width: 25 * vw
   }
 })
