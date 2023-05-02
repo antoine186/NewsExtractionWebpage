@@ -11,6 +11,14 @@ const styles = StyleSheet.create({
     backgroundColor: '#F5FCFF',
     width: Dimensions.get('window').width
   },
+  innerContainer: {
+    //flex: 1,
+    //height: ScreenHeight,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#F5FCFF',
+    //width: Dimensions.get('window').width
+  },
   header: {
     padding: 1 * vw
   },
@@ -44,6 +52,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginTop: 2 * vw,
     backgroundColor: '#FF1493'
+  },
+  image: {
+    marginBottom: 0.5 * vw,
+    height: 2.5 * vw,
+    width: 2.5 * vw
   }
 })
 
