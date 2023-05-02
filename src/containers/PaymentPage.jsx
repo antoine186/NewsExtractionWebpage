@@ -181,6 +181,7 @@ class PaymentPage extends Component {
         )
       } else {
         console.log('Subscription deletion failed')
+        console.log(response.data.error_message)
       }
     }
     )
