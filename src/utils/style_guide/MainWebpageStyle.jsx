@@ -12,12 +12,9 @@ const styles = StyleSheet.create({
     width: Dimensions.get('window').width
   },
   innerContainer: {
-    //flex: 1,
-    //height: ScreenHeight,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-    //width: Dimensions.get('window').width
+    backgroundColor: '#F5FCFF'
   },
   header: {
     padding: 1 * vw
