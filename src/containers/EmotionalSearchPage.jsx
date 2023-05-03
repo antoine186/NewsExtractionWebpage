@@ -12,6 +12,7 @@ import SearchOverallEmoResultTable from '../components/molecules/SearchOverallEm
 import EmoEngagementStringFormatter from './search_helper_functions/EmoEngagementStringFormatter'
 import EmoSearchBasicResultCard from '../components/molecules/EmoSearchBasicResultCard'
 import { connect } from 'react-redux'
+import EmoSearchOverallResultCard from '../components/molecules/EmoSearchOverallResultCard'
 
 function Link (props) {
   return <Text {...props} accessibilityRole="link" style={StyleSheet.compose(styles.link, props.style)} />
@@ -20,12 +21,6 @@ function Link (props) {
 class EmotionalSearchPage extends Component {
   constructor (props) {
     super(props)
-
-    const options = [
-      { label: '01:00', value: '1' },
-      { label: '01:30', value: '1.5' },
-      { label: '02:00', value: '2' }
-    ]
 
     this.state = {
       searchInput: '',
@@ -36,7 +31,8 @@ class EmotionalSearchPage extends Component {
       noResultsToReturn: false,
       searchingInitiated: false,
       anyResponseFromServer: false,
-      toggleOptions: options
+      startDateString: '',
+      endDateString: ''
     }
 
     api.post(getPreviousSearchResult, {
@@ -47,6 +43,9 @@ class EmotionalSearchPage extends Component {
     ).then(response => {
       if (response.data !== 'Error') {
         console.log('Retrieved previous search returned something!')
+        this.setState({ searchInput: response.data.responsePayload.previous_search_result.search_input })
+        this.setState({ startDateString: this.date2String(response.data.responsePayload.previous_search_result.search_start_date) })
+        this.setState({ endDateString: this.date2String(response.data.responsePayload.previous_search_result.search_end_date) })
         this.populateOverallEmoResultTable(response.data.responsePayload.previous_search_result)
         this.populateArticlesResultTable(response.data.responsePayload.previous_search_result)
       } else {
@@ -98,6 +97,7 @@ class EmotionalSearchPage extends Component {
     searchOverallEmoResultTableData.push(overallEmoResultDict)
 
     this.setState({ searchOverallEmoResultTableData })
+    this.setState({ searchingInitiated: false })
   }
 
   populateArticlesResultTable (data) {
@@ -118,6 +118,16 @@ class EmotionalSearchPage extends Component {
     this.setState({ searchArticlesResultTableData })
   }
 
+  date2String (dateArray) {
+    let dateString = ''
+
+    dateString = dateString + dateArray[1] + '/'
+    dateString = dateString + dateArray[2] + '/'
+    dateString = dateString + dateArray[0]
+
+    return dateString
+  }
+
   render () {
     return (
         <View style={styles.innerContainer}>
@@ -130,6 +140,7 @@ class EmotionalSearchPage extends Component {
                 multiline
                 numberOfLines={4}
                 maxLength={40}
+                value={this.state.searchInput}
                 onChangeText={text => this.setState({ searchInput: text })}
                 placeholder={'Try searching \'ChatGPT\'... (result might take a few minutes)'}
                 style={{ padding: 10, borderWidth: 2, borderColor: '#BC2BEA' }}
@@ -149,7 +160,7 @@ class EmotionalSearchPage extends Component {
               <br></br>
               <br></br>
               <Text style={styles.text}>
-                Give Me a Minute or Two...
+                Please Come Back in a Minute or Two...
               </Text>
               <br></br>
               <br></br>
@@ -164,9 +175,9 @@ class EmotionalSearchPage extends Component {
             </View>
           }
 
-          {this.state.searchingInitiated && !this.state.noResultsToReturn && this.state.anyResponseFromServer &&
+          {!this.state.searchingInitiated &&
             <Text style={styles.text}>
-              Results One Week Prior and Up to Selected Date
+              From {this.state.startDateString} To {this.state.endDateString}
             </Text>
           }
           <br></br>
@@ -175,9 +186,15 @@ class EmotionalSearchPage extends Component {
               No results found! Maybe the date is too recent... Please refresh page to initiate another search.
             </Text>
           }
-          <SearchOverallEmoResultTable tableData={this.state.searchOverallEmoResultTableData} />
-          <SearchArticlesResultTable tableData={this.state.searchArticlesResultTableData} />
-          <EmoSearchBasicResultCard />
+          {false &&
+          <>
+            <SearchOverallEmoResultTable tableData={this.state.searchOverallEmoResultTableData} />
+            <SearchArticlesResultTable tableData={this.state.searchArticlesResultTableData} />
+          </>
+          }
+          {!this.state.searchingInitiated &&
+            <EmoSearchOverallResultCard resultData={this.state.searchOverallEmoResultTableData} />
+          }
         </View>
     )
   }
