@@ -18,7 +18,8 @@ function ArticlesResultTableDataWrangler (data) {
     publisher: happiestArticle.publisher,
     published_date: happiestArticle.published_date,
     emotional_engagement: EmoEngagementStringFormatter(happiestArticle.emo_breakdown),
-    url: happiestArticle.url
+    url: happiestArticle.url,
+    extracted_keywords: happiestArticle.extracted_keywords
   }
   const mostAngryArticleData = {
     article_category: 'Angriest Article',
@@ -27,7 +28,8 @@ function ArticlesResultTableDataWrangler (data) {
     publisher: mostAngryArticle.publisher,
     published_date: mostAngryArticle.published_date,
     emotional_engagement: EmoEngagementStringFormatter(mostAngryArticle.emo_breakdown),
-    url: mostAngryArticle.url
+    url: mostAngryArticle.url,
+    extracted_keywords: mostAngryArticle.extracted_keywords
   }
   const mostDisgustedArticleData = {
     article_category: 'Most Disgusted Article',
@@ -36,7 +38,8 @@ function ArticlesResultTableDataWrangler (data) {
     publisher: mostDisgustedArticle.publisher,
     published_date: mostDisgustedArticle.published_date,
     emotional_engagement: EmoEngagementStringFormatter(mostDisgustedArticle.emo_breakdown),
-    url: mostDisgustedArticle.url
+    url: mostDisgustedArticle.url,
+    extracted_keywords: mostDisgustedArticle.extracted_keywords
   }
   const mostFearfulArticleData = {
     article_category: 'Most Fearful Article',
@@ -45,7 +48,8 @@ function ArticlesResultTableDataWrangler (data) {
     publisher: mostFearfulArticle.publisher,
     published_date: mostFearfulArticle.published_date,
     emotional_engagement: EmoEngagementStringFormatter(mostFearfulArticle.emo_breakdown),
-    url: mostFearfulArticle.url
+    url: mostFearfulArticle.url,
+    extracted_keywords: mostFearfulArticle.extracted_keywords
   }
   const mostNeutralArticleData = {
     article_category: 'Most Neutral Article',
@@ -54,7 +58,8 @@ function ArticlesResultTableDataWrangler (data) {
     publisher: mostNeutralArticle.publisher,
     published_date: mostNeutralArticle.published_date,
     emotional_engagement: EmoEngagementStringFormatter(mostNeutralArticle.emo_breakdown),
-    url: mostNeutralArticle.url
+    url: mostNeutralArticle.url,
+    extracted_keywords: mostNeutralArticle.extracted_keywords
   }
   const mostSurprisedArticleData = {
     article_category: 'Most Surprised Article',
@@ -63,7 +68,8 @@ function ArticlesResultTableDataWrangler (data) {
     publisher: mostSurprisedArticle.publisher,
     published_date: mostSurprisedArticle.published_date,
     emotional_engagement: EmoEngagementStringFormatter(mostSurprisedArticle.emo_breakdown),
-    url: mostSurprisedArticle.url
+    url: mostSurprisedArticle.url,
+    extracted_keywords: mostSurprisedArticle.extracted_keywords
   }
   const sadestArticleData = {
     article_category: 'Sadest Article',
@@ -72,7 +78,8 @@ function ArticlesResultTableDataWrangler (data) {
     publisher: sadestArticle.publisher,
     published_date: sadestArticle.published_date,
     emotional_engagement: EmoEngagementStringFormatter(sadestArticle.emo_breakdown),
-    url: sadestArticle.url
+    url: sadestArticle.url,
+    extracted_keywords: sadestArticle.extracted_keywords
   }
 
   return {

@@ -58,9 +58,24 @@ class EmoSearchBasicResultCard extends Component {
                 </CardActions>
                 <Collapse in={this.state.articleExpand} timeout="auto" unmountOnExit>
                     <CardContent>
+                        <Typography sx={{ fontSize: 1.2 * vh }} color="text.secondary" gutterBottom>
+                            Emotional Engagement
+                        </Typography>
                         <Typography paragraph sx={{ fontSize: 1.2 * vh }}>
                             {this.state.articleData !== undefined &&
                                 this.state.articleData.emotional_engagement
+                            }
+                            <br></br>
+                            <br></br>
+                            <Typography sx={{ fontSize: 1.2 * vh }} color="text.secondary" gutterBottom>
+                                Extracted Concepts
+                            </Typography>
+                            {this.state.articleData !== undefined &&
+                            <ul>
+                                {this.state.articleData.extracted_keywords.map(keywords => (
+                                    <li>{keywords[0]}</li>
+                                ))}
+                            </ul>
                             }
                         </Typography>
                     </CardContent>
