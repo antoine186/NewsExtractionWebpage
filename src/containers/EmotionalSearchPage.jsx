@@ -196,7 +196,13 @@ class EmotionalSearchPage extends Component {
           </>
           }
           {!this.state.searchingInitiated && !this.state.noResultsToReturn &&
+          <View>
             <EmoSearchOverallResultCard resultData={this.state.searchOverallEmoResultTableData} />
+            <EmoSearchBasicResultCard
+              emoIcon={'😃'}
+              articleData={this.state.searchArticlesResultTableData[0]}
+              />
+          </View>
           }
         </View>
     )
