@@ -37,10 +37,7 @@ class EmoSearchBasicResultCard extends Component {
                     </Typography>
                     <Typography variant="h5" sx={{ fontSize: 1.6 * vh }}>
                         {this.state.articleData !== undefined &&
-                            <a href={this.state.articleData.url}>{this.state.articleData.title}</a>
-                        }
-                        {
-                            console.log(this.state.articleData)
+                            <a href={this.state.articleData.url} style={{ color: '#808B96' }}>{this.state.articleData.title}</a>
                         }
                     </Typography>
                     <Typography sx={{ fontSize: 1.2 * vh }} color="text.secondary">
