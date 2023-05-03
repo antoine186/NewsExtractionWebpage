@@ -45,7 +45,7 @@ class LandingSwitchingPage extends Component {
             <Navigate to='/login' />
         </View>
       )
-    } else if (this.props.validSubscription.validSubscription.payload) {
+    } else if (this.props.validSubscription.validSubscription.payload !== undefined && this.props.validSubscription.validSubscription.payload) {
       return (
         <View>
             <TopBar settingsEnabled={true} />
@@ -78,7 +78,7 @@ class LandingSwitchingPage extends Component {
             </View>
         </View>
       )
-    } else if (this.state.userSessionValidated && !this.props.validSubscription.validSubscription.payload) {
+    } else if (this.state.userSessionValidated && this.props.validSubscription.validSubscription.payload !== undefined) {
       return (
         <View>
             <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0" />
