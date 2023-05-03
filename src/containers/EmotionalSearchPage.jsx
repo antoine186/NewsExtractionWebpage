@@ -59,6 +59,7 @@ class EmotionalSearchPage extends Component {
     e.preventDefault()
 
     this.setState({ searchingInitiated: true })
+    this.setState({ noResultsToReturn: false })
 
     api.post(searchUrl, {
       searchInput: this.state.searchInput,
@@ -76,6 +77,8 @@ class EmotionalSearchPage extends Component {
         this.populateArticlesResultTable(response.data)
       } else {
         this.setState({ noResultsToReturn: true })
+        this.setState({ searchingInitiated: false })
+        this.forceUpdate()
       }
     }
     )
@@ -155,7 +158,7 @@ class EmotionalSearchPage extends Component {
             </View>
           </View>
           <br></br>
-          {this.state.searchingInitiated && !this.state.anyResponseFromServer &&
+          {this.state.searchingInitiated &&
             <View>
               <br></br>
               <br></br>
@@ -175,13 +178,13 @@ class EmotionalSearchPage extends Component {
             </View>
           }
 
-          {!this.state.searchingInitiated &&
+          {!this.state.searchingInitiated && !this.state.noResultsToReturn &&
             <Text style={styles.text}>
               From {this.state.startDateString} To {this.state.endDateString}
             </Text>
           }
           <br></br>
-          {this.state.noResultsToReturn &&
+          {this.state.noResultsToReturn && !this.state.searchingInitiated &&
             <Text style={styles.text}>
               No results found! Maybe the date is too recent... Please refresh page to initiate another search.
             </Text>
@@ -192,7 +195,7 @@ class EmotionalSearchPage extends Component {
             <SearchArticlesResultTable tableData={this.state.searchArticlesResultTableData} />
           </>
           }
-          {!this.state.searchingInitiated &&
+          {!this.state.searchingInitiated && !this.state.noResultsToReturn &&
             <EmoSearchOverallResultCard resultData={this.state.searchOverallEmoResultTableData} />
           }
         </View>
