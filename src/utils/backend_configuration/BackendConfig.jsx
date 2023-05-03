@@ -20,6 +20,7 @@ export const getStripeCustomerId = '/get_stripe_customer_id'
 export const deleteSubscription = '/delete_subscription'
 export const forgotPassword = '/forgot_password'
 export const passwordReset = '/password_reset'
+export const getPreviousSearchResult = '/get-previous-search-result'
 
 export const api = axios.create({
   baseURL: backendUrl

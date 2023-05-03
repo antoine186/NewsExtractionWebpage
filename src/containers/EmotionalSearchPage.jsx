@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, TextInput, TouchableOpacity, Icon, Image } from
 import CappedDatePicker from '../components/atoms/CappedDatePicker'
 import styles from '../utils/style_guide/MainWebpageStyle'
 import PropTypes from 'prop-types'
-import { api, searchUrl } from '../utils/backend_configuration/BackendConfig'
+import { api, searchUrl, getPreviousSearchResult } from '../utils/backend_configuration/BackendConfig'
 import DateFormatter from '../utils/DateFormatter'
 import SearchArticlesResultTable from '../components/molecules/SearchArticlesResultTable'
 import ArticlesResultTableDataWrangler from './search_helper_functions/ArticlesResultTableDataWrangler'
@@ -11,6 +11,7 @@ import ClipLoader from 'react-spinners/ClipLoader'
 import SearchOverallEmoResultTable from '../components/molecules/SearchOverallEmoResultTable'
 import EmoEngagementStringFormatter from './search_helper_functions/EmoEngagementStringFormatter'
 import EmoSearchBasicResultCard from '../components/molecules/EmoSearchBasicResultCard'
+import { connect } from 'react-redux'
 
 function Link (props) {
   return <Text {...props} accessibilityRole="link" style={StyleSheet.compose(styles.link, props.style)} />
@@ -37,6 +38,22 @@ class EmotionalSearchPage extends Component {
       anyResponseFromServer: false,
       toggleOptions: options
     }
+
+    api.post(getPreviousSearchResult, {
+      username: this.props.accountData.accountData.payload.emailAddress
+    }, {
+      withCredentials: true
+    }
+    ).then(response => {
+      if (response.data !== 'Error') {
+        console.log('Retrieved previous search returned something!')
+        this.populateOverallEmoResultTable(response.data.responsePayload.previous_search_result)
+        this.populateArticlesResultTable(response.data.responsePayload.previous_search_result)
+      } else {
+        this.setState({ noResultsToReturn: true })
+      }
+    }
+    )
   }
 
   handleSubmit = (e) => {
@@ -46,7 +63,8 @@ class EmotionalSearchPage extends Component {
 
     api.post(searchUrl, {
       searchInput: this.state.searchInput,
-      dateInput: this.state.dateInput
+      dateInput: this.state.dateInput,
+      username: this.props.accountData.accountData.payload.emailAddress
     }, {
       withCredentials: true
     }
@@ -135,12 +153,14 @@ class EmotionalSearchPage extends Component {
               </Text>
               <br></br>
               <br></br>
-              <ClipLoader
-                color={'#e75fa6'}
-                size={200}
-                aria-label="Loading Spinner"
-                data-testid="loader"
-              />
+              <View style={{ alignItems: 'center' }}>
+                <ClipLoader
+                  color={'#e75fa6'}
+                  size={200}
+                  aria-label="Loading Spinner"
+                  data-testid="loader"
+                />
+              </View>
             </View>
           }
 
@@ -177,4 +197,10 @@ EmotionalSearchPage.defaultProps = {
   defaultDate: yesterday
 }
 
-export default EmotionalSearchPage
+const mapStateToProps = state => {
+  return {
+    accountData: state.accountData
+  }
+}
+
+export default connect(mapStateToProps)(EmotionalSearchPage)
