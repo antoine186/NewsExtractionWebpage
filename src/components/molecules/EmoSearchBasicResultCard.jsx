@@ -32,7 +32,7 @@ class EmoSearchBasicResultCard extends Component {
         <View>
             <Card style={styles.articleCard}>
                 <CardContent>
-                    <Typography sx={{ fontSize: 1.2 * vh }} color="text.secondary" gutterBottom>
+                    <Typography sx={{ fontSize: 1.2 * vh }} color="text.primary" gutterBottom>
                         Most {this.state.emoIcon}
                     </Typography>
                     <Typography variant="h5" sx={{ fontSize: 1.6 * vh }}>
@@ -40,7 +40,7 @@ class EmoSearchBasicResultCard extends Component {
                             <a href={this.state.articleData.url} style={{ color: '#808B96' }}>{this.state.articleData.title}</a>
                         }
                     </Typography>
-                    <Typography sx={{ fontSize: 1.2 * vh }} color="text.secondary">
+                    <Typography sx={{ fontSize: 1.2 * vh }} color="text.primary">
                         {this.state.articleData !== undefined &&
                             this.state.articleData.publisher
                         }
