@@ -201,7 +201,31 @@ class EmotionalSearchPage extends Component {
             <EmoSearchBasicResultCard
               emoIcon={'😃'}
               articleData={this.state.searchArticlesResultTableData[0]}
-              />
+            />
+            <EmoSearchBasicResultCard
+              emoIcon={'😡'}
+              articleData={this.state.searchArticlesResultTableData[1]}
+            />
+            <EmoSearchBasicResultCard
+              emoIcon={'🤢'}
+              articleData={this.state.searchArticlesResultTableData[2]}
+            />
+            <EmoSearchBasicResultCard
+              emoIcon={'😱'}
+              articleData={this.state.searchArticlesResultTableData[3]}
+            />
+            <EmoSearchBasicResultCard
+              emoIcon={'😐'}
+              articleData={this.state.searchArticlesResultTableData[4]}
+            />
+            <EmoSearchBasicResultCard
+              emoIcon={'😢'}
+              articleData={this.state.searchArticlesResultTableData[5]}
+            />
+            <EmoSearchBasicResultCard
+              emoIcon={'😯'}
+              articleData={this.state.searchArticlesResultTableData[6]}
+            />
           </View>
           }
         </View>
