@@ -35,6 +35,13 @@ const styles = StyleSheet.create({
     marginVertical: 1 * vw,
     textAlign: 'center'
   },
+  tagText: {
+    lineHeight: 1 * vw,
+    fontSize: 0.8 * vw,
+    marginVertical: 1 * vw,
+    marginLeft: 1 * vw,
+    textAlign: 'center'
+  },
   link: {
     color: '#1B95E0'
   },
@@ -59,6 +66,15 @@ const styles = StyleSheet.create({
     marginBottom: 0.5 * vw,
     // height: 8 * vw,
     width: 25 * vw
+  },
+  titleText2: {
+    color: '#AD3978',
+    fontSize: 0.8 * vw
+  },
+  rowContainer: {
+    flexDirection: 'row',
+    // justifyContent: 'space-between',
+    overflow: 'visible'
   }
 })
 

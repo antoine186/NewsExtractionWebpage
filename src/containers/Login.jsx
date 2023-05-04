@@ -75,14 +75,17 @@ function Login () {
               if (response.data.operation_success) {
                 if (response.data.responsePayload.stripe_subscription_status === 'active' ||
                 response.data.responsePayload.stripe_subscription_status === 'trialing') {
+                  console.log('Found valid subscription')
                   dispatch(setValidSubscription(true))
                 } else {
+                  console.log('No valid subscriptions found')
                   dispatch(setValidSubscription(false))
                 }
               } else { /* empty */ }
             }
             )
           } else {
+            console.log('No valid subscriptions found')
             dispatch(setValidSubscription(false))
           }
         }

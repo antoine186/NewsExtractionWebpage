@@ -7,6 +7,7 @@ import { StyleSheet, Text, View, TextInput, TouchableOpacity, Icon, Image } from
 import { Navigate } from 'react-router-dom'
 import styles from '../utils/style_guide/MainWebpageStyle'
 import { connect } from 'react-redux'
+import TaggingPage from './TaggingPage'
 
 class LandingSwitchingPage extends Component {
   constructor (props) {
@@ -22,6 +23,7 @@ class LandingSwitchingPage extends Component {
 
     this.clearToggleChoice = this.clearToggleChoice.bind(this)
     this.toggleClickSearch = this.toggleClickSearch.bind(this)
+    this.toggleClickTag = this.toggleClickTag.bind(this)
   }
 
   clearToggleChoice () {
@@ -35,6 +37,12 @@ class LandingSwitchingPage extends Component {
     console.log('Toggling to search')
     this.clearToggleChoice()
     this.setState({ searchShow: true })
+  }
+
+  toggleClickTag () {
+    console.log('Toggling to tagging')
+    this.clearToggleChoice()
+    this.setState({ tagShow: true })
   }
 
   render () {
@@ -52,7 +60,12 @@ class LandingSwitchingPage extends Component {
             <View style={styles.container}>
                 <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0" />
                 <View style={styles.header}>
+                  {this.state.searchShow &&
                     <Text style={styles.titleText}>Emotional Machines Search (Beta)</Text>
+                  }
+                  {this.state.tagShow &&
+                    <Text style={styles.titleText}>Emotional Machines Tagging (Beta)</Text>
+                  }
                 </View>
                 <ToggleButtonGroup
                     // value={alignment}
@@ -62,7 +75,7 @@ class LandingSwitchingPage extends Component {
                     <ToggleButton value="search" onClick={this.toggleClickSearch}>
                         <Image style={styles.image} source={require('../assets/images/magnifying-glass-search-icon-png-transparent.png')} />
                     </ToggleButton>
-                    <ToggleButton value="tag">
+                    <ToggleButton value="tag" onClick={this.toggleClickTag}>
                         <Image style={styles.image} source={require('../assets/images/tag.jpg')} />
                     </ToggleButton>
                     <ToggleButton value="progression">
@@ -74,6 +87,9 @@ class LandingSwitchingPage extends Component {
                 </ToggleButtonGroup>
                 {this.state.searchShow &&
                     <EmotionalSearchPage />
+                }
+                {this.state.tagShow &&
+                    <TaggingPage />
                 }
             </View>
         </View>
