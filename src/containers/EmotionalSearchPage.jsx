@@ -186,14 +186,8 @@ class EmotionalSearchPage extends Component {
           <br></br>
           {this.state.noResultsToReturn && !this.state.searchingInitiated &&
             <Text style={styles.text}>
-              No results found! Maybe the date is too recent... Please refresh page to initiate another search.
+              Not enough results found! Maybe the date is too recent... Please refresh page to initiate another search.
             </Text>
-          }
-          {false &&
-          <>
-            <SearchOverallEmoResultTable tableData={this.state.searchOverallEmoResultTableData} />
-            <SearchArticlesResultTable tableData={this.state.searchArticlesResultTableData} />
-          </>
           }
           {!this.state.searchingInitiated && !this.state.noResultsToReturn &&
           <View>

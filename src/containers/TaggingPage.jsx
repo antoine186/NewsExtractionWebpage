@@ -1,9 +1,10 @@
 import React from 'react'
 import styles from '../utils/style_guide/MainWebpageStyle'
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, Icon, Image } from 'react-native'
-import TagLine from '../components/atoms/TagLine'
-import { api } from '../utils/backend_configuration/BackendConfig'
+import TagLine from '../components/molecules/TagLine'
+import DateFormatterForUI from '../utils/DateFormatterForUI'
 import DateFormatter from '../utils/DateFormatter'
+import { connect } from 'react-redux'
 
 class TaggingPage extends React.Component {
   constructor (props) {
@@ -12,12 +13,19 @@ class TaggingPage extends React.Component {
     const relevantDate = new Date()
 
     relevantDate.setDate(relevantDate.getDate() - 1)
+    const yesterdayString = DateFormatterForUI(relevantDate)
     const yesterday = DateFormatter(relevantDate)
+
+    relevantDate.setDate(relevantDate.getDate() - 1)
+
+    const dayBeforeYesterday = DateFormatter(relevantDate)
 
     this.state = {
       searchInput: '',
       searchInputs: [],
-      yesterday
+      yesterdayString,
+      yesterday,
+      dayBeforeYesterday
     }
   }
 
@@ -28,7 +36,8 @@ class TaggingPage extends React.Component {
       const newSearchInputs = this.state.searchInputs
       newSearchInputs.push({
         searchInput: this.state.searchInput,
-        searchDate: this.state.yesterday
+        searchDate: this.state.yesterday,
+        dayBeforeSearchDate: this.state.dayBeforeYesterday
       })
       this.setState({
         searchInputs: newSearchInputs
@@ -56,7 +65,7 @@ class TaggingPage extends React.Component {
                     <br></br>
                     {!this.state.searchingInitiated &&
                         <TouchableOpacity style={styles.searchBtn} onPress={this.handleSubmit}>
-                            <Text style={styles.text}>ADD</Text>
+                            <Text style={styles.text}>TAG</Text>
                         </TouchableOpacity>
                     }
                 </View>
@@ -66,17 +75,22 @@ class TaggingPage extends React.Component {
                 <View>
                     <br></br>
                     <Text style={styles.titleText2}>
-                        Below are your active tags
+                        Below are your active tags for {this.state.yesterdayString}
                     </Text>
                     <br></br>
                     <br></br>
                     {
-                        this.state.searchInputs.map((searchInputs) => (
-                            <View>
-                                <TagLine />
-                                <br></br>
-                            </View>
-                        ))
+                    this.state.searchInputs.map((searchInputs) => (
+                        <View>
+                            <TagLine
+                                searchInput={searchInputs.searchInput}
+                                searchDate={searchInputs.searchDate}
+                                dayBeforeSearchDate={searchInputs.dayBeforeSearchDate}
+                                accountData={this.props.accountData}
+                            />
+                            <br></br>
+                        </View>
+                    ))
                     }
                 </View>
             }
@@ -85,4 +99,10 @@ class TaggingPage extends React.Component {
   }
 }
 
-export default TaggingPage
+const mapStateToProps = state => {
+  return {
+    accountData: state.accountData
+  }
+}
+
+export default connect(mapStateToProps)(TaggingPage)
