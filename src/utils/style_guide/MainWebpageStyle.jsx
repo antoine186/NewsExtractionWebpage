@@ -64,7 +64,6 @@ const styles = StyleSheet.create({
   },
   articleCard: {
     marginBottom: 0.5 * vw,
-    // height: 8 * vw,
     width: 25 * vw
   },
   titleText2: {
@@ -74,7 +73,8 @@ const styles = StyleSheet.create({
   rowContainer: {
     flexDirection: 'row',
     // justifyContent: 'space-between',
-    overflow: 'visible'
+    overflow: 'visible',
+    alignContent: 'center'
   },
   imageTag: {
     marginBottom: 0.5 * vw,

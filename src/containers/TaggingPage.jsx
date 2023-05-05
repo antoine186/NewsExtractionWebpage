@@ -124,23 +124,26 @@ class TaggingPage extends React.Component {
             </View>
             <br></br>
             {true &&
-                <View>
+                <View style={styles.innerContainer}>
                     <br></br>
-                    <Text style={styles.titleText2}>
-                        Below are your active tags for {this.state.yesterdayString}
-                    </Text>
+                    {this.state.searchInputs.length > 0 &&
+                      <Text style={styles.titleText2}>
+                        Below are your active tags
+                      </Text>
+                    }
                     <br></br>
                     <br></br>
                     {
                       this.state.searchInputs.map((searchInputs) => (
                         <View>
-                            <TagLine
-                                searchInput={searchInputs.searchInput}
-                                searchDate={searchInputs.searchDate}
-                                dayBeforeSearchDate={searchInputs.dayBeforeSearchDate}
-                                accountData={this.props.accountData}
-                            />
-                            <br></br>
+                          <TagLine
+                              searchInput={searchInputs.searchInput}
+                              searchDate={searchInputs.searchDate}
+                              dayBeforeSearchDate={searchInputs.dayBeforeSearchDate}
+                              accountData={this.props.accountData}
+                              existingTaggingInput={this.state.existingTaggingInput}
+                          />
+                          <br></br>
                         </View>
                       ))
                     }

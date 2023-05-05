@@ -33,7 +33,7 @@ class EmoSearchBasicResultCard extends Component {
             <Card style={styles.articleCard}>
                 <CardContent>
                     <Typography sx={{ fontSize: 1.2 * vh }} color="text.primary" gutterBottom>
-                        Most {this.state.emoIcon}
+                        Most {this.state.emoIcon} out of all articles found
                     </Typography>
                     <Typography variant="h5" sx={{ fontSize: 1.6 * vh }}>
                         {this.state.articleData !== undefined &&

@@ -2,11 +2,13 @@ import React, { Component } from 'react'
 
 import styles from '../../utils/style_guide/MainWebpageStyle'
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, Icon, Image } from 'react-native'
-import { api, taggingSearch } from '../../utils/backend_configuration/BackendConfig'
+import { api, taggingSearch, getPreviousTaggingResult } from '../../utils/backend_configuration/BackendConfig'
 import TagSearchResult from '../atoms/TagSearchResult'
 import { SpinnerRoundFilled } from 'spinners-react'
-
 const { vw, vh, vmin, vmax } = require('react-native-viewport-units')
+import EmoEngagementStringFormatter from '../../containers/search_helper_functions/EmoEngagementStringFormatter'
+import ArticlesResultTableDataWrangler from '../../containers/search_helper_functions/ArticlesResultTableDataWrangler'
+import { connect } from 'react-redux'
 
 class TagLine extends Component {
   constructor (props) {
@@ -17,10 +19,69 @@ class TagLine extends Component {
       searchDate: this.props.searchDate,
       dayBeforeSearchDate: this.props.dayBeforeSearchDate,
       accountData: this.props.accountData,
-      showResults: false
+      showResults: false,
+      existingTaggingInput: this.props.existingTaggingInput,
+      searchOverallEmoResultTableData: '',
+      searchArticlesResultTableData: ''
     }
 
-    this.initiateSearch()
+    this.getTaggingResults.bind(this)
+    this.initiateSearch.bind(this)
+
+    this.getTaggingResults()
+  }
+
+  populateOverallEmoResultTable (data) {
+    const searchOverallEmoResultTableData = []
+
+    const overallEmoResultDict = {
+      overall_emo: 'Overall Emotional Engagement with Search Topic Over All Articles Found!',
+      emotional_engagement: EmoEngagementStringFormatter(data.average_emo_breakdown)
+    }
+
+    searchOverallEmoResultTableData.push(overallEmoResultDict)
+
+    this.setState({ searchOverallEmoResultTableData })
+  }
+
+  populateArticlesResultTable (data) {
+    const searchArticlesResultTableData = []
+
+    const articlesResultsDict = ArticlesResultTableDataWrangler(data)
+
+    searchArticlesResultTableData.push(
+      articlesResultsDict.Happiest,
+      articlesResultsDict.Angriest,
+      articlesResultsDict.Disgusted,
+      articlesResultsDict.Fearful,
+      articlesResultsDict.Neutral,
+      articlesResultsDict.Sadest,
+      articlesResultsDict.Surprised
+    )
+
+    this.setState({ searchArticlesResultTableData })
+  }
+
+  getTaggingResults () {
+    api.post(getPreviousTaggingResult, {
+      username: this.props.accountData.accountData.payload.emailAddress,
+      searchInput: this.state.searchInput
+    }, {
+      withCredentials: true
+    }
+    ).then(response => {
+      if (response.data !== 'Error') {
+        console.log('Tagging returned something!')
+        this.populateOverallEmoResultTable(response.data.responsePayload.previous_search_result)
+        this.populateArticlesResultTable(response.data.responsePayload.previous_search_result)
+        this.setState({ noResultsToReturn: false })
+      } else {
+        console.log('Tagging returned an error')
+        this.setState({ noResultsToReturn: true })
+        this.initiateSearch()
+      }
+    }
+    )
   }
 
   initiateSearch () {
@@ -37,7 +98,7 @@ class TagLine extends Component {
 
   render () {
     return (
-      <View>
+      <View style={styles.innerContainer}>
         <View style={styles.rowContainer}>
           <SpinnerRoundFilled
             style={{
@@ -65,6 +126,11 @@ class TagLine extends Component {
           <TagSearchResult
           startDateString={this.state.dayBeforeSearchDate}
           endDateString={this.state.searchDate}
+          searchInput={this.state.searchInput}
+          existingTaggingInput={this.state.existingTaggingInput}
+          searchOverallEmoResultTableData={this.state.searchOverallEmoResultTableData}
+          searchArticlesResultTableData={this.state.searchArticlesResultTableData}
+          noResultsToReturn={this.state.noResultsToReturn}
         />
         }
       </View>
@@ -72,4 +138,10 @@ class TagLine extends Component {
   }
 }
 
-export default TagLine
+const mapStateToProps = state => {
+  return {
+    accountData: state.accountData
+  }
+}
+
+export default connect(mapStateToProps)(TagLine)
