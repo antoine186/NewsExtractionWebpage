@@ -5,6 +5,7 @@ import TagLine from '../components/molecules/TagLine'
 import DateFormatterForUI from '../utils/DateFormatterForUI'
 import DateFormatter from '../utils/DateFormatter'
 import { connect } from 'react-redux'
+import { api, getTaggingInputs, saveTaggingInputs, updateTaggingInputs } from '../utils/backend_configuration/BackendConfig'
 
 class TaggingPage extends React.Component {
   constructor (props) {
@@ -25,8 +26,25 @@ class TaggingPage extends React.Component {
       searchInputs: [],
       yesterdayString,
       yesterday,
-      dayBeforeYesterday
+      dayBeforeYesterday,
+      existingTaggingInput: false
     }
+
+    api.post(getTaggingInputs, {
+      username: this.props.accountData.accountData.payload.emailAddress,
+    }, {
+      withCredentials: true
+    }
+    ).then(response => {
+      if (response.data.operation_success) {
+        console.log('Retrieved existing tags list')
+        this.setState({ searchInputs: response.data.responsePayload.previous_tagging_input })
+        this.setState({ existingTaggingInput: true })
+      } else {
+        console.log('No existing tags list found')
+      }
+    }
+    )
   }
 
   handleSubmit = (e) => {
@@ -39,6 +57,40 @@ class TaggingPage extends React.Component {
         searchDate: this.state.yesterday,
         dayBeforeSearchDate: this.state.dayBeforeYesterday
       })
+
+      if (!this.state.existingTaggingInput) {
+        api.post(saveTaggingInputs, {
+          username: this.props.accountData.accountData.payload.emailAddress,
+          taggingInputList: newSearchInputs
+        }, {
+          withCredentials: true
+        }
+        ).then(response => {
+          if (response.data.operation_success) {
+            console.log('Saved the new tags list')
+            this.setState({ existingTaggingInput: true })
+          } else {
+            console.log('Saving the new tags list failed')
+          }
+        }
+        )
+      } else {
+        api.post(updateTaggingInputs, {
+          username: this.props.accountData.accountData.payload.emailAddress,
+          taggingInputList: newSearchInputs
+        }, {
+          withCredentials: true
+        }
+        ).then(response => {
+          if (response.data.operation_success) {
+            console.log('Updated the new tags list')
+          } else {
+            console.log('Updating the new tags list failed')
+          }
+        }
+        )
+      }
+
       this.setState({
         searchInputs: newSearchInputs
       })
@@ -80,7 +132,7 @@ class TaggingPage extends React.Component {
                     <br></br>
                     <br></br>
                     {
-                    this.state.searchInputs.map((searchInputs) => (
+                      this.state.searchInputs.map((searchInputs) => (
                         <View>
                             <TagLine
                                 searchInput={searchInputs.searchInput}
@@ -90,7 +142,7 @@ class TaggingPage extends React.Component {
                             />
                             <br></br>
                         </View>
-                    ))
+                      ))
                     }
                 </View>
             }

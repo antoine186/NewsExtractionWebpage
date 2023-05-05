@@ -75,6 +75,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     // justifyContent: 'space-between',
     overflow: 'visible'
+  },
+  imageTag: {
+    marginBottom: 0.5 * vw,
+    width: 3.5 * vw,
+    height: '100%'
   }
 })
 

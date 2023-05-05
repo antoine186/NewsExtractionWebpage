@@ -21,6 +21,10 @@ export const deleteSubscription = '/delete_subscription'
 export const forgotPassword = '/forgot_password'
 export const passwordReset = '/password_reset'
 export const getPreviousSearchResult = '/get-previous-search-result'
+export const taggingSearch = './tagging-search'
+export const getTaggingInputs = './get-tagging-inputs'
+export const saveTaggingInputs = './save-tagging-inputs'
+export const updateTaggingInputs = './update-tagging-inputs'
 
 export const api = axios.create({
   baseURL: backendUrl
