@@ -9,6 +9,7 @@ const { vw, vh, vmin, vmax } = require('react-native-viewport-units')
 import EmoEngagementStringFormatter from '../../containers/search_helper_functions/EmoEngagementStringFormatter'
 import ArticlesResultTableDataWrangler from '../../containers/search_helper_functions/ArticlesResultTableDataWrangler'
 import { connect } from 'react-redux'
+import EmoChangeStringFormatter from '../../containers/search_helper_functions/EmoChangeStringFormatter'
 
 class TagLine extends Component {
   constructor (props) {
@@ -36,7 +37,8 @@ class TagLine extends Component {
 
     const overallEmoResultDict = {
       overall_emo: 'Overall Emotional Engagement with Search Topic Over All Articles Found!',
-      emotional_engagement: EmoEngagementStringFormatter(data.average_emo_breakdown)
+      emotional_engagement: EmoEngagementStringFormatter(data.average_emo_breakdown),
+      emotional_engagement_percentage_change: EmoChangeStringFormatter(data.average_emo_breakdown, data.previous_average_emo_breakdown)
     }
 
     searchOverallEmoResultTableData.push(overallEmoResultDict)

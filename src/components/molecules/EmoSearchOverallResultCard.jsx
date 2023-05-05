@@ -41,6 +41,10 @@ class EmoSearchOverallResultCard extends Component {
                         {this.state.resultData[0] !== undefined &&
                             this.state.resultData[0]['emotional_engagement']
                         }
+                        <br></br>
+                        {this.state.resultData[0] !== undefined && this.state.resultData[0]['emotional_engagement_percentage_change'] !== undefined &&
+                          this.state.resultData[0]['emotional_engagement_percentage_change']
+                        }
                     </Typography>
                 </CardContent>
             </Card>

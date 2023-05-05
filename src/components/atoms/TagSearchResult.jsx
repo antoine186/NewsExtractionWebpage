@@ -22,7 +22,6 @@ class TagSearchResult extends React.Component {
 
   componentDidUpdate (prevProps, prevState) {
     if (prevProps.searchOverallEmoResultTableData !== this.props.searchOverallEmoResultTableData) {
-      console.log(searchOverallEmoResultTableData)
       this.setState({ searchOverallEmoResultTableData: this.props.searchOverallEmoResultTableData })
     }
     if (prevProps.searchArticlesResultTableData !== this.props.searchArticlesResultTableData) {
