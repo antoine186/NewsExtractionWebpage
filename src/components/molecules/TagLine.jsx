@@ -26,7 +26,9 @@ class TagLine extends Component {
       searchOverallEmoResultTableData: '',
       searchArticlesResultTableData: '',
       removeTagFromList: this.props.removeTagFromList,
-      stillTagging: false
+      stillTagging: false,
+      setAlreadyTagging: this.props.setAlreadyTagging,
+      alreadyTagging: this.props.alreadyTagging
     }
 
     this.getTaggingResults.bind(this)
@@ -68,6 +70,8 @@ class TagLine extends Component {
   }
 
   getTaggingResults () {
+    this.state.setAlreadyTagging(this.state.searchInput)
+
     api.post(getPreviousTaggingResult, {
       username: this.props.accountData.accountData.payload.emailAddress,
       searchInput: this.state.searchInput
@@ -91,7 +95,11 @@ class TagLine extends Component {
         console.log('No pre-existing tag')
         console.log('Still tagging')
         this.setState({ stillTagging: true })
-        this.initiateSearch()
+
+        if (!this.state.alreadyTagging) {
+          console.log('FFS')
+          this.initiateSearch()
+        }
       }
     }
     )

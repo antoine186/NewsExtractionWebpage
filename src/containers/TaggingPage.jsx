@@ -53,7 +53,8 @@ class TaggingPage extends React.Component {
       newSearchInputs.push({
         searchInput: this.state.searchInput,
         searchDate: this.state.yesterday,
-        dayBeforeSearchDate: this.state.dayBeforeYesterday
+        dayBeforeSearchDate: this.state.dayBeforeYesterday,
+        alreadyTagging: false
       })
 
       if (!this.state.existingTaggingInput) {
@@ -95,6 +96,35 @@ class TaggingPage extends React.Component {
     }
   }
 
+  setAlreadyTagging (searchInput) {
+    const newSearchInputs = this.state.searchInputs
+    const newSearchInputsTaggingSet = newSearchInputs.map(input => {
+      if (input.searchInput === searchInput) {
+        input.alreadyTagging = true
+      }
+      return input
+    })
+
+    api.post(updateTaggingInputs, {
+      username: this.props.accountData.accountData.payload.emailAddress,
+      taggingInputList: newSearchInputsTaggingSet
+    }, {
+      withCredentials: true
+    }
+    ).then(response => {
+      if (response.data.operation_success) {
+        console.log('Updated the new tags list')
+      } else {
+        console.log('Updating the new tags list failed')
+      }
+    }
+    )
+
+    this.setState({
+      searchInputs: newSearchInputsTaggingSet
+    })
+  }
+
   removeTagFromList (searchInput) {
     const newSearchInputs = this.state.searchInputs.filter(input => input.searchInput !== searchInput)
 
@@ -116,7 +146,7 @@ class TaggingPage extends React.Component {
       )
 
       api.post(deleteTaggingInputs, {
-        username: this.props.accountData.accountData.payload.emailAddress,
+        username: this.props.accountData.accountData.payload.emailAddress
       }, {
         withCredentials: true
       }
@@ -207,6 +237,8 @@ class TaggingPage extends React.Component {
                               accountData={this.props.accountData}
                               existingTaggingInput={this.state.existingTaggingInput}
                               removeTagFromList={this.removeTagFromList.bind(this)}
+                              setAlreadyTagging={this.setAlreadyTagging.bind(this)}
+                              alreadyTagging={searchInputs.alreadyTagging}
                           />
                           <br></br>
                         </View>
