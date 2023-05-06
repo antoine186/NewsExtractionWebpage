@@ -26,6 +26,12 @@ class LandingSwitchingPage extends Component {
     this.toggleClickTag = this.toggleClickTag.bind(this)
   }
 
+  componentDidUpdate (prevProps, prevState) {
+    if (prevProps.userSession !== this.props.userSession) {
+      this.setState({ userSessionValidated: this.props.userSession.validated })
+    }
+  }
+
   clearToggleChoice () {
     this.setState({ searchShow: false })
     this.setState({ tagShow: false })
@@ -101,6 +107,8 @@ class LandingSwitchingPage extends Component {
             <Navigate to='/payment' />
         </View>
       )
+    } else {
+      {this.forceUpdate()}
     }
   }
 }

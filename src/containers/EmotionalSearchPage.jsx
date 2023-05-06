@@ -29,6 +29,7 @@ class EmotionalSearchPage extends Component {
       searchOverallEmoResultTableData: [],
       searchArticlesResultTableData: [],
       noResultsToReturn: false,
+      noPreviousResults: false,
       searchingInitiated: false,
       anyResponseFromServer: false,
       startDateString: '',
@@ -41,15 +42,16 @@ class EmotionalSearchPage extends Component {
       withCredentials: true
     }
     ).then(response => {
-      if (response.data !== 'Error') {
+      if (response.data.operation_success) {
         console.log('Retrieved previous search returned something!')
         this.setState({ searchInput: response.data.responsePayload.previous_search_result.search_input })
         this.setState({ startDateString: this.date2String(response.data.responsePayload.previous_search_result.search_start_date) })
         this.setState({ endDateString: this.date2String(response.data.responsePayload.previous_search_result.search_end_date) })
+        this.setState({ noPreviousResults: false })
         this.populateOverallEmoResultTable(response.data.responsePayload.previous_search_result)
         this.populateArticlesResultTable(response.data.responsePayload.previous_search_result)
       } else {
-        this.setState({ noResultsToReturn: true })
+        this.setState({ noPreviousResults: true })
       }
     }
     )
@@ -73,8 +75,11 @@ class EmotionalSearchPage extends Component {
 
       if (response.data !== 'Error') {
         console.log('Search returned something!')
+        this.setState({ searchingInitiated: false })
+        this.setState({ noPreviousResults: false })
         this.populateOverallEmoResultTable(response.data)
         this.populateArticlesResultTable(response.data)
+        this.forceUpdate()
       } else {
         this.setState({ noResultsToReturn: true })
         this.setState({ searchingInitiated: false })
@@ -178,7 +183,7 @@ class EmotionalSearchPage extends Component {
             </View>
           }
 
-          {!this.state.searchingInitiated && !this.state.noResultsToReturn &&
+          {!this.state.searchingInitiated && !this.state.noResultsToReturn && !this.state.noPreviousResults &&
             <Text style={styles.text}>
               From {this.state.startDateString} To {this.state.endDateString}
             </Text>
@@ -189,7 +194,7 @@ class EmotionalSearchPage extends Component {
               Not enough results found! Maybe the date is too recent... Please refresh page to initiate another search.
             </Text>
           }
-          {!this.state.searchingInitiated && !this.state.noResultsToReturn &&
+          {!this.state.searchingInitiated && !this.state.noResultsToReturn && !this.state.noPreviousResults &&
           <View>
             <EmoSearchOverallResultCard resultData={this.state.searchOverallEmoResultTableData} />
             <EmoSearchBasicResultCard
