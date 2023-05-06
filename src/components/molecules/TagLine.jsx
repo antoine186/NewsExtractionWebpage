@@ -10,6 +10,7 @@ import EmoEngagementStringFormatter from '../../containers/search_helper_functio
 import ArticlesResultTableDataWrangler from '../../containers/search_helper_functions/ArticlesResultTableDataWrangler'
 import { connect } from 'react-redux'
 import EmoChangeStringFormatter from '../../containers/search_helper_functions/EmoChangeStringFormatter'
+import Button from '@mui/material/Button'
 
 class TagLine extends Component {
   constructor (props) {
@@ -23,7 +24,9 @@ class TagLine extends Component {
       showResults: false,
       existingTaggingInput: this.props.existingTaggingInput,
       searchOverallEmoResultTableData: '',
-      searchArticlesResultTableData: ''
+      searchArticlesResultTableData: '',
+      removeTagFromList: this.props.removeTagFromList,
+      stillTagging: false
     }
 
     this.getTaggingResults.bind(this)
@@ -72,14 +75,22 @@ class TagLine extends Component {
       withCredentials: true
     }
     ).then(response => {
-      if (response.data !== 'Error') {
-        console.log('Tagging returned something!')
-        this.populateOverallEmoResultTable(response.data.responsePayload.previous_search_result)
-        this.populateArticlesResultTable(response.data.responsePayload.previous_search_result)
-        this.setState({ noResultsToReturn: false })
+      if (response.data.operation_success) {
+        if (response.data.responsePayload.previous_search_result === 'No results') {
+          console.log('No tagging results')
+          this.setState({ noResultsToReturn: true })
+          this.setState({ stillTagging: false })
+        } else {
+          console.log('Tagging returned something!')
+          this.populateOverallEmoResultTable(response.data.responsePayload.previous_search_result)
+          this.populateArticlesResultTable(response.data.responsePayload.previous_search_result)
+          this.setState({ noResultsToReturn: false })
+          this.setState({ stillTagging: false })
+        }
       } else {
-        console.log('Tagging returned an error')
-        this.setState({ noResultsToReturn: true })
+        console.log('No pre-existing tag')
+        console.log('Still tagging')
+        this.setState({ stillTagging: true })
         this.initiateSearch()
       }
     }
@@ -96,6 +107,11 @@ class TagLine extends Component {
       withCredentials: true
     }
     )
+  }
+
+  deleteTag () {
+    console.log('Attempting to delete tag line')
+    this.state.removeTagFromList(this.state.searchInput)
   }
 
   render () {
@@ -123,6 +139,16 @@ class TagLine extends Component {
           <Text style={styles.tagText}>
               "{this.state.searchInput}"
           </Text>
+          <Button
+            variant="contained"
+            color="error"
+            style={{
+              marginLeft: 1.5 * vw
+            }}
+            onClick={this.deleteTag.bind(this)}
+          >
+            Remove
+          </Button>
         </View>
         {this.state.showResults &&
           <TagSearchResult
@@ -133,6 +159,7 @@ class TagLine extends Component {
           searchOverallEmoResultTableData={this.state.searchOverallEmoResultTableData}
           searchArticlesResultTableData={this.state.searchArticlesResultTableData}
           noResultsToReturn={this.state.noResultsToReturn}
+          stillTagging={this.state.stillTagging}
         />
         }
       </View>

@@ -5,7 +5,7 @@ import TagLine from '../components/molecules/TagLine'
 import DateFormatterForUI from '../utils/DateFormatterForUI'
 import DateFormatter from '../utils/DateFormatter'
 import { connect } from 'react-redux'
-import { api, getTaggingInputs, saveTaggingInputs, updateTaggingInputs } from '../utils/backend_configuration/BackendConfig'
+import { api, getTaggingInputs, saveTaggingInputs, updateTaggingInputs, deleteTag, deleteTaggingInputs } from '../utils/backend_configuration/BackendConfig'
 
 class TaggingPage extends React.Component {
   constructor (props) {
@@ -31,7 +31,7 @@ class TaggingPage extends React.Component {
     }
 
     api.post(getTaggingInputs, {
-      username: this.props.accountData.accountData.payload.emailAddress,
+      username: this.props.accountData.accountData.payload.emailAddress
     }, {
       withCredentials: true
     }
@@ -47,10 +47,8 @@ class TaggingPage extends React.Component {
     )
   }
 
-  handleSubmit = (e) => {
-    e.preventDefault()
-
-    if (this.state.searchInputs.length < 5) {
+  handleSubmit () {
+    if (this.state.searchInputs.length < 3) {
       const newSearchInputs = this.state.searchInputs
       newSearchInputs.push({
         searchInput: this.state.searchInput,
@@ -97,6 +95,72 @@ class TaggingPage extends React.Component {
     }
   }
 
+  removeTagFromList (searchInput) {
+    const newSearchInputs = this.state.searchInputs.filter(input => input.searchInput !== searchInput)
+
+    if (newSearchInputs.length < 1) {
+      console.log('Tags list now sized zero')
+      this.setState({ existingTaggingInput: false })
+
+      api.post(deleteTag, {
+        username: this.props.accountData.accountData.payload.emailAddress,
+        searchInput
+      }, {
+        withCredentials: true
+      }
+      ).then(response => {
+        if (response.data.operation_success) {
+          console.log('Tag successfully deleted')
+        }
+      }
+      )
+
+      api.post(deleteTaggingInputs, {
+        username: this.props.accountData.accountData.payload.emailAddress,
+      }, {
+        withCredentials: true
+      }
+      ).then(response => {
+        if (response.data.operation_success) {
+          console.log('Tags list successfully deleted')
+        }
+      }
+      )
+    } else {
+      api.post(deleteTag, {
+        username: this.props.accountData.accountData.payload.emailAddress,
+        searchInput
+      }, {
+        withCredentials: true
+      }
+      ).then(response => {
+        if (response.data.operation_success) {
+          console.log('Tag successfully deleted')
+        }
+      }
+      )
+
+      api.post(updateTaggingInputs, {
+        username: this.props.accountData.accountData.payload.emailAddress,
+        taggingInputList: newSearchInputs
+      }, {
+        withCredentials: true
+      }
+      ).then(response => {
+        if (response.data.operation_success) {
+          console.log('Updated the new tags list')
+        } else {
+          console.log('Updating the new tags list failed')
+        }
+      }
+      )
+    }
+
+    this.setState({
+      searchInputs: newSearchInputs
+    })
+  }
+
   render () {
     return (
         <View style={styles.innerContainer}>
@@ -116,7 +180,7 @@ class TaggingPage extends React.Component {
                     />
                     <br></br>
                     {!this.state.searchingInitiated &&
-                        <TouchableOpacity style={styles.searchBtn} onPress={this.handleSubmit}>
+                        <TouchableOpacity style={styles.searchBtn} onPress={this.handleSubmit.bind(this)}>
                             <Text style={styles.text}>TAG</Text>
                         </TouchableOpacity>
                     }
@@ -142,6 +206,7 @@ class TaggingPage extends React.Component {
                               dayBeforeSearchDate={searchInputs.dayBeforeSearchDate}
                               accountData={this.props.accountData}
                               existingTaggingInput={this.state.existingTaggingInput}
+                              removeTagFromList={this.removeTagFromList.bind(this)}
                           />
                           <br></br>
                         </View>

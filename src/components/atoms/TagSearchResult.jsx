@@ -16,7 +16,8 @@ class TagSearchResult extends React.Component {
       endDateString: this.props.endDateString,
       noResultsToReturn: this.props.noResultsToReturn,
       searchInput: this.props.searchInput,
-      existingTaggingInput: this.props.existingTaggingInput
+      existingTaggingInput: this.props.existingTaggingInput,
+      stillTagging: this.props.stillTagging
     }
   }
 
@@ -44,8 +45,13 @@ class TagSearchResult extends React.Component {
                 Not enough results found! Maybe the date is too recent...
               </Text>
             }
+            {this.state.stillTagging &&
+              <Text style={styles.text}>
+                Still tagging... Please come back in half an hour.
+              </Text>
+            }
           </View>
-          {!this.state.noResultsToReturn &&
+          {!this.state.noResultsToReturn && !this.state.stillTagging &&
           <View>
             <EmoSearchOverallResultCard resultData={this.state.searchOverallEmoResultTableData} />
             <EmoSearchBasicResultCard

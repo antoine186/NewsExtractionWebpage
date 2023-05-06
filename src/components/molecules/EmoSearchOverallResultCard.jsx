@@ -41,10 +41,20 @@ class EmoSearchOverallResultCard extends Component {
                         {this.state.resultData[0] !== undefined &&
                             this.state.resultData[0]['emotional_engagement']
                         }
+                    </Typography>
+                    {this.state.resultData[0] !== undefined && this.state.resultData[0]['emotional_engagement_percentage_change'] !== undefined &&
+                      <View>
                         <br></br>
-                        {this.state.resultData[0] !== undefined && this.state.resultData[0]['emotional_engagement_percentage_change'] !== undefined &&
-                          this.state.resultData[0]['emotional_engagement_percentage_change']
-                        }
+                        <Typography sx={{ fontSize: 1.2 * vh }} color="text.secondary">
+                          Daily Change
+                        </Typography>
+                        <br></br>
+                      </View>
+                    }
+                    <Typography variant="body2" sx={{ fontSize: 1.4 * vh }}>
+                      {this.state.resultData[0] !== undefined && this.state.resultData[0]['emotional_engagement_percentage_change'] !== undefined &&
+                        this.state.resultData[0]['emotional_engagement_percentage_change']
+                      }
                     </Typography>
                 </CardContent>
             </Card>
