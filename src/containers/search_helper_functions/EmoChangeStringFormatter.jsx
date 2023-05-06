@@ -39,7 +39,7 @@ function EmoChangeStringFormatter (emoBreakdown, previousEmoBreakdown) {
   if (((emoBreakdownSorted[4][1] - previousEmoBreakdown[emoBreakdownSorted[4][0]]) / previousEmoBreakdown[emoBreakdownSorted[4][0]] * 100) >= 0) {
     emoSign5 = '+'
   }
-  emoEngagementFormattedString = emoEngagementFormattedString + emoIcons[emoBreakdownSorted[4][0]] + ' ' + emoSign5 + ((emoBreakdownSorted[4][1]) - previousEmoBreakdown[emoBreakdownSorted[4][0]] / previousEmoBreakdown[emoBreakdownSorted[4][0]] * 100).toFixed(2) + '% '
+  emoEngagementFormattedString = emoEngagementFormattedString + emoIcons[emoBreakdownSorted[4][0]] + ' ' + emoSign5 + ((emoBreakdownSorted[4][1] - previousEmoBreakdown[emoBreakdownSorted[4][0]]) / previousEmoBreakdown[emoBreakdownSorted[4][0]] * 100).toFixed(2) + '% '
 
   let emoSign6 = ''
   if (((emoBreakdownSorted[5][1] - previousEmoBreakdown[emoBreakdownSorted[5][0]]) / previousEmoBreakdown[emoBreakdownSorted[5][0]] * 100) >= 0) {
