@@ -47,7 +47,7 @@ class TagSearchResult extends React.Component {
             }
             {this.state.stillTagging &&
               <Text style={styles.text}>
-                Still tagging... Please come back in half an hour and refresh the page.
+                Still tagging... Please come back in half an hour and !REFRESH! the page.
               </Text>
             }
           </View>
