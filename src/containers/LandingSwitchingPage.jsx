@@ -9,6 +9,7 @@ import styles from '../utils/style_guide/MainWebpageStyle'
 import { connect } from 'react-redux'
 import TaggingPage from './TaggingPage'
 import ProgressionPage from './ProgressionPage'
+import LinkingPage from './LinkingPage'
 
 class LandingSwitchingPage extends Component {
   constructor (props) {
@@ -26,6 +27,7 @@ class LandingSwitchingPage extends Component {
     this.toggleClickSearch = this.toggleClickSearch.bind(this)
     this.toggleClickTag = this.toggleClickTag.bind(this)
     this.toggleClickProgression = this.toggleClickProgression.bind(this)
+    this.toggleClickLinking = this.toggleClickLinking.bind(this)
   }
 
   componentDidUpdate (prevProps, prevState) {
@@ -59,6 +61,12 @@ class LandingSwitchingPage extends Component {
     this.setState({ progression: true })
   }
 
+  toggleClickLinking () {
+    console.log('Toggling to linking')
+    this.clearToggleChoice()
+    this.setState({ linking: true })
+  }
+
   render () {
     if (!this.state.userSessionValidated) {
       return (
@@ -83,6 +91,9 @@ class LandingSwitchingPage extends Component {
                   {this.state.progression &&
                     <Text style={styles.titleText}>Emotional Machines Progression Charting (Beta)</Text>
                   }
+                  {this.state.linking &&
+                    <Text style={styles.titleText}>Emotional Machines Link Analysis (Beta)</Text>
+                  }
                 </View>
                 <ToggleButtonGroup
                     // value={alignment}
@@ -98,7 +109,7 @@ class LandingSwitchingPage extends Component {
                     <ToggleButton value="progression" onClick={this.toggleClickProgression}>
                         <Image style={styles.image} source={require('../assets/images/chart.jpg')} />
                     </ToggleButton>
-                    <ToggleButton value="linking">
+                    <ToggleButton value="linking" onClick={this.toggleClickLinking}>
                         <Image style={styles.image} source={require('../assets/images/node_graph.png')} />
                     </ToggleButton>
                 </ToggleButtonGroup>
@@ -110,6 +121,9 @@ class LandingSwitchingPage extends Component {
                 }
                 {this.state.progression &&
                   <ProgressionPage />
+                }
+                {this.state.linking &&
+                  <LinkingPage />
                 }
             </View>
         </View>

@@ -84,6 +84,9 @@ const styles = StyleSheet.create({
   chartCard: {
     marginBottom: 0.5 * vw,
     width: 35 * vw
+  },
+  errorText: {
+    color: '#DC143C'
   }
 })
 
