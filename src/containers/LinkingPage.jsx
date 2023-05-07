@@ -30,19 +30,27 @@ class LinkingPage extends Component {
   handleSubmit = (e) => {
     e.preventDefault()
 
+    let validLinking = true
+
     if (this.state.linkingInput1 === '') {
       this.setState({ linkingInput1Empty: true })
+      validLinking = false
     } else {
       this.setState({ linkingInput1Empty: false })
     }
 
     if (this.state.linkingInput2 === '') {
       this.setState({ linkingInput2Empty: true })
+      validLinking = false
     } else {
       this.setState({ linkingInput2Empty: false })
     }
 
-    if (!this.state.linkingInput1Empty && !this.state.linkingInput2Empty) {
+    if (validLinking) {
+      console.log('Attempting linking')
+
+      console.log(this.state.linkingInput1Empty)
+
       this.setState({ linkingInitiated: true })
       this.setState({ noResultsToShow: false })
       this.setState({ linkingFailed: false })
@@ -84,8 +92,8 @@ class LinkingPage extends Component {
                     <TextInput
                         editable
                         multiline
-                        numberOfLines={4}
-                        maxLength={40}
+                        numberOfLines={2}
+                        maxLength={20}
                         value={this.state.linkingInput1}
                         onChangeText={text => this.setState({ linkingInput1: text })}
                         placeholder={'Try linking \'ChatGPT\'... (linking might take a few hours)'}
@@ -103,8 +111,8 @@ class LinkingPage extends Component {
                     <TextInput
                         editable
                         multiline
-                        numberOfLines={4}
-                        maxLength={40}
+                        numberOfLines={2}
+                        maxLength={20}
                         value={this.state.linkingInput2}
                         onChangeText={text => this.setState({ linkingInput2: text })}
                         placeholder={'Try linking \'Sam Altman\'... (linking might take a few hours)'}

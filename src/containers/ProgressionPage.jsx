@@ -52,6 +52,7 @@ class ProgressionPage extends Component {
         console.log('Retrieved previous charting')
         this.setState({ nothingToShow: false })
         this.populateChartingData(response.data.responsePayload.previous_chart_result)
+        this.setState({ searchInput: response.data.responsePayload.previous_chart_result.emo_breakdown_result_metadata_1.search_input })
       } else {
         console.log('Retrieving previous charting failed')
         this.setState({ nothingToShow: true })
@@ -206,8 +207,6 @@ class ProgressionPage extends Component {
     this.setState({ surpriseProgressionKeywords: newSurpriseProgressionKeywords })
 
     this.setState({ progressionDates: newProgressionDates })
-
-    this.setState({ searchInput: response.data.responsePayload.previous_chart_result.emo_breakdown_result_metadata_1.search_input })
   }
 
   handleSubmit = (e) => {
