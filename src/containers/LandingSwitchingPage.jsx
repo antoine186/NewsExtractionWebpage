@@ -8,6 +8,7 @@ import { Navigate } from 'react-router-dom'
 import styles from '../utils/style_guide/MainWebpageStyle'
 import { connect } from 'react-redux'
 import TaggingPage from './TaggingPage'
+import ProgressionPage from './ProgressionPage'
 
 class LandingSwitchingPage extends Component {
   constructor (props) {
@@ -24,6 +25,7 @@ class LandingSwitchingPage extends Component {
     this.clearToggleChoice = this.clearToggleChoice.bind(this)
     this.toggleClickSearch = this.toggleClickSearch.bind(this)
     this.toggleClickTag = this.toggleClickTag.bind(this)
+    this.toggleClickProgression = this.toggleClickProgression.bind(this)
   }
 
   componentDidUpdate (prevProps, prevState) {
@@ -51,6 +53,12 @@ class LandingSwitchingPage extends Component {
     this.setState({ tagShow: true })
   }
 
+  toggleClickProgression () {
+    console.log('Toggling to progression')
+    this.clearToggleChoice()
+    this.setState({ progression: true })
+  }
+
   render () {
     if (!this.state.userSessionValidated) {
       return (
@@ -72,6 +80,9 @@ class LandingSwitchingPage extends Component {
                   {this.state.tagShow &&
                     <Text style={styles.titleText}>Emotional Machines Tagging (Beta)</Text>
                   }
+                  {this.state.progression &&
+                    <Text style={styles.titleText}>Emotional Machines Progression Charting (Beta)</Text>
+                  }
                 </View>
                 <ToggleButtonGroup
                     // value={alignment}
@@ -84,7 +95,7 @@ class LandingSwitchingPage extends Component {
                     <ToggleButton value="tag" onClick={this.toggleClickTag}>
                         <Image style={styles.image} source={require('../assets/images/tag.jpg')} />
                     </ToggleButton>
-                    <ToggleButton value="progression">
+                    <ToggleButton value="progression" onClick={this.toggleClickProgression}>
                         <Image style={styles.image} source={require('../assets/images/chart.jpg')} />
                     </ToggleButton>
                     <ToggleButton value="linking">
@@ -92,10 +103,13 @@ class LandingSwitchingPage extends Component {
                     </ToggleButton>
                 </ToggleButtonGroup>
                 {this.state.searchShow &&
-                    <EmotionalSearchPage />
+                  <EmotionalSearchPage />
                 }
                 {this.state.tagShow &&
-                    <TaggingPage />
+                  <TaggingPage />
+                }
+                {this.state.progression &&
+                  <ProgressionPage />
                 }
             </View>
         </View>

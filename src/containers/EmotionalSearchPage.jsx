@@ -29,7 +29,7 @@ class EmotionalSearchPage extends Component {
       searchOverallEmoResultTableData: [],
       searchArticlesResultTableData: [],
       noResultsToReturn: false,
-      noPreviousResults: false,
+      noPreviousResults: true,
       searchingInitiated: false,
       anyResponseFromServer: false,
       startDateString: '',
@@ -51,10 +51,14 @@ class EmotionalSearchPage extends Component {
         this.populateOverallEmoResultTable(response.data.responsePayload.previous_search_result)
         this.populateArticlesResultTable(response.data.responsePayload.previous_search_result)
       } else {
+        console.log('No previous search results')
         this.setState({ noPreviousResults: true })
       }
     }
-    )
+    ).catch(error => {
+      console.log('No previous search results')
+      this.setState({ noPreviousResults: true })
+    })
   }
 
   handleSubmit = (e) => {
