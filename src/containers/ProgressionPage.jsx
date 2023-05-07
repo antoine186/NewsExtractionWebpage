@@ -25,6 +25,13 @@ class ProgressionPage extends Component {
       neutralProgressionData: [],
       sadnessProgressionData: [],
       surpriseProgressionData: [],
+      angerProgressionKeywords: [],
+      disgustProgressionKeywords: [],
+      fearProgressionKeywords: [],
+      joyProgressionKeywords: [],
+      neutralProgressionKeywords: [],
+      sadnessProgressionKeywords: [],
+      surpriseProgressionKeywords: [],
       progressionDates: [],
       dateInput: yesterday
     }
@@ -45,6 +52,14 @@ class ProgressionPage extends Component {
         newAngerProgressionData.push(response.data.responsePayload.previous_chart_result.emo_breakdown_result_metadata_5.average_emo_breakdown.anger_percentage)
         newAngerProgressionData.push(response.data.responsePayload.previous_chart_result.emo_breakdown_result_metadata_6.average_emo_breakdown.anger_percentage)
         newAngerProgressionData = newAngerProgressionData.reverse()
+        let newAngerProgressionKeywords = []
+        newAngerProgressionKeywords.push(response.data.responsePayload.previous_chart_result.emo_breakdown_result_metadata_1.most_angry_article.extracted_keywords)
+        newAngerProgressionKeywords.push(response.data.responsePayload.previous_chart_result.emo_breakdown_result_metadata_2.most_angry_article.extracted_keywords)
+        newAngerProgressionKeywords.push(response.data.responsePayload.previous_chart_result.emo_breakdown_result_metadata_3.most_angry_article.extracted_keywords)
+        newAngerProgressionKeywords.push(response.data.responsePayload.previous_chart_result.emo_breakdown_result_metadata_4.most_angry_article.extracted_keywords)
+        newAngerProgressionKeywords.push(response.data.responsePayload.previous_chart_result.emo_breakdown_result_metadata_5.most_angry_article.extracted_keywords)
+        newAngerProgressionKeywords.push(response.data.responsePayload.previous_chart_result.emo_breakdown_result_metadata_6.most_angry_article.extracted_keywords)
+        newAngerProgressionKeywords = newAngerProgressionKeywords.reverse()
 
         let newDisgustProgressionData = []
         newDisgustProgressionData.push(response.data.responsePayload.previous_chart_result.emo_breakdown_result_metadata_1.average_emo_breakdown.disgust_percentage)
@@ -54,6 +69,14 @@ class ProgressionPage extends Component {
         newDisgustProgressionData.push(response.data.responsePayload.previous_chart_result.emo_breakdown_result_metadata_5.average_emo_breakdown.disgust_percentage)
         newDisgustProgressionData.push(response.data.responsePayload.previous_chart_result.emo_breakdown_result_metadata_6.average_emo_breakdown.disgust_percentage)
         newDisgustProgressionData = newDisgustProgressionData.reverse()
+        let newDisgustProgressionKeywords = []
+        newDisgustProgressionKeywords.push(response.data.responsePayload.previous_chart_result.emo_breakdown_result_metadata_1.most_disgusted_article.extracted_keywords)
+        newDisgustProgressionKeywords.push(response.data.responsePayload.previous_chart_result.emo_breakdown_result_metadata_2.most_disgusted_article.extracted_keywords)
+        newDisgustProgressionKeywords.push(response.data.responsePayload.previous_chart_result.emo_breakdown_result_metadata_3.most_disgusted_article.extracted_keywords)
+        newDisgustProgressionKeywords.push(response.data.responsePayload.previous_chart_result.emo_breakdown_result_metadata_4.most_disgusted_article.extracted_keywords)
+        newDisgustProgressionKeywords.push(response.data.responsePayload.previous_chart_result.emo_breakdown_result_metadata_5.most_disgusted_article.extracted_keywords)
+        newDisgustProgressionKeywords.push(response.data.responsePayload.previous_chart_result.emo_breakdown_result_metadata_6.most_disgusted_article.extracted_keywords)
+        newDisgustProgressionKeywords = newDisgustProgressionKeywords.reverse()
 
         let newFearProgressionData = []
         newFearProgressionData.push(response.data.responsePayload.previous_chart_result.emo_breakdown_result_metadata_1.average_emo_breakdown.fear_percentage)
@@ -63,6 +86,14 @@ class ProgressionPage extends Component {
         newFearProgressionData.push(response.data.responsePayload.previous_chart_result.emo_breakdown_result_metadata_5.average_emo_breakdown.fear_percentage)
         newFearProgressionData.push(response.data.responsePayload.previous_chart_result.emo_breakdown_result_metadata_6.average_emo_breakdown.fear_percentage)
         newFearProgressionData = newFearProgressionData.reverse()
+        let newFearProgressionKeywords = []
+        newFearProgressionKeywords.push(response.data.responsePayload.previous_chart_result.emo_breakdown_result_metadata_1.most_fearful_article.extracted_keywords)
+        newFearProgressionKeywords.push(response.data.responsePayload.previous_chart_result.emo_breakdown_result_metadata_2.most_fearful_article.extracted_keywords)
+        newFearProgressionKeywords.push(response.data.responsePayload.previous_chart_result.emo_breakdown_result_metadata_3.most_fearful_article.extracted_keywords)
+        newFearProgressionKeywords.push(response.data.responsePayload.previous_chart_result.emo_breakdown_result_metadata_4.most_fearful_article.extracted_keywords)
+        newFearProgressionKeywords.push(response.data.responsePayload.previous_chart_result.emo_breakdown_result_metadata_5.most_fearful_article.extracted_keywords)
+        newFearProgressionKeywords.push(response.data.responsePayload.previous_chart_result.emo_breakdown_result_metadata_6.most_fearful_article.extracted_keywords)
+        newFearProgressionKeywords = newFearProgressionKeywords.reverse()
 
         let newJoyProgressionData = []
         newJoyProgressionData.push(response.data.responsePayload.previous_chart_result.emo_breakdown_result_metadata_1.average_emo_breakdown.joy_percentage)
@@ -72,6 +103,14 @@ class ProgressionPage extends Component {
         newJoyProgressionData.push(response.data.responsePayload.previous_chart_result.emo_breakdown_result_metadata_5.average_emo_breakdown.joy_percentage)
         newJoyProgressionData.push(response.data.responsePayload.previous_chart_result.emo_breakdown_result_metadata_6.average_emo_breakdown.joy_percentage)
         newJoyProgressionData = newJoyProgressionData.reverse()
+        let newJoyProgressionKeywords = []
+        newJoyProgressionKeywords.push(response.data.responsePayload.previous_chart_result.emo_breakdown_result_metadata_1.happiest_article.extracted_keywords)
+        newJoyProgressionKeywords.push(response.data.responsePayload.previous_chart_result.emo_breakdown_result_metadata_2.happiest_article.extracted_keywords)
+        newJoyProgressionKeywords.push(response.data.responsePayload.previous_chart_result.emo_breakdown_result_metadata_3.happiest_article.extracted_keywords)
+        newJoyProgressionKeywords.push(response.data.responsePayload.previous_chart_result.emo_breakdown_result_metadata_4.happiest_article.extracted_keywords)
+        newJoyProgressionKeywords.push(response.data.responsePayload.previous_chart_result.emo_breakdown_result_metadata_5.happiest_article.extracted_keywords)
+        newJoyProgressionKeywords.push(response.data.responsePayload.previous_chart_result.emo_breakdown_result_metadata_6.happiest_article.extracted_keywords)
+        newJoyProgressionKeywords = newJoyProgressionKeywords.reverse()
 
         let newNeutralProgressionData = []
         newNeutralProgressionData.push(response.data.responsePayload.previous_chart_result.emo_breakdown_result_metadata_1.average_emo_breakdown.neutral_percentage)
@@ -81,6 +120,14 @@ class ProgressionPage extends Component {
         newNeutralProgressionData.push(response.data.responsePayload.previous_chart_result.emo_breakdown_result_metadata_5.average_emo_breakdown.neutral_percentage)
         newNeutralProgressionData.push(response.data.responsePayload.previous_chart_result.emo_breakdown_result_metadata_6.average_emo_breakdown.neutral_percentage)
         newNeutralProgressionData = newNeutralProgressionData.reverse()
+        let newNeutralProgressionKeywords = []
+        newNeutralProgressionKeywords.push(response.data.responsePayload.previous_chart_result.emo_breakdown_result_metadata_1.most_neutral_article.extracted_keywords)
+        newNeutralProgressionKeywords.push(response.data.responsePayload.previous_chart_result.emo_breakdown_result_metadata_2.most_neutral_article.extracted_keywords)
+        newNeutralProgressionKeywords.push(response.data.responsePayload.previous_chart_result.emo_breakdown_result_metadata_3.most_neutral_article.extracted_keywords)
+        newNeutralProgressionKeywords.push(response.data.responsePayload.previous_chart_result.emo_breakdown_result_metadata_4.most_neutral_article.extracted_keywords)
+        newNeutralProgressionKeywords.push(response.data.responsePayload.previous_chart_result.emo_breakdown_result_metadata_5.most_neutral_article.extracted_keywords)
+        newNeutralProgressionKeywords.push(response.data.responsePayload.previous_chart_result.emo_breakdown_result_metadata_6.most_neutral_article.extracted_keywords)
+        newNeutralProgressionKeywords = newNeutralProgressionKeywords.reverse()
 
         let newSadnessProgressionData = []
         newSadnessProgressionData.push(response.data.responsePayload.previous_chart_result.emo_breakdown_result_metadata_1.average_emo_breakdown.sadness_percentage)
@@ -90,6 +137,14 @@ class ProgressionPage extends Component {
         newSadnessProgressionData.push(response.data.responsePayload.previous_chart_result.emo_breakdown_result_metadata_5.average_emo_breakdown.sadness_percentage)
         newSadnessProgressionData.push(response.data.responsePayload.previous_chart_result.emo_breakdown_result_metadata_6.average_emo_breakdown.sadness_percentage)
         newSadnessProgressionData = newSadnessProgressionData.reverse()
+        let newSadnessProgressionKeywords = []
+        newSadnessProgressionKeywords.push(response.data.responsePayload.previous_chart_result.emo_breakdown_result_metadata_1.sadest_article.extracted_keywords)
+        newSadnessProgressionKeywords.push(response.data.responsePayload.previous_chart_result.emo_breakdown_result_metadata_2.sadest_article.extracted_keywords)
+        newSadnessProgressionKeywords.push(response.data.responsePayload.previous_chart_result.emo_breakdown_result_metadata_3.sadest_article.extracted_keywords)
+        newSadnessProgressionKeywords.push(response.data.responsePayload.previous_chart_result.emo_breakdown_result_metadata_4.sadest_article.extracted_keywords)
+        newSadnessProgressionKeywords.push(response.data.responsePayload.previous_chart_result.emo_breakdown_result_metadata_5.sadest_article.extracted_keywords)
+        newSadnessProgressionKeywords.push(response.data.responsePayload.previous_chart_result.emo_breakdown_result_metadata_6.sadest_article.extracted_keywords)
+        newSadnessProgressionKeywords = newSadnessProgressionKeywords.reverse()
 
         let newSurpriseProgressionData = []
         newSurpriseProgressionData.push(response.data.responsePayload.previous_chart_result.emo_breakdown_result_metadata_1.average_emo_breakdown.surprise_percentage)
@@ -99,6 +154,14 @@ class ProgressionPage extends Component {
         newSurpriseProgressionData.push(response.data.responsePayload.previous_chart_result.emo_breakdown_result_metadata_5.average_emo_breakdown.surprise_percentage)
         newSurpriseProgressionData.push(response.data.responsePayload.previous_chart_result.emo_breakdown_result_metadata_6.average_emo_breakdown.surprise_percentage)
         newSurpriseProgressionData = newSurpriseProgressionData.reverse()
+        let newSurpriseProgressionKeywords = []
+        newSurpriseProgressionKeywords.push(response.data.responsePayload.previous_chart_result.emo_breakdown_result_metadata_1.most_surprised_article.extracted_keywords)
+        newSurpriseProgressionKeywords.push(response.data.responsePayload.previous_chart_result.emo_breakdown_result_metadata_2.most_surprised_article.extracted_keywords)
+        newSurpriseProgressionKeywords.push(response.data.responsePayload.previous_chart_result.emo_breakdown_result_metadata_3.most_surprised_article.extracted_keywords)
+        newSurpriseProgressionKeywords.push(response.data.responsePayload.previous_chart_result.emo_breakdown_result_metadata_4.most_surprised_article.extracted_keywords)
+        newSurpriseProgressionKeywords.push(response.data.responsePayload.previous_chart_result.emo_breakdown_result_metadata_5.most_surprised_article.extracted_keywords)
+        newSurpriseProgressionKeywords.push(response.data.responsePayload.previous_chart_result.emo_breakdown_result_metadata_6.most_surprised_article.extracted_keywords)
+        newSurpriseProgressionKeywords = newSurpriseProgressionKeywords.reverse()
 
         let newProgressionDates = []
         newProgressionDates.push({month: response.data.responsePayload.previous_chart_result.emo_breakdown_result_metadata_1.emo_month, year: response.data.responsePayload.previous_chart_result.emo_breakdown_result_metadata_1.emo_year})
@@ -116,6 +179,14 @@ class ProgressionPage extends Component {
         this.setState({ neutralProgressionData: newNeutralProgressionData })
         this.setState({ sadnessProgressionData: newSadnessProgressionData })
         this.setState({ surpriseProgressionData: newSurpriseProgressionData })
+
+        this.setState({ angerProgressionKeywords: newAngerProgressionKeywords })
+        this.setState({ disgustProgressionKeywords: newDisgustProgressionKeywords })
+        this.setState({ fearProgressionKeywords: newFearProgressionKeywords })
+        this.setState({ joyProgressionKeywords: newJoyProgressionKeywords })
+        this.setState({ neutralProgressionKeywords: newNeutralProgressionKeywords })
+        this.setState({ sadnessProgressionKeywords: newSadnessProgressionKeywords })
+        this.setState({ surpriseProgressionKeywords: newSurpriseProgressionKeywords })
 
         this.setState({ progressionDates: newProgressionDates })
 
@@ -198,36 +269,43 @@ class ProgressionPage extends Component {
                                 progressionDataLine={this.state.joyProgressionData}
                                 progressionDates={this.state.progressionDates}
                                 progressionEmoIcon={'😃'}
+                                progressionKeyWords={this.state.joyProgressionKeywords}
                             />
                             <EmoProgressionCard
                                 progressionDataLine={this.state.angerProgressionData}
                                 progressionDates={this.state.progressionDates}
                                 progressionEmoIcon={'😡'}
+                                progressionKeyWords={this.state.angerProgressionKeywords}
                             />
                             <EmoProgressionCard
                                 progressionDataLine={this.state.neutralProgressionData}
                                 progressionDates={this.state.progressionDates}
                                 progressionEmoIcon={'😐'}
+                                progressionKeyWords={this.state.neutralProgressionKeywords}
                             />
                             <EmoProgressionCard
                                 progressionDataLine={this.state.fearProgressionData}
                                 progressionDates={this.state.progressionDates}
                                 progressionEmoIcon={'😱'}
+                                progressionKeyWords={this.state.fearProgressionKeywords}
                             />
                             <EmoProgressionCard
                                 progressionDataLine={this.state.surpriseProgressionData}
                                 progressionDates={this.state.progressionDates}
                                 progressionEmoIcon={'😯'}
+                                progressionKeyWords={this.state.surpriseProgressionKeywords}
                             />
                             <EmoProgressionCard
                                 progressionDataLine={this.state.sadnessProgressionData}
                                 progressionDates={this.state.progressionDates}
                                 progressionEmoIcon={'😢'}
+                                progressionKeyWords={this.state.sadnessProgressionKeywords}
                             />
                             <EmoProgressionCard
                                 progressionDataLine={this.state.disgustProgressionData}
                                 progressionDates={this.state.progressionDates}
                                 progressionEmoIcon={'🤢'}
+                                progressionKeyWords={this.state.disgustProgressionKeywords}
                             />
                           <br></br>
                         </View>

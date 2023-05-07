@@ -19,7 +19,9 @@ class EmoProgressionCard extends Component {
       progressionDataLine: this.props.progressionDataLine,
       chartData: [],
       progressionDates: this.props.progressionDates,
-      emoIcon: this.props.progressionEmoIcon
+      emoIcon: this.props.progressionEmoIcon,
+      progressionKeyWords: this.props.progressionKeyWords,
+      articleExpand: false
     }
   }
 
@@ -84,6 +86,96 @@ class EmoProgressionCard extends Component {
                         <Line type="monotone" dataKey="emotion" stroke="#8884d8" activeDot={{ r: 8 }} />
                     </LineChart>
                 </CardContent>
+                <CardActions>
+                    <Button size="small" onClick={() => this.setState({ articleExpand: !this.state.articleExpand })}>Learn More</Button>
+                </CardActions>
+                <Collapse in={this.state.articleExpand} timeout="auto" unmountOnExit>
+                    <CardContent>
+                        <Typography paragraph sx={{ fontSize: 1.2 * vh }}>
+                            <Typography sx={{ fontSize: 1.2 * vh }} color="text.secondary" gutterBottom>
+                                Extracted Concepts
+                            </Typography>
+                            {this.props.progressionDates !== undefined && this.props.progressionDates.length > 0 &&
+                                <Typography sx={{ fontSize: 1 * vh }} color="text.secondary" gutterBottom>
+                                    {this.props.progressionDates[0].month} {this.props.progressionDates[0].year}
+                                </Typography>
+                            }
+                            {this.props.progressionKeyWords !== undefined && this.props.progressionKeyWords.length > 0 &&
+                            <ul>
+                                {this.props.progressionKeyWords[0].map(keywords => (
+                                    <li>{keywords[0]}</li>
+                                ))}
+                            </ul>
+                            }
+                            <br></br>
+                            {this.props.progressionDates !== undefined && this.props.progressionDates.length > 1 &&
+                                <Typography sx={{ fontSize: 1 * vh }} color="text.secondary" gutterBottom>
+                                    {this.props.progressionDates[1].month} {this.props.progressionDates[1].year}
+                                </Typography>
+                            }
+                            {this.props.progressionKeyWords !== undefined && this.props.progressionKeyWords.length > 1 &&
+                            <ul>
+                                {this.props.progressionKeyWords[1].map(keywords => (
+                                    <li>{keywords[0]}</li>
+                                ))}
+                            </ul>
+                            }
+                            <br></br>
+                            {this.props.progressionDates !== undefined && this.props.progressionDates.length > 2 &&
+                                <Typography sx={{ fontSize: 1 * vh }} color="text.secondary" gutterBottom>
+                                    {this.props.progressionDates[2].month} {this.props.progressionDates[2].year}
+                                </Typography>
+                            }
+                            {this.props.progressionKeyWords !== undefined && this.props.progressionKeyWords.length > 2 &&
+                            <ul>
+                                {this.props.progressionKeyWords[2].map(keywords => (
+                                    <li>{keywords[0]}</li>
+                                ))}
+                            </ul>
+                            }
+                            <br></br>
+                            {this.props.progressionDates !== undefined && this.props.progressionDates.length > 3 &&
+                                <Typography sx={{ fontSize: 1 * vh }} color="text.secondary" gutterBottom>
+                                    {this.props.progressionDates[3].month} {this.props.progressionDates[3].year}
+                                </Typography>
+                            }
+                            {this.props.progressionKeyWords !== undefined && this.props.progressionKeyWords.length > 3 &&
+                            <ul>
+                                {this.props.progressionKeyWords[3].map(keywords => (
+                                    <li>{keywords[0]}</li>
+                                ))}
+                            </ul>
+                            }
+                            <br></br>
+                            {this.props.progressionDates !== undefined && this.props.progressionDates.length > 4 &&
+                                <Typography sx={{ fontSize: 1 * vh }} color="text.secondary" gutterBottom>
+                                    {this.props.progressionDates[4].month} {this.props.progressionDates[4].year}
+                                </Typography>
+                            }
+                            {this.props.progressionKeyWords !== undefined && this.props.progressionKeyWords.length > 4 &&
+                            <ul>
+                                {this.props.progressionKeyWords[4].map(keywords => (
+                                    <li>{keywords[0]}</li>
+                                ))}
+                            </ul>
+                            }
+                            <br></br>
+                            <br></br>
+                            {this.props.progressionDates !== undefined && this.props.progressionDates.length > 5 &&
+                                <Typography sx={{ fontSize: 1 * vh }} color="text.secondary" gutterBottom>
+                                    {this.props.progressionDates[5].month} {this.props.progressionDates[5].year}
+                                </Typography>
+                            }
+                            {this.props.progressionKeyWords !== undefined && this.props.progressionKeyWords.length > 5 &&
+                            <ul>
+                                {this.props.progressionKeyWords[5].map(keywords => (
+                                    <li>{keywords[0]}</li>
+                                ))}
+                            </ul>
+                            }
+                        </Typography>
+                    </CardContent>
+                </Collapse>
             </Card>
         </View>
     )
