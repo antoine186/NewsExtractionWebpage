@@ -28,6 +28,8 @@ export const updateTaggingInputs = './update-tagging-inputs'
 export const getPreviousTaggingResult = './get-previous-tagging-result'
 export const deleteTag = './delete-tag'
 export const deleteTaggingInputs = './delete-tagging-inputs'
+export const progressionCharting = './progression-charting'
+export const getPreviousCharting = './get-previous-charting'
 
 export const api = axios.create({
   baseURL: backendUrl

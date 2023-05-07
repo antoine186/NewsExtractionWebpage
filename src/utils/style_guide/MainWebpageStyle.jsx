@@ -80,6 +80,10 @@ const styles = StyleSheet.create({
     marginBottom: 0.5 * vw,
     width: 3.5 * vw,
     height: '100%'
+  },
+  chartCard: {
+    marginBottom: 0.5 * vw,
+    width: 35 * vw
   }
 })
 
