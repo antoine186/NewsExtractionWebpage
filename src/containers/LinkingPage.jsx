@@ -1,10 +1,12 @@
 import React, { Component } from 'react'
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, Icon, Image } from 'react-native'
 import styles from '../utils/style_guide/MainWebpageStyle'
-import { api, linkingTopics } from '../utils/backend_configuration/BackendConfig'
+import { api, linkingTopics, getPreviousLinking } from '../utils/backend_configuration/BackendConfig'
 import { connect } from 'react-redux'
 import DateFormatter from '../utils/DateFormatter'
 import ClipLoader from 'react-spinners/ClipLoader'
+import EmoEngagementStringFormatter from './search_helper_functions/EmoEngagementStringFormatter'
+import EmoLinkingCard from '../components/molecules/EmoLinkingCard'
 
 class LinkingPage extends Component {
   constructor (props) {
@@ -23,8 +25,32 @@ class LinkingPage extends Component {
       linkingInput2Empty: false,
       linkingInitiated: false,
       noResultsToShow: false,
-      linkingFailed: false
+      linkingFailed: false,
+      linkOverallEmoResultTableData: '',
+      latentLinks: []
     }
+
+    api.post(getPreviousLinking, {
+      username: this.props.accountData.accountData.payload.emailAddress
+    }, {
+      withCredentials: true
+    }
+    ).then(response => {
+      if (response.data.operation_success) {
+        console.log('Retrieved previous linking result')
+
+        this.setState({ linkOverallEmoResultTableData: EmoEngagementStringFormatter(response.data.responsePayload.linking_result.emo_breakdown_average) })
+        this.setState({ latentLinks: response.data.responsePayload.linking_result.topic_linking_results })
+        this.setState({ linkingInput1: response.data.responsePayload.linking_result.linkingInput1 })
+        this.setState({ linkingInput2: response.data.responsePayload.linking_result.linkingInput2 })
+        this.setState({ noResultsToShow: false })
+      } else {
+        console.log('Failed to retrieve previous linking result')
+
+        this.setState({ noResultsToShow: true })
+      }
+    }
+    )
   }
 
   handleSubmit = (e) => {
@@ -156,6 +182,14 @@ class LinkingPage extends Component {
             </View>
             }
             <br></br>
+            {!this.state.noResultsToShow &&
+            <View>
+                <EmoLinkingCard
+                  linkOverallEmoResultTableData={this.state.linkOverallEmoResultTableData}
+                  latentLinks={this.state.latentLinks}
+                />
+            </View>
+            }
         </View>
     )
   }
