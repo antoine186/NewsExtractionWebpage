@@ -30,6 +30,7 @@ export const deleteTag = './delete-tag'
 export const deleteTaggingInputs = './delete-tagging-inputs'
 export const progressionCharting = './progression-charting'
 export const getPreviousCharting = './get-previous-charting'
+export const linkingTopics = './linking-topics'
 
 export const api = axios.create({
   baseURL: backendUrl

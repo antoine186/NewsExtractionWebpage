@@ -92,7 +92,7 @@ class LandingSwitchingPage extends Component {
                     <Text style={styles.titleText}>Emotional Machines Progression Charting (Beta)</Text>
                   }
                   {this.state.linking &&
-                    <Text style={styles.titleText}>Emotional Machines Link Analysis (Beta)</Text>
+                    <Text style={styles.titleText}>Emotional Machines Link Analysis (Experimental)</Text>
                   }
                 </View>
                 <ToggleButtonGroup

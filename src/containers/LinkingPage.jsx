@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, Icon, Image } from 'react-native'
 import styles from '../utils/style_guide/MainWebpageStyle'
-import { api } from '../utils/backend_configuration/BackendConfig'
+import { api, linkingTopics } from '../utils/backend_configuration/BackendConfig'
 import { connect } from 'react-redux'
 import DateFormatter from '../utils/DateFormatter'
 import ClipLoader from 'react-spinners/ClipLoader'
@@ -55,7 +55,7 @@ class LinkingPage extends Component {
       this.setState({ noResultsToShow: false })
       this.setState({ linkingFailed: false })
 
-      api.post(progressionCharting, {
+      api.post(linkingTopics, {
         linkingInput1: this.state.linkingInput1,
         linkingInput2: this.state.linkingInput2,
         dateInput: this.state.dateInput,
