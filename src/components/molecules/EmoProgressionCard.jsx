@@ -15,9 +15,36 @@ class EmoProgressionCard extends Component {
   constructor (props) {
     super(props)
 
+    const data = [
+      {
+        name: this.props.progressionDates[0].month + ' ' + this.props.progressionDates[0].year,
+        emotion: this.props.progressionDataLine[0] * 100
+      },
+      {
+        name: this.props.progressionDates[1].month + ' ' + this.props.progressionDates[1].year,
+        emotion: this.props.progressionDataLine[1] * 100
+      },
+      {
+        name: this.props.progressionDates[2].month + ' ' + this.props.progressionDates[2].year,
+        emotion: this.props.progressionDataLine[2] * 100
+      },
+      {
+        name: this.props.progressionDates[3].month + ' ' + this.props.progressionDates[3].year,
+        emotion: this.props.progressionDataLine[3] * 100
+      },
+      {
+        name: this.props.progressionDates[4].month + ' ' + this.props.progressionDates[4].year,
+        emotion: this.props.progressionDataLine[4] * 100
+      },
+      {
+        name: this.props.progressionDates[5].month + ' ' + this.props.progressionDates[5].year,
+        emotion: this.props.progressionDataLine[5] * 100
+      }
+    ]
+
     this.state = {
       progressionDataLine: this.props.progressionDataLine,
-      chartData: [],
+      chartData: data,
       progressionDates: this.props.progressionDates,
       emoIcon: this.props.progressionEmoIcon,
       progressionKeyWords: this.props.progressionKeyWords,
@@ -30,27 +57,27 @@ class EmoProgressionCard extends Component {
       const data = [
         {
           name: this.props.progressionDates[0].month + ' ' + this.props.progressionDates[0].year,
-          emotion: this.props.progressionDataLine[0] * 100,
+          emotion: this.props.progressionDataLine[0] * 100
         },
         {
           name: this.props.progressionDates[1].month + ' ' + this.props.progressionDates[1].year,
-          emotion: this.props.progressionDataLine[1] * 100,
+          emotion: this.props.progressionDataLine[1] * 100
         },
         {
           name: this.props.progressionDates[2].month + ' ' + this.props.progressionDates[2].year,
-          emotion: this.props.progressionDataLine[2] * 100,
+          emotion: this.props.progressionDataLine[2] * 100
         },
         {
           name: this.props.progressionDates[3].month + ' ' + this.props.progressionDates[3].year,
-          emotion: this.props.progressionDataLine[3] * 100,
+          emotion: this.props.progressionDataLine[3] * 100
         },
         {
           name: this.props.progressionDates[4].month + ' ' + this.props.progressionDates[4].year,
-          emotion: this.props.progressionDataLine[4] * 100,
+          emotion: this.props.progressionDataLine[4] * 100
         },
         {
           name: this.props.progressionDates[5].month + ' ' + this.props.progressionDates[5].year,
-          emotion: this.props.progressionDataLine[5] * 100,
+          emotion: this.props.progressionDataLine[5] * 100
         }
       ]
       this.setState({ chartData: data })

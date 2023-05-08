@@ -14,7 +14,6 @@ class ProgressionPage extends Component {
     const relevantDate = new Date()
 
     relevantDate.setDate(relevantDate.getDate() - 1)
-    // const yesterdayString = DateFormatterForUI(relevantDate)
     const yesterday = DateFormatter(relevantDate)
 
     this.state = {
@@ -35,7 +34,7 @@ class ProgressionPage extends Component {
       surpriseProgressionKeywords: [],
       progressionDates: [],
       dateInput: yesterday,
-      nothingToShow: false,
+      nothingToShow: true,
       chartingInitiated: false,
       chartingFailed: false
     }

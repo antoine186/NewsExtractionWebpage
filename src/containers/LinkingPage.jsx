@@ -92,7 +92,7 @@ class LinkingPage extends Component {
                     <TextInput
                         editable
                         multiline
-                        numberOfLines={2}
+                        numberOfLines={4}
                         maxLength={20}
                         value={this.state.linkingInput1}
                         onChangeText={text => this.setState({ linkingInput1: text })}
@@ -111,7 +111,7 @@ class LinkingPage extends Component {
                     <TextInput
                         editable
                         multiline
-                        numberOfLines={2}
+                        numberOfLines={4}
                         maxLength={20}
                         value={this.state.linkingInput2}
                         onChangeText={text => this.setState({ linkingInput2: text })}
