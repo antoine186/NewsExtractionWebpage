@@ -213,6 +213,10 @@ class AccountCreationPage extends React.Component {
       this.setState({ addressLine1Empty: false })
     }
 
+    if (this.state.addressLine2 === undefined) {
+      this.setState({ addressLine2: '' })
+    }
+
     if (this.state.selectedCountryName === undefined) {
       handleSubmitProceed = false
       this.setState({ countryEmpty: true })
@@ -256,6 +260,7 @@ class AccountCreationPage extends React.Component {
           StripeCustomerCreate(accountCreationData, this.props.setStripeCustomerId,
             this.goToPaymentGrabber.bind(this), this.errorCreateStripeCustomerGrabber.bind(this))
         } else {
+          console.log(response.data.error_message)
           if (response.data.error_message === 'The account associated with your email already exists') {
             this.setState({ emailAlreadyExists: true })
           } else if (response.data.error_message === 'Something went wrong, please try again later') {

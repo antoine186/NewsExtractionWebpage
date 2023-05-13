@@ -90,7 +90,12 @@ class EmotionalSearchPage extends Component {
         this.forceUpdate()
       }
     }
-    )
+    ).catch(error => {
+      console.log('Search failed for an internal reason')
+      this.setState({ noResultsToReturn: true })
+      this.setState({ searchingInitiated: false })
+      this.forceUpdate()
+    })
   }
 
   onChange (event) {

@@ -89,7 +89,6 @@ class AccountBasicInfoInputView extends React.Component {
   }
 
   setPassword (password) {
-    console.log('We are here')
     this.setState({ password })
     this.state.passwordGrabber(password)
   }

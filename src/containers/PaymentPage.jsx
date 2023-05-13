@@ -146,6 +146,7 @@ class PaymentPage extends Component {
           this.props.setstripeSubscription(response.data.responsePayload)
         } else {
           console.log('Subscription creation failed')
+          console.log(response.data.error_message)
           this.setState({ subscriptionCreationFailed: true })
         }
       }
