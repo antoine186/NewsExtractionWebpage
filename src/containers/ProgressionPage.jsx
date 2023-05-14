@@ -215,6 +215,8 @@ class ProgressionPage extends Component {
     this.setState({ chartingFailed: false })
     this.setState({ nothingToShow: true })
 
+    const oneSecond = 1000
+
     api.post(progressionCharting, {
       searchInput: this.state.searchInput,
       dateInput: this.state.dateInput,
@@ -245,7 +247,40 @@ class ProgressionPage extends Component {
         this.setState({ chartingFailed: true })
       }
     }
-    )
+    ).catch(error => {
+      if (error.code === 'ERR_BAD_RESPONSE') {
+        setTimeout(
+          () => {
+            console.log('Triggered timeout recovery')
+            api.post(getPreviousCharting, {
+              username: this.props.accountData.accountData.payload.emailAddress
+            }, {
+              withCredentials: true
+            }
+            ).then(response => {
+              if (response.data.operation_success) {
+                console.log('Retrieved previous charting')
+                this.setState({ nothingToShow: false })
+                this.setState({ chartingInitiated: false })
+                this.populateChartingData(response.data.responsePayload.previous_chart_result)
+                this.setState({ searchInput: response.data.responsePayload.previous_chart_result.emo_breakdown_result_metadata_1.search_input })
+                this.forceUpdate()
+              } else {
+                console.log('Retrieving previous charting failed')
+                this.setState({ nothingToShow: true })
+                this.setState({ chartingInitiated: false })
+                this.setState({ chartingFailed: true })
+              }
+            }
+            ).catch(error => {
+              console.log('Retrieving previous charting failed')
+              this.setState({ nothingToShow: true })
+              this.setState({ chartingInitiated: false })
+              this.setState({ chartingFailed: true })
+            })
+          }, oneSecond * 60 * 2)
+      }
+    })
   }
 
   render () {
