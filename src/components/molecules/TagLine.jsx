@@ -32,7 +32,10 @@ class TagLine extends Component {
     }
 
     this.getTaggingResults.bind(this)
-    this.initiateSearch.bind(this)
+
+    if (!this.props.alreadyTagging) {
+      this.initiateSearch.bind(this)
+    }
 
     this.getTaggingResults()
   }
@@ -97,7 +100,6 @@ class TagLine extends Component {
         this.setState({ stillTagging: true })
 
         if (!this.state.alreadyTagging) {
-          console.log('FFS')
           this.initiateSearch()
         }
       }
@@ -122,6 +124,14 @@ class TagLine extends Component {
     this.state.removeTagFromList(this.state.searchInput)
   }
 
+  midFlightResultsPeak () {
+    if (!this.state.showResults && this.state.stillTagging) {
+      this.getTaggingResults()
+    }
+
+    this.setState({ showResults: !this.state.showResults })
+  }
+
   render () {
     return (
       <View style={styles.innerContainer}>
@@ -136,7 +146,7 @@ class TagLine extends Component {
             color="#B533FF"
           />
           <TouchableOpacity
-            onPress={() => this.setState({ showResults: !this.state.showResults })}
+            onPress={this.midFlightResultsPeak.bind(this)}
             style={{}}
           >
             <Image

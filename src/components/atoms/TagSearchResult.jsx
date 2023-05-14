@@ -4,6 +4,7 @@ import { StyleSheet, Text, View, TextInput, TouchableOpacity, Icon, Image } from
 import EmoSearchOverallResultCard from '../molecules/EmoSearchOverallResultCard'
 import EmoSearchBasicResultCard from '../molecules/EmoSearchBasicResultCard'
 import { connect } from 'react-redux'
+import ReplaceAll from '../../utils/ReplaceAll'
 
 class TagSearchResult extends React.Component {
   constructor (props) {
@@ -36,7 +37,7 @@ class TagSearchResult extends React.Component {
           <View>
             {!this.state.noResultsToReturn &&
               <Text style={styles.text}>
-                From {this.state.startDateString} To {this.state.endDateString}
+                From {new Date(this.state.startDateString).toLocaleDateString('en-US')} To {new Date(this.state.endDateString).toLocaleDateString('en-US')}
               </Text>
             }
             <br></br>
