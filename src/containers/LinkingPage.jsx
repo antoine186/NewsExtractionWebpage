@@ -24,7 +24,7 @@ class LinkingPage extends Component {
       linkingInput1Empty: false,
       linkingInput2Empty: false,
       linkingInitiated: false,
-      noResultsToShow: false,
+      noResultsToShow: true,
       linkingFailed: false,
       linkOverallEmoResultTableData: '',
       latentLinks: []
@@ -57,6 +57,8 @@ class LinkingPage extends Component {
     e.preventDefault()
 
     let validLinking = true
+
+    const oneSecond = 1000
 
     if (this.state.linkingInput1 === '') {
       this.setState({ linkingInput1Empty: true })
@@ -104,7 +106,47 @@ class LinkingPage extends Component {
           this.setState({ linkingFailed: true })
         }
       }
-      )
+      ).catch(error => {
+        if (error.code === 'ERR_BAD_RESPONSE') {
+          setTimeout(
+            () => {
+              console.log('Triggered timeout recovery')
+              api.post(getPreviousLinking, {
+                username: this.props.accountData.accountData.payload.emailAddress
+              }, {
+                withCredentials: true
+              }
+              ).then(response => {
+                if (response.data.operation_success) {
+                  console.log('Retrieved previous linking result')
+
+                  this.setState({ linkOverallEmoResultTableData: EmoEngagementStringFormatter(response.data.responsePayload.linking_result.emo_breakdown_average) })
+                  this.setState({ latentLinks: response.data.responsePayload.linking_result.topic_linking_results })
+                  this.setState({ linkingInput1: response.data.responsePayload.linking_result.linkingInput1 })
+                  this.setState({ linkingInput2: response.data.responsePayload.linking_result.linkingInput2 })
+                  this.setState({ noResultsToShow: false })
+                  this.setState({ linkingInitiated: false })
+                  this.setState({ linkingFailed: false })
+                } else {
+                  console.log('Linking failed')
+
+                  this.setState({ linkingInitiated: false })
+                  this.setState({ noResultsToShow: true })
+                  this.setState({ linkingFailed: true })
+                }
+              }
+              ).catch(error => {
+                console.log('Linking failed')
+
+                this.setState({ linkingInitiated: false })
+                this.setState({ noResultsToShow: true })
+                this.setState({ linkingFailed: true })
+              })
+            }, oneSecond * 60 * 2)
+        } else {
+          console.log(error.message)
+        }
+      })
     }
   }
 
@@ -152,13 +194,25 @@ class LinkingPage extends Component {
                         <br></br>
                     </View>
                     }
-                    <br></br>
-                    {!this.state.linkingInitiated &&
-                        <TouchableOpacity style={styles.searchBtn} onPress={this.handleSubmit}>
-                            <Text style={styles.text}>LINK</Text>
-                        </TouchableOpacity>
-                    }
                 </View>
+            </View>
+            <View style={styles.innerContainer}>
+                  <br></br>
+                  {!this.state.linkingInitiated &&
+                      <TouchableOpacity style={styles.searchBtn} onPress={this.handleSubmit}>
+                          <Text style={styles.text}>LINK</Text>
+                      </TouchableOpacity>
+                  }
+                  <br></br>
+                  {!this.state.linkingInitiated && !this.state.noResultsToShow &&
+                    <View>
+                      <br></br>
+                      <Text style={styles.titleText2}>
+                          Emotional & Semantic Links
+                      </Text>
+                      <br></br>
+                    </View>
+                  }
             </View>
             {this.state.linkingInitiated &&
             <View>
