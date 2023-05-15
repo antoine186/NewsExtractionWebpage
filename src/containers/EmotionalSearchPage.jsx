@@ -93,41 +93,40 @@ class EmotionalSearchPage extends Component {
       }
     }
     ).catch(error => {
+      // Also add 'ERR_EMPTY_RESPONSE'
       if (error.code === 'ERR_BAD_RESPONSE') {
-        setTimeout(
-          () => {
-            console.log('Triggered timeout recovery')
-            api.post(getPreviousSearchResult, {
-              username: this.props.accountData.accountData.payload.emailAddress
-            }, {
-              withCredentials: true
-            }
-            ).then(response => {
-              if (response.data.operation_success) {
-                console.log('Retrieved previous search returned something!')
-                this.setState({ searchInput: response.data.responsePayload.previous_search_result.search_input })
-                this.setState({ startDateString: this.date2String(response.data.responsePayload.previous_search_result.search_start_date) })
-                this.setState({ endDateString: this.date2String(response.data.responsePayload.previous_search_result.search_end_date) })
-                this.setState({ noPreviousResults: false })
-                this.populateOverallEmoResultTable(response.data.responsePayload.previous_search_result)
-                this.populateArticlesResultTable(response.data.responsePayload.previous_search_result)
-              } else {
-                console.log('Search failed for an internal reason')
-                this.setState({ noResultsToReturn: true })
-                this.setState({ searchingInitiated: false })
-                this.setState({ noPreviousResults: true })
-              }
-            }
-            ).catch(error => {
-              console.log('No previous search results')
+      }
+      setTimeout(
+        () => {
+          console.log('Triggered timeout recovery')
+          api.post(getPreviousSearchResult, {
+            username: this.props.accountData.accountData.payload.emailAddress
+          }, {
+            withCredentials: true
+          }
+          ).then(response => {
+            if (response.data.operation_success) {
+              console.log('Retrieved previous search returned something!')
+              this.setState({ searchInput: response.data.responsePayload.previous_search_result.search_input })
+              this.setState({ startDateString: this.date2String(response.data.responsePayload.previous_search_result.search_start_date) })
+              this.setState({ endDateString: this.date2String(response.data.responsePayload.previous_search_result.search_end_date) })
+              this.setState({ noPreviousResults: false })
+              this.populateOverallEmoResultTable(response.data.responsePayload.previous_search_result)
+              this.populateArticlesResultTable(response.data.responsePayload.previous_search_result)
+            } else {
+              console.log('Search failed for an internal reason')
               this.setState({ noResultsToReturn: true })
               this.setState({ searchingInitiated: false })
               this.setState({ noPreviousResults: true })
-            })
-          }, oneSecond * 60)
-      } else {
-        console.log(error.message)
-      }
+            }
+          }
+          ).catch(error => {
+            console.log('No previous search results')
+            this.setState({ noResultsToReturn: true })
+            this.setState({ searchingInitiated: false })
+            this.setState({ noPreviousResults: true })
+          })
+        }, oneSecond * 60)
     })
   }
 

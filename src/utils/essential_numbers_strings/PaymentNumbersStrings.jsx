@@ -1,2 +1,2 @@
 
-export const basicSubscriptionPricePerMonth = 29.9
+export const basicSubscriptionPricePerMonth = 59.9

@@ -116,47 +116,45 @@ class LinkingPage extends Component {
       }
       ).catch(error => {
         if (error.code === 'ERR_BAD_RESPONSE') {
-          setTimeout(
-            () => {
-              console.log('Triggered timeout recovery')
-              api.post(getPreviousLinking, {
-                username: this.props.accountData.accountData.payload.emailAddress
-              }, {
-                withCredentials: true
-              }
-              ).then(response => {
-                if (response.data.operation_success) {
-                  console.log('Retrieved previous linking result')
+        }
+        setTimeout(
+          () => {
+            console.log('Triggered timeout recovery')
+            api.post(getPreviousLinking, {
+              username: this.props.accountData.accountData.payload.emailAddress
+            }, {
+              withCredentials: true
+            }
+            ).then(response => {
+              if (response.data.operation_success) {
+                console.log('Retrieved previous linking result')
 
-                  this.setState({ linkOverallEmoResultTableData: EmoEngagementStringFormatter(response.data.responsePayload.linking_result.emo_breakdown_average) })
-                  this.setState({ latentLinks: response.data.responsePayload.linking_result.topic_linking_results })
-                  this.setState({ linkingInput1: response.data.responsePayload.linking_result.linkingInput1 })
-                  this.setState({ linkingInput2: response.data.responsePayload.linking_result.linkingInput2 })
-                  this.setState({ noResultsToShow: false })
-                  this.setState({ linkingInitiated: false })
-                  this.setState({ linkingFailed: false })
-                  this.setState({ noResultsToReturn: true })
-                } else {
-                  console.log('Linking failed')
-
-                  this.setState({ linkingInitiated: false })
-                  this.setState({ noResultsToShow: true })
-                  this.setState({ linkingFailed: true })
-                  this.setState({ noResultsToReturn: false })
-                }
-              }
-              ).catch(error => {
+                this.setState({ linkOverallEmoResultTableData: EmoEngagementStringFormatter(response.data.responsePayload.linking_result.emo_breakdown_average) })
+                this.setState({ latentLinks: response.data.responsePayload.linking_result.topic_linking_results })
+                this.setState({ linkingInput1: response.data.responsePayload.linking_result.linkingInput1 })
+                this.setState({ linkingInput2: response.data.responsePayload.linking_result.linkingInput2 })
+                this.setState({ noResultsToShow: false })
+                this.setState({ linkingInitiated: false })
+                this.setState({ linkingFailed: false })
+                this.setState({ noResultsToReturn: true })
+              } else {
                 console.log('Linking failed')
 
                 this.setState({ linkingInitiated: false })
                 this.setState({ noResultsToShow: true })
                 this.setState({ linkingFailed: true })
                 this.setState({ noResultsToReturn: false })
-              })
-            }, oneSecond * 60 * 2)
-        } else {
-          console.log(error.message)
-        }
+              }
+            }
+            ).catch(error => {
+              console.log('Linking failed')
+
+              this.setState({ linkingInitiated: false })
+              this.setState({ noResultsToShow: true })
+              this.setState({ linkingFailed: true })
+              this.setState({ noResultsToReturn: false })
+            })
+          }, oneSecond * 60 * 2)
       })
     }
   }
