@@ -15,16 +15,24 @@ class LinkingPage extends Component {
     const relevantDate = new Date()
 
     relevantDate.setDate(relevantDate.getDate() - 1)
+
+    const searchEndDate = relevantDate
+
     const yesterday = DateFormatter(relevantDate)
+
+    const searchStartDate = searchEndDate.setDate(searchEndDate.getDate() - 1)
 
     this.state = {
       linkingInput1: '',
       linkingInput2: '',
       dateInput: yesterday,
+      dateInputInDateType: searchEndDate,
+      startDateInputInDateType: searchStartDate,
       linkingInput1Empty: false,
       linkingInput2Empty: false,
       linkingInitiated: false,
       noResultsToShow: true,
+      noResultsToReturn: false,
       linkingFailed: false,
       linkOverallEmoResultTableData: '',
       latentLinks: []
@@ -77,8 +85,6 @@ class LinkingPage extends Component {
     if (validLinking) {
       console.log('Attempting linking')
 
-      console.log(this.state.linkingInput1Empty)
-
       this.setState({ linkingInitiated: true })
       this.setState({ noResultsToShow: false })
       this.setState({ linkingFailed: false })
@@ -98,12 +104,14 @@ class LinkingPage extends Component {
           this.setState({ linkingInitiated: false })
           this.setState({ noResultsToShow: false })
           this.setState({ linkingFailed: false })
+          this.setState({ noResultsToReturn: false })
         } else {
           console.log('Linking failed')
 
           this.setState({ linkingInitiated: false })
           this.setState({ noResultsToShow: true })
           this.setState({ linkingFailed: true })
+          this.setState({ noResultsToReturn: true })
         }
       }
       ).catch(error => {
@@ -127,12 +135,14 @@ class LinkingPage extends Component {
                   this.setState({ noResultsToShow: false })
                   this.setState({ linkingInitiated: false })
                   this.setState({ linkingFailed: false })
+                  this.setState({ noResultsToReturn: true })
                 } else {
                   console.log('Linking failed')
 
                   this.setState({ linkingInitiated: false })
                   this.setState({ noResultsToShow: true })
                   this.setState({ linkingFailed: true })
+                  this.setState({ noResultsToReturn: false })
                 }
               }
               ).catch(error => {
@@ -141,6 +151,7 @@ class LinkingPage extends Component {
                 this.setState({ linkingInitiated: false })
                 this.setState({ noResultsToShow: true })
                 this.setState({ linkingFailed: true })
+                this.setState({ noResultsToReturn: false })
               })
             }, oneSecond * 60 * 2)
         } else {
@@ -235,14 +246,25 @@ class LinkingPage extends Component {
                 </View>
             </View>
             }
+            {!this.state.noResultsToShow && !this.state.linkingInitiated &&
+              <Text style={styles.text}>
+                From {new Date(this.state.startDateInputInDateType).toLocaleDateString('en-US')} To {new Date(this.state.dateInputInDateType).toLocaleDateString('en-US')}
+              </Text>
+            }
             <br></br>
-            {!this.state.noResultsToShow &&
+            {!this.state.noResultsToShow && !this.state.linkingInitiated &&
             <View>
                 <EmoLinkingCard
                   linkOverallEmoResultTableData={this.state.linkOverallEmoResultTableData}
                   latentLinks={this.state.latentLinks}
                 />
             </View>
+            }
+            <br></br>
+            {this.state.noResultsToReturn && !this.state.linkingInitiated && this.state.noResultsToShow &&
+              <Text style={styles.text}>
+                Not enough results found! Maybe the date is too recent...
+              </Text>
             }
         </View>
     )
