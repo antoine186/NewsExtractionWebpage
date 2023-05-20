@@ -10,6 +10,7 @@ import { userInputFieldMaxCharacter } from '../utils/user_input_config/UserInput
 import { setValidSubscription } from '../store/Slices/ValidSubscriptionSlice'
 import { setstripeSubscription } from '../store/Slices/StripeSubscriptionSlice'
 import { setAccountData } from '../store/Slices/AccountDataSlice'
+import { userInputFieldMaxCharacterEmail } from '../utils/user_input_config/UserInputConfig'
 
 function Login () {
   const [username, setUsername] = useState('')
@@ -123,7 +124,7 @@ function Login () {
             placeholder="Email"
             placeholderTextColor="#003f5c"
             onChangeText={(email) => setUsername(email)}
-            maxLength={userInputFieldMaxCharacter}
+            maxLength={userInputFieldMaxCharacterEmail}
           />
         </View>
         <View style={styles.inputView}>

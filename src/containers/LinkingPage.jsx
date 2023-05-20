@@ -154,7 +154,7 @@ class LinkingPage extends Component {
               this.setState({ linkingFailed: true })
               this.setState({ noResultsToReturn: false })
             })
-          }, oneSecond * 60 * 2)
+          }, oneSecond * 60 * 15)
       })
     }
   }
@@ -230,6 +230,9 @@ class LinkingPage extends Component {
                     <br></br>
                     <Text style={styles.text}>
                         Still linking... Please come back in half an hour and !REFRESH! the page.
+                    </Text>
+                    <Text style={styles.text}>
+                        Don't reissue the same query. If the page is blank within 30 min, we might still be searching!
                     </Text>
                     <br></br>
                     <br></br>

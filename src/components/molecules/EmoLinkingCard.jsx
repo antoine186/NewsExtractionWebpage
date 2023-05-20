@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { StyleSheet, Text, View, TextInput, TouchableOpacity, Icon, Image } from 'react-native'
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, Icon, Image, Dimensions } from 'react-native'
 import styles from '../../utils/style_guide/MainWebpageStyle'
 // import Box from '@mui/material/Box'
 import Card from '@mui/material/Card'
@@ -14,12 +14,33 @@ class EmoLinkingCard extends Component {
   constructor (props) {
     super(props)
 
+    const windowWidth = Dimensions.get('window').width
+    const windowHeight = Dimensions.get('window').height
+
+    const aspectRatio = windowWidth / windowHeight
+
+    const windowWidthCm = (windowWidth / 160) * 2.54
+
+    let largeWebBrowser = true
+    let mobileBrowser = false
+    let sizeScaler = 1
+
+    if (aspectRatio < 1.3 && windowWidthCm < 25) {
+      largeWebBrowser = false
+      sizeScaler = 1
+      if (aspectRatio < 0.6 && windowWidthCm < 15) {
+        mobileBrowser = true
+        sizeScaler = 0.8
+      }
+    }
+
     this.state = {
       articleExpand: false,
       articleData: this.props.articleData,
       emoIcon: this.props.emoIcon,
       linkOverallEmoResultTableData: this.props.linkOverallEmoResultTableData,
-      latentLinks: this.props.latentLinks
+      latentLinks: this.props.latentLinks,
+      sizeScaler
     }
   }
 
@@ -34,10 +55,10 @@ class EmoLinkingCard extends Component {
         <View>
             <Card style={styles.articleCard}>
                 <CardContent>
-                    <Typography sx={{ fontSize: 1.2 * vh }} color="text.primary" gutterBottom>
+                    <Typography sx={{ fontSize: 1.2 * this.state.sizeScaler * vh }} color="text.primary" gutterBottom>
                         Emotional Link
                     </Typography>
-                    <Typography variant="h5" sx={{ fontSize: 1.6 * vh }}>
+                    <Typography variant="h5" sx={{ fontSize: 1.6 * this.state.sizeScaler * vh }}>
                         {this.props.linkOverallEmoResultTableData}
                     </Typography>
                 </CardContent>
@@ -46,27 +67,27 @@ class EmoLinkingCard extends Component {
                 </CardActions>
                 <Collapse in={this.state.articleExpand} timeout="auto" unmountOnExit>
                     <CardContent>
-                        <Typography sx={{ fontSize: 1.2 * vh }} color="text.secondary" gutterBottom>
+                        <Typography sx={{ fontSize: 1.2 * this.state.sizeScaler * vh }} color="text.secondary" gutterBottom>
                             Latent Emotional Links
                         </Typography>
-                        <Typography paragraph sx={{ fontSize: 1.2 * vh }}>
+                        <Typography paragraph sx={{ fontSize: 1.2 * this.state.sizeScaler * vh }}>
                             <br></br>
                             {this.props.latentLinks !== undefined && this.props.latentLinks.length > 0 &&
                             <ul>
                                 {this.props.latentLinks.map(latentLink => (
                                     <View>
-                                    <Typography variant="h5" sx={{ fontSize: 1.6 * vh }}>
+                                    <Typography variant="h5" sx={{ fontSize: 1.6 * this.state.sizeScaler * vh }}>
                                         <a href={latentLink.url} style={{ color: '#808B96' }}>{latentLink.title}</a>
                                     </Typography>
                                     <br></br>
-                                    <Typography sx={{ fontSize: 1.2 * vh }} color="text.primary">
+                                    <Typography sx={{ fontSize: 1.2 * this.state.sizeScaler * vh }} color="text.primary">
                                         {latentLink.publisher}
                                     </Typography>
-                                    <Typography sx={{ fontSize: 1.2 * vh }} color="text.primary">
+                                    <Typography sx={{ fontSize: 1.2 * this.state.sizeScaler * vh }} color="text.primary">
                                         {latentLink.published_date}
                                     </Typography>
                                     <br></br>
-                                    <Typography sx={{ fontSize: 1.2 * vh }} color="text.secondary" gutterBottom>
+                                    <Typography sx={{ fontSize: 1.2 * this.state.sizeScaler * vh }} color="text.secondary" gutterBottom>
                                         Extracted Concepts
                                     </Typography>
                                     <br></br>

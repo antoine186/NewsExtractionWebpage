@@ -211,6 +211,9 @@ class EmotionalSearchPage extends Component {
               <Text style={styles.text}>
                 Please Come Back in a Minute or Two...
               </Text>
+              <Text style={styles.text}>
+                Don't reissue the same query. If the page is blank within 10 min, we might still be searching!
+              </Text>
               <br></br>
               <br></br>
               <View style={{ alignItems: 'center' }}>

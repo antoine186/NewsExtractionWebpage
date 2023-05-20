@@ -9,6 +9,7 @@ import DateFormatter from '../../utils/DateFormatter'
 import { userInputFieldMaxCharacter } from '../../utils/user_input_config/UserInputConfig'
 import { mockingConfig } from '../../utils/debug_configuration/MockingConfig'
 import AccountCreationBasicDataMock from '../../mocking/AccountCreationBasicDataMock'
+import { userInputFieldMaxCharacterEmail } from '../../utils/user_input_config/UserInputConfig'
 
 class AccountBasicInfoInputView extends React.Component {
   constructor (props) {
@@ -171,7 +172,7 @@ class AccountBasicInfoInputView extends React.Component {
             placeholderTextColor="#003f5c"
             value={this.state.emailAddress}
             onChangeText={emailAddress => this.setUserEmail(emailAddress)}
-            maxLength={userInputFieldMaxCharacter}
+            maxLength={userInputFieldMaxCharacterEmail}
           />
         </View>
         {this.props.emailEmpty &&

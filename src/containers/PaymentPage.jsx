@@ -199,7 +199,7 @@ class PaymentPage extends Component {
             <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0" />
           </Helmet>
           <Text style={styles.titleText}>
-            Your Payment Details
+            Your Payment Details - {basicSubscriptionPricePerMonth} USD/Month Subscription
           </Text>
           {(this.props.userSession.validated && !this.props.validSubscription.validSubscription.payload) &&
             <Text style={styles.titleText2}>

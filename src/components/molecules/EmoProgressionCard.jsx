@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { StyleSheet, Text, View, TextInput, TouchableOpacity, Icon, Image } from 'react-native'
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, Icon, Image, Dimensions } from 'react-native'
 import styles from '../../utils/style_guide/MainWebpageStyle'
 // import Box from '@mui/material/Box'
 import Card from '@mui/material/Card'
@@ -14,6 +14,32 @@ const { vw, vh, vmin, vmax } = require('react-native-viewport-units')
 class EmoProgressionCard extends Component {
   constructor (props) {
     super(props)
+
+    const windowWidth = Dimensions.get('window').width
+    const windowHeight = Dimensions.get('window').height
+
+    const aspectRatio = windowWidth / windowHeight
+
+    const windowWidthCm = (windowWidth / 160) * 2.54
+
+    let largeWebBrowser = true
+    let mobileBrowser = false
+    let sizeScaler = 1
+    let sizeChartWidthScaler = 1
+    let sizeChartHeightScaler = 1
+    let sizeMarginScaler = 1
+
+    if (aspectRatio < 1.3 && windowWidthCm < 25) {
+      largeWebBrowser = false
+      sizeScaler = 1
+      if (aspectRatio < 0.6 && windowWidthCm < 15) {
+        mobileBrowser = true
+        sizeScaler = 0.8
+        sizeChartWidthScaler = 2
+        sizeChartHeightScaler = 0.6
+        sizeMarginScaler = 0
+      }
+    }
 
     const data = [
       {
@@ -48,7 +74,11 @@ class EmoProgressionCard extends Component {
       progressionDates: this.props.progressionDates,
       emoIcon: this.props.progressionEmoIcon,
       progressionKeyWords: this.props.progressionKeyWords,
-      articleExpand: false
+      articleExpand: false,
+      sizeScaler,
+      sizeChartWidthScaler,
+      sizeChartHeightScaler,
+      sizeMarginScaler
     }
   }
 
@@ -90,18 +120,18 @@ class EmoProgressionCard extends Component {
         <View>
             <Card style={styles.chartCard}>
                 <CardContent>
-                    <Typography variant="h5" sx={{ fontSize: 1.6 * vh }}>
+                    <Typography variant="h5" sx={{ fontSize: 1.6 * this.state.sizeScaler * vh }}>
                         {this.state.emoIcon} Progression in %
                     </Typography>
                     <br></br>
                     <LineChart
-                    width={32 * vw}
-                    height={300}
+                    width={32 * this.state.sizeChartWidthScaler * vw}
+                    height={300 * this.state.sizeChartHeightScaler}
                     data={this.state.chartData}
                     margin={{
                       top: 5,
-                      right: 30,
-                      left: 20,
+                      right: 30 * this.state.sizeMarginScaler,
+                      left: 20 * this.state.sizeMarginScaler,
                       bottom: 5
                     }}
                     >
@@ -118,12 +148,12 @@ class EmoProgressionCard extends Component {
                 </CardActions>
                 <Collapse in={this.state.articleExpand} timeout="auto" unmountOnExit>
                     <CardContent>
-                        <Typography paragraph sx={{ fontSize: 1.2 * vh }}>
-                            <Typography sx={{ fontSize: 1.2 * vh }} color="text.secondary" gutterBottom>
+                        <Typography paragraph sx={{ fontSize: 1.2 * this.state.sizeScaler * vh }}>
+                            <Typography sx={{ fontSize: 1.2 * this.state.sizeScaler * vh }} color="text.secondary" gutterBottom>
                                 Extracted Concepts
                             </Typography>
                             {this.props.progressionDates !== undefined && this.props.progressionDates.length > 0 &&
-                                <Typography sx={{ fontSize: 1 * vh }} color="text.secondary" gutterBottom>
+                                <Typography sx={{ fontSize: 1 * this.state.sizeScaler * vh }} color="text.secondary" gutterBottom>
                                     {this.props.progressionDates[0].month} {this.props.progressionDates[0].year}
                                 </Typography>
                             }
@@ -136,7 +166,7 @@ class EmoProgressionCard extends Component {
                             }
                             <br></br>
                             {this.props.progressionDates !== undefined && this.props.progressionDates.length > 1 &&
-                                <Typography sx={{ fontSize: 1 * vh }} color="text.secondary" gutterBottom>
+                                <Typography sx={{ fontSize: 1 * this.state.sizeScaler * vh }} color="text.secondary" gutterBottom>
                                     {this.props.progressionDates[1].month} {this.props.progressionDates[1].year}
                                 </Typography>
                             }
@@ -149,7 +179,7 @@ class EmoProgressionCard extends Component {
                             }
                             <br></br>
                             {this.props.progressionDates !== undefined && this.props.progressionDates.length > 2 &&
-                                <Typography sx={{ fontSize: 1 * vh }} color="text.secondary" gutterBottom>
+                                <Typography sx={{ fontSize: 1 * this.state.sizeScaler * vh }} color="text.secondary" gutterBottom>
                                     {this.props.progressionDates[2].month} {this.props.progressionDates[2].year}
                                 </Typography>
                             }
@@ -162,7 +192,7 @@ class EmoProgressionCard extends Component {
                             }
                             <br></br>
                             {this.props.progressionDates !== undefined && this.props.progressionDates.length > 3 &&
-                                <Typography sx={{ fontSize: 1 * vh }} color="text.secondary" gutterBottom>
+                                <Typography sx={{ fontSize: 1 * this.state.sizeScaler * vh }} color="text.secondary" gutterBottom>
                                     {this.props.progressionDates[3].month} {this.props.progressionDates[3].year}
                                 </Typography>
                             }
@@ -175,7 +205,7 @@ class EmoProgressionCard extends Component {
                             }
                             <br></br>
                             {this.props.progressionDates !== undefined && this.props.progressionDates.length > 4 &&
-                                <Typography sx={{ fontSize: 1 * vh }} color="text.secondary" gutterBottom>
+                                <Typography sx={{ fontSize: 1 * this.state.sizeScaler * vh }} color="text.secondary" gutterBottom>
                                     {this.props.progressionDates[4].month} {this.props.progressionDates[4].year}
                                 </Typography>
                             }
@@ -189,7 +219,7 @@ class EmoProgressionCard extends Component {
                             <br></br>
                             <br></br>
                             {this.props.progressionDates !== undefined && this.props.progressionDates.length > 5 &&
-                                <Typography sx={{ fontSize: 1 * vh }} color="text.secondary" gutterBottom>
+                                <Typography sx={{ fontSize: 1 * this.state.sizeScaler * vh }} color="text.secondary" gutterBottom>
                                     {this.props.progressionDates[5].month} {this.props.progressionDates[5].year}
                                 </Typography>
                             }

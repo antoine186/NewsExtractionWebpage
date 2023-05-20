@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { StyleSheet, Text, View, TextInput, TouchableOpacity, Icon, Image } from 'react-native'
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, Icon, Image, Dimensions } from 'react-native'
 import styles from '../../utils/style_guide/MainWebpageStyle'
 // import Box from '@mui/material/Box'
 import Card from '@mui/material/Card'
@@ -14,8 +14,29 @@ class EmoSearchOverallResultCard extends Component {
   constructor (props) {
     super(props)
 
+    const windowWidth = Dimensions.get('window').width
+    const windowHeight = Dimensions.get('window').height
+
+    const aspectRatio = windowWidth / windowHeight
+
+    const windowWidthCm = (windowWidth / 160) * 2.54
+
+    let largeWebBrowser = true
+    let mobileBrowser = false
+    let sizeScaler = 1
+
+    if (aspectRatio < 1.3 && windowWidthCm < 25) {
+      largeWebBrowser = false
+      sizeScaler = 1
+      if (aspectRatio < 0.6 && windowWidthCm < 15) {
+        mobileBrowser = true
+        sizeScaler = 0.8
+      }
+    }
+
     this.state = {
-      resultData: this.props.resultData
+      resultData: this.props.resultData,
+      sizeScaler
     }
   }
 
@@ -30,30 +51,30 @@ class EmoSearchOverallResultCard extends Component {
         <View>
             <Card style={styles.articleCard}>
                 <CardContent>
-                    <Typography variant="h5" sx={{ fontSize: 1.6 * vh }}>
+                    <Typography variant="h5" sx={{ fontSize: 1.6 * this.state.sizeScaler * vh }}>
                         Overall Emotional Engagement with Search Topic
                     </Typography>
-                    <Typography sx={{ fontSize: 1.2 * vh }} color="text.secondary">
+                    <Typography sx={{ fontSize: 1.2 * this.state.sizeScaler * vh }} color="text.secondary">
                         Emotional Engagement
                     </Typography>
                     <br></br>
-                    <Typography variant="body2" sx={{ fontSize: 1.4 * vh }}>
+                    <Typography variant="body2" sx={{ fontSize: 1.4 * this.state.sizeScaler * vh }}>
                         {this.state.resultData[0] !== undefined &&
-                            this.state.resultData[0]['emotional_engagement']
+                            this.state.resultData[0].emotional_engagement
                         }
                     </Typography>
-                    {this.state.resultData[0] !== undefined && this.state.resultData[0]['emotional_engagement_percentage_change'] !== undefined &&
+                    {this.state.resultData[0] !== undefined && this.state.resultData[0].emotional_engagement_percentage_change !== undefined &&
                       <View>
                         <br></br>
-                        <Typography sx={{ fontSize: 1.2 * vh }} color="text.secondary">
+                        <Typography sx={{ fontSize: 1.2 * this.state.sizeScaler * vh }} color="text.secondary">
                           Daily Change
                         </Typography>
                         <br></br>
                       </View>
                     }
-                    <Typography variant="body2" sx={{ fontSize: 1.4 * vh }}>
-                      {this.state.resultData[0] !== undefined && this.state.resultData[0]['emotional_engagement_percentage_change'] !== undefined &&
-                        this.state.resultData[0]['emotional_engagement_percentage_change']
+                    <Typography variant="body2" sx={{ fontSize: 1.4 * this.state.sizeScaler * vh }}>
+                      {this.state.resultData[0] !== undefined && this.state.resultData[0].emotional_engagement_percentage_change !== undefined &&
+                        this.state.resultData[0].emotional_engagement_percentage_change
                       }
                     </Typography>
                 </CardContent>
